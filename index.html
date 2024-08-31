@@ -1,127 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Educare</title>
-    <link rel="stylesheet" href="index.css">
-</head>
-<body>
-    <div class="header">
-    <header>
-        <h1>EDUCARE</h1>
-    </header>
-    <nav>
-        <a href="#" class="M" id="a">Home</a>
-        <a href="Courses.html" class="M" target="_blank" style="height: 25px;">Courses</a>
-        <a href="AboutUs.html" class="M" target="_blank" style="height: 25px;">About Us</a>
-        <a href="Organisations.html" class="M" target="_blank" style="height: 25px;">Contact</a>
-        <a href="Library.html" class="M" target="_blank" style="height: 25px;">Library</a>
-    </nav>
-</div>
-<div class="main-content">
-    <h2 class="first" id="parag">Explore a wide range of courses and enhance your knowledge.</h2>
-    <p class="first" id="paragr">Our mission is to provide quality education for everyone.</p>
-</div>
-<div class="benefits-website">
-    <div class="Q_1" >Our Website has multilingual support like Children can learn in whatever language they are comfortable in</div>
-    <div class="Q_1" >We also have virtual labs for different subjects, through which a student can implement learning by doing</div>
-    <div class="Q_1" >We also have Tests on all the topic of all the subject, which will help students improve their grades</div>
-</div>
-<footer>
-    <span>&copy; 2024 Educational Website. All rights reserved.</span>
-</footer>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Register & Login</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <div class="container" id="signUp" style="display:none;"> 
+            <h1 class="form-title">Register</h1>
+            <form mehod="post" action="">
+                <div class="input-group">
+                    <i class="fas fa-user"></i>
+                    <input type="text" name="fName" id="fName" placeholder="First Name" required>
+                    <label for="fname">First Name</label>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-user"></i>
+                    <input type="text" name="lName" id="lName" placeholder="Last Name" required>
+                    <label for="lname">Last Name</label>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-envelope"></i> 
+                    <input type="email" name="email" id="email" placeholder="Email" required>
+                    <label for="email">Email</label>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-lock"></i> 
+                    <input type="password" id="password" placeholder="password" required>
+                    <label for="password">Password</label>
+                </div>
+                <input type="submit" class="btn" value="Sign Up" name="signUp">
+            </form>
+            <p class="or">
+                ----------or----------
+            </p>
+            <div class="icons">
+                <i class="fab fa-google"></i>
+                <i class="fab fa-facebook"></i>
+            </div>
+            <div class="links">
+                <p>Already Have a Account ?</p>
+                <button id="signInButton">Sign In</button>
+            </div>
+        </div>
 
-<!-- Circular icon for opening the chatbot -->
-<div id="chatIcon">💬</div>
-
-<!-- Chatbot popup -->
-<div id="chatPopup">
-    <div id="chatHeader">
-        Chatbot
-        <button id="closeBtn">x</button>
-    </div>
-    <div id="chatBody">
-        <!-- Chat content will go here -->
-    </div>
-    <div id="chatFooter">
-        <input type="text" id="userInput" placeholder="Type a message...">
-        <button id="sendBtn">Send</button>
-    </div>
-</div>
-
-<script>
-    // Existing JavaScript functionality
-
-    // JavaScript for handling the chatbot popup
-    document.getElementById('chatIcon').addEventListener('click', function() {
-        document.getElementById('chatPopup').style.display = 'block';
-    });
-
-    document.getElementById('closeBtn').addEventListener('click', function() {
-        document.getElementById('chatPopup').style.display = 'none';
-    });
-
-    document.getElementById('sendBtn').addEventListener('click', function() {
-        const userInput = document.getElementById('userInput').value;
-        if (userInput) {
-            handleUserInput(userInput);
-            document.getElementById('userInput').value = '';
-        }
-    });
-
-    function handleUserInput(input) {
-        const chatBody = document.getElementById('chatBody');
-        const userMessage = document.createElement('div');
-        userMessage.textContent = input;
-        userMessage.className = 'message user-message';
-        chatBody.appendChild(userMessage);
-        chatBody.scrollTop = chatBody.scrollHeight;
-
-        // Process the input and respond
-        processInput(input);
-    }
-
-    function processInput(input) {
-        const chatBody = document.getElementById('chatBody');
-        const botMessage = document.createElement('div');
-        botMessage.className = 'message bot-message';
-        chatBody.appendChild(botMessage);
-
-        const normalizedInput = input.toLowerCase();
-        if (['english', 'eng', 'ENGLISH', 'ENG', 'English'].includes(normalizedInput)) {
-            botMessage.textContent = 'Which chapter? (Enter a number between 1 and 4)';
-        } else if (/^[1-4]$/.test(input)) {
-            const chapterNumber = parseInt(input, 10);
-            botMessage.textContent = `Here is the link to Chapter ${chapterNumber}: `;
-            const link = document.createElement('a');
-            link.href = `EngChp${chapterNumber}.html`; // Assuming chapters are named as Chapter1.html, Chapter2.html, etc.
-            link.textContent = `Chapter ${chapterNumber}`;
-            link.target = '_blank';
-            botMessage.appendChild(link);
-        } else {
-            botMessage.textContent = 'Sorry, I did not understand that. Please type "English", "Eng", or "eng" to start.';
-        }
-        chatBody.scrollTop = chatBody.scrollHeight;
-    }
-</script>
-<script type="text/javascript">
-    function googleTranslateElementInit() {
-        new google.translate.TranslateElement({
-            pageLanguage: 'en',
-            includedLanguages: 'en,hi,gu,kn,ml,mr,pa,ta,te,bn,ur,mai', // Add the language codes for Indian languages
-        }, 'google_translate_element');
-    } 
-    function storeSelectedLanguage() {
-        const languageDropdown = document.querySelector('.goog-te-combo');
-        languageDropdown.addEventListener('change', function() {
-            localStorage.setItem('selectedLanguage', languageDropdown.value);
-        });
-    }
-
-    // Run the function to store the selected language
-    storeSelectedLanguage();
-</script>
-<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-</body>
+        <div class="container" id="signIn"> 
+            <h1 class="form-title">Sign In</h1>
+            <form mehod="post" action="">
+               
+                <div class="input-group">
+                    <i class="fas fa-envelope"></i> 
+                    <input type="email" name="email" id="email" placeholder="Email" required>
+                    <label for="email">Email</label>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-lock"></i> 
+                    <input type="password" id="password" placeholder="password" required>
+                    <label for="password">Password</label>
+                </div>
+                <p class="recover">
+                    <a href="#">Recover Password</a>
+                </p>
+                <input type="submit" class="btn" value="Sign In" name="signIn">
+            </form>
+            <p class="or">
+                ----------or----------
+            </p>
+            <div class="icons">
+                <i class="fab fa-google"></i>
+                <i class="fab fa-facebook"></i>
+            </div>
+            <div class="links">
+                <p>Don't Have Account yet?</p>
+                <button id="signUpButton">Sign Up</button>
+            </div>
+        </div>
+        <script src="script.js"></script>
+    </body>
 </html>
