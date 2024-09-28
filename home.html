@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Educare</title>
+    <link rel="stylesheet" href="home.css">
+</head>
+<body>
+    <div class="header-box">
+        <div class="logo-title">
+            <img src="/images/EDucare.png" width="70px " height="70px">
+            <span class="site-title">Educare</span>
+        </div>
+        <nav>
+            <a href="home.html" class="M" id="a">Home</a>
+            <a href="course.html" class="M" style="height: 25px;">Courses</a>
+            <a href="about.html" class="M" style="height: 25px;">About </a>
+            <a href="library.html" class="M" style="height: 25px;">Library</a>
+            <a href="login.html" class="login-signup-btn" target="_blank">Login/Signup</a>
+        </nav>
+    </div>
+    
+</div>
+<div class="main-content">
+    <h2 class="first" id="parag">Explore a wide range of courses and enhance your knowledge.</h2>
+    <p class="first" id="paragr">Our mission is to provide quality education for everyone.</p>
+</div>
+<div class="benefits-website">
+    <div class="Q_1" >Our Website has multilingual support like Children can learn in whatever language they are comfortable in</div>
+    <div class="Q_1" >We also have virtual labs for different subjects, through which a student can implement learning by doing</div>
+    <div class="Q_1" >We also have Tests on all the topic of all the subject, which will help students improve their grades</div>
+</div>
+<footer>
+    <div class="footer-container">
+        <div class="footer-section">
+            <h4>Contact Us</h4>
+            <p>Email: educare@gmail.com</p>
+            <p>Phone: 9769395940</p>
+            <p><a href="www.facebook.com">Facebook</a></p>
+        </div>
+        <div class="footer-section">
+            <h4>Founders</h4>
+            <p><a href="">Yash Apte</a></p>
+            <p><a href="">Maithili Chalke</a></p>
+        </div>
+        <div class="footer-section">
+            <h4>Our Team</h4>
+            <p>Team of dedicated professionals</p>
+        </div>
+        <div class="footer-section">
+            <h4>© 2024 Educational Website. All rights reserved.</h4>
+        </div>
+    </div>
+</footer>
+
+<!-- Circular icon for opening the chatbot -->
+<div id="chatIcon">💬</div>
+
+<!-- Chatbot popup -->
+<div id="chatPopup">
+    <div id="chatHeader">
+        Chatbot
+        <button id="closeBtn">x</button>
+    </div>
+    <div id="chatBody">
+        <!-- Chat content will go here -->
+    </div>
+    <div id="chatFooter">
+        <input type="text" id="userInput" placeholder="Type a message...">
+        <button id="sendBtn">Send</button>
+    </div>
+</div>
+
+<script>
+    // Existing JavaScript functionality
+
+    // JavaScript for handling the chatbot popup
+    document.getElementById('chatIcon').addEventListener('click', function() {
+        document.getElementById('chatPopup').style.display = 'block';
+    });
+
+    document.getElementById('closeBtn').addEventListener('click', function() {
+        document.getElementById('chatPopup').style.display = 'none';
+    });
+
+    document.getElementById('sendBtn').addEventListener('click', function() {
+        const userInput = document.getElementById('userInput').value;
+        if (userInput) {
+            handleUserInput(userInput);
+            document.getElementById('userInput').value = '';
+        }
+    });
+
+    function handleUserInput(input) {
+        const chatBody = document.getElementById('chatBody');
+        const userMessage = document.createElement('div');
+        userMessage.textContent = input;
+        userMessage.className = 'message user-message';
+        chatBody.appendChild(userMessage);
+        chatBody.scrollTop = chatBody.scrollHeight;
+
+        // Process the input and respond
+        processInput(input);
+    }
+
+    function processInput(input) {
+        const chatBody = document.getElementById('chatBody');
+        const botMessage = document.createElement('div');
+        botMessage.className = 'message bot-message';
+        chatBody.appendChild(botMessage);
+
+        const normalizedInput = input.toLowerCase();
+        if (['english', 'eng', 'ENGLISH', 'ENG', 'English'].includes(normalizedInput)) {
+            botMessage.textContent = 'Which chapter? (Enter a number between 1 and 4)';
+        } else if (/^[1-4]$/.test(input)) {
+            const chapterNumber = parseInt(input, 10);
+            botMessage.textContent = `Here is the link to Chapter ${chapterNumber}: `;
+            const link = document.createElement('a');
+            link.href = `EngChp${chapterNumber}.html`; // Assuming chapters are named as Chapter1.html, Chapter2.html, etc.
+            link.textContent = `Chapter ${chapterNumber}`;
+            link.target = '_blank';
+            botMessage.appendChild(link);
+        } else {
+            botMessage.textContent = 'Sorry, I did not understand that. Please type "English", "Eng", or "eng" to start.';
+        }
+        chatBody.scrollTop = chatBody.scrollHeight;
+    }
+</script>
+<script type="text/javascript">
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({
+            pageLanguage: 'en',
+            includedLanguages: 'en,hi,gu,kn,ml,mr,pa,ta,te,bn,ur,mai', // Add the language codes for Indian languages
+        }, 'google_translate_element');
+    } 
+    function storeSelectedLanguage() {
+        const languageDropdown = document.querySelector('.goog-te-combo');
+        languageDropdown.addEventListener('change', function() {
+            localStorage.setItem('selectedLanguage', languageDropdown.value);
+        });
+    }
+
+    // Run the function to store the selected language
+    storeSelectedLanguage();
+</script>
+<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</body>
+</html>
