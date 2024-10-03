@@ -1,0 +1,143 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif; /* Add a consistent font */
+    background-color:#fdfbfb;
+    overflow-x: hidden;
+}
+
+.header-box {
+    width: 100%;
+    display: flex;
+    align-items: center; /* Vertically center content */
+    padding: 10px 20px;
+    background-color:#152f49;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Add a subtle shadow for a modern look */
+}
+
+.logo-title {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Space between logo and text */
+}
+
+.site-title {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #fefdfdea; /* Dark color for better contrast */
+}
+
+img {
+    border-radius: 50%; /* Optional: Circular logo */
+}
+
+nav {
+    display: flex;
+    margin-left: auto;
+    width: 700px;
+    gap: 20px; /* Space between nav items */
+}
+
+nav a {
+    color: #fcfcfc;
+    text-decoration: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+.login-signup-btn {
+    color: white;
+    background-color: #007bff;
+    padding: 10px 20px; /* Adjust padding for button-like appearance */
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.login-signup-btn:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+}
+nav a:hover {
+    background-color: #f36830;
+}
+/* Section sidebar*/
+.sidebr {
+    background-color:#749c85;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 300px; /* Adjust width as needed */
+    height:1700px;
+    margin-left: 0px;
+}
+
+.title-subj {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.title-subj h2 {
+    font-size: 1.8em;
+    color: #000000;
+    margin-bottom: 5px;
+    margin-top: 0px;
+}
+
+.title-subj p {
+    color: #606060;
+    font-size: 0.9em;
+}
+
+.section-chp-names p {
+    margin: 10px 0;
+    font-size: 1em;
+    padding: 10px;
+}
+
+.section-chp-names a {
+    color: #000000;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.section-chp-names a:hover {
+    color: #2409bb;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid #000000;
+}
+.chp_main_section{
+    display: flex;
+    position: absolute;
+    top:90px;
+    left: 300px;
+    width:1260px;
+    height: 1000px;
+}
+.breadcrumb{
+    height: 70px;
+}
+.breadcrumb ul{
+    list-style: none;
+    display: flex;
+    gap: 15px;
+    padding: 10px;
+    margin-left: 20px;
+}
+.breadcrumb li {
+    display: inline;
+    font-size: 30px;
+}
+
+.breadcrumb a {
+    color: #3e428b;
+   
+}
+.chp1{
+    background-color: #f7f7f7;
+    position: absolute;
+    top:70px;
+    left: 20px;
+    padding: 10px;
+    padding-left: 20px;
+}
