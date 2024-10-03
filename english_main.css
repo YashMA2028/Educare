@@ -1,0 +1,354 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif; /* Add a consistent font */
+    background-color:#fdfbfb;
+    overflow-x: hidden;
+}
+
+.header-box {
+    width: 100%;
+    display: flex;
+    align-items: center; /* Vertically center content */
+    padding: 10px 20px;
+    background-color:#152f49;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Add a subtle shadow for a modern look */
+}
+
+.logo-title {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Space between logo and text */
+}
+
+.site-title {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #fefdfdea; /* Dark color for better contrast */
+}
+
+img {
+    border-radius: 50%; /* Optional: Circular logo */
+}
+
+nav {
+    display: flex;
+    margin-left: auto;
+    width: 700px;
+    gap: 20px; /* Space between nav items */
+}
+
+nav a {
+    color: #fcfcfc;
+    text-decoration: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+.login-signup-btn {
+    color: white;
+    background-color: #007bff;
+    padding: 10px 20px; /* Adjust padding for button-like appearance */
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.login-signup-btn:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+}
+nav a:hover {
+    background-color: #f36830;
+}
+/* Section sidebar*/
+.sidebr {
+    background-color:#749c85;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 300px; /* Adjust width as needed */
+    height:1700px;
+    margin-left: 0px;
+}
+
+.title-subj {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.title-subj h2 {
+    font-size: 1.8em;
+    color: #000000;
+    margin-bottom: 5px;
+    margin-top: 0px;
+}
+
+.title-subj p {
+    color: #606060;
+    font-size: 0.9em;
+}
+
+.section-chp-names p {
+    margin: 10px 0;
+    font-size: 1em;
+    padding: 10px;
+}
+
+.section-chp-names a {
+    color: #000000;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.section-chp-names a:hover {
+    color: #2409bb;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid #000000;
+}
+/*Dispaly content*/
+.chp1_main_section{
+    display: flex;
+    position: absolute;
+    top:90px;
+    left: 300px;
+    width:1260px;
+    height: 1000px;
+}
+.breadcrumb{
+    height: 70px;
+}
+.breadcrumb ul{
+    list-style: none;
+    display: flex;
+    gap: 15px;
+    padding: 10px;
+    margin-left: 20px;
+}
+.breadcrumb li {
+    display: inline;
+    font-size: 30px;
+}
+
+.breadcrumb a {
+    color: #3e428b;
+   
+}
+.chp1_title {
+    position: absolute;
+    top:70px;
+    padding: 10px;
+    padding-left: 20px;
+}
+.chp1_title h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    
+}
+.poem-summary{
+    display: flex;
+    padding-left: 30px;
+    gap: 40px;
+}
+.poem ,.Summary{
+    border: 1px solid black;
+    border-radius: 10px;
+    background-color: #fdfbfb;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth scaling and shadow transition */
+}
+.poem:hover, .Summary:hover, .figure-of-speech:hover , .Meaning:hover{
+    transform: scale(1.05); /* Enlarge by 5% on hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Increase shadow on hover */
+}
+.poem{
+    padding: 10px;
+    width: 450px;
+    border-radius: 10px;
+}
+.poem h3, .Summary h3{
+    font-size: 20px;
+    font-weight: bold;
+    margin: 0px;
+}
+.poem span {
+    white-space: pre-wrap;
+    text-align: left;
+    font-size: 20px;
+}
+.Summary{
+    display: block;
+    width: 550px;
+    border-radius: 10px;
+    padding: 10px;
+}
+.Summary span{
+    white-space: pre-wrap;
+    text-align: left;
+    font-size: 20px;
+}
+.Summary button, .video button, .figure-of-speech  button, .video-fos button{
+
+    width: fit-content;
+    padding: 5px;
+    font-size: 20px;
+    margin-top: 15px;
+    background-color: #cbffe2;
+    border-radius: 15px;
+}
+.figure-of-speech{
+    border: 1px solid black;
+    border-radius: 10px;
+    background-color: #fdfbfb;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: block;
+    width: 600px;
+    border-radius: 10px;
+    padding: 10px;
+    position:absolute;
+    top:600px;
+    left: 50px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.figure-of-speech h3{
+    font-size: 20px;
+    font-weight: bold;
+    margin: 0px;
+}
+.figure-of-speech span{
+    white-space: pre-wrap;
+    text-align: left;
+    font-size: 20px;
+}
+.Meaning{
+    border: 1px solid black;
+    border-radius: 10px;
+    width: 400px;
+    height: 300px;
+    position: absolute;
+    top:600px;
+    left: 700px;
+    padding: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.Meaning h3{
+    font-size: 20px;
+    font-weight: bold;
+    margin: 0px;
+}
+.Meaning span{
+    white-space: pre-wrap;
+    text-align: left;
+    font-size: 20px;
+}
+/* Chanegd div*/
+.video{
+    margin-top: 50px;
+    width: 550px;
+    height: 300px;;
+    border-radius: 10px;
+    padding: 10px;
+    display: none;
+}
+.video h3{
+    font-size: 50px;
+    color: white;
+}
+.video-fos{
+    padding: 10px;
+    position:absolute;
+    top:650px;
+    left: 50px;
+    width: 550px;
+    height: 300px;
+    display: none;
+}
+/*Grammar*/
+.grammar{
+    width: fit-content;
+    height: fit-content;
+    position: absolute;
+    top:90px;
+    left: 20px;
+    display: none;
+}
+.grammar h2{
+    font-size: 30px;
+}
+.grammar p{
+    font-size: 20px;
+}
+.word-chain{
+    width: 950px;
+    background-color: red;
+    padding: 15px;
+    border: 1px solid black;
+    border-radius: 10px;
+    background-color: #fdfbfb;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.word-chain ul{
+    display: inline;
+    list-style-type:none;
+}
+.word-chain ul li{
+    display: inline;
+}
+.word-chain input{
+    width: 120px; /* Full-width inputs */
+  padding: 10px; /* Spacing inside the input */
+  margin: 10px 0; /* Space between inputs */
+  box-sizing: border-box; /* Ensure padding is included in width */
+  border: 2px solid #ccc; /* Light gray border */
+  border-radius: 5px; /* Rounded corners */
+  font-size: 16px; /* Font size */
+  transition: border-color 0.3s ease-in-out; /* Smooth transition for border color */
+}
+.word-chain button{
+    padding: 10px 20px;
+  background-color: #f0f5f0; /* Green background */
+  color: rgb(2, 2, 2); /* White text */
+  border: 1px solid black; /* No border */
+  border-radius: 5px; /* Rounded corners */
+  font-size: 16px; /* Font size */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: background-color 0.3s ease-in-out; /* Smooth transition for background color */ /* Block display for full-width */
+  width: 120px;
+}
+/* footer */
+footer {
+    background-color:#152f49;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+.footer-section {
+    margin: 20px;
+}
+
+.footer-section h4 {
+    margin-bottom: 10px;
+    font-size: 1.2em;
+}
+
+.footer-section p,
+.footer-section a {
+    color: white;
+    margin: 5px 0;
+}
+
+.footer-section a {
+    text-decoration: none;
+}
+
+.footer-section a:hover {
+    text-decoration: underline;
+}
