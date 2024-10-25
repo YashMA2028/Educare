@@ -9,17 +9,18 @@
 </head>
 
 <body>
+    <div id="google_translate_element">
     <div class="header-box">
         <div class="logo-title">
-            <img src="/images/EDucare.png" width="70px " height="70px">
+            <img src="EDucare.png" width="70px " height="70px">
             <span class="site-title">Educare</span>
         </div>
         <nav>
-            <a href="/others/home.html" class="M" id="a">Home</a>
-            <a href="/others/course.html" class="M" style="height: 25px;">Courses</a>
-            <a href="/others/about.html" class="M" style="height: 25px;">About </a>
-            <a href="/others/library.html" class="M" style="height: 25px;">Library</a>
-            <a href="/others/login.html" class="login-signup-btn" target="_blank">Login/Signup</a>
+            <a href="home.html" class="M" id="a">Home</a>
+            <a href="course.html" class="M" style="height: 25px;">Courses</a>
+            <a href="about.html" class="M" style="height: 25px;">About </a>
+            <a href="library.html" class="M" style="height: 25px;">Library</a>
+            <a href="login.html" class="login-signup-btn" target="_blank">Login/Signup</a>
         </nav>
     </div>
     <div class="sidebr">
@@ -43,9 +44,9 @@
     <div class="chp1_main_section">
         <div class="breadcrumb">
             <ul>
-                <li><a href="/others/home.html">Home</a></li>
+                <li><a href="home.html">Home</a></li>
                 <li>></li>
-                <li><a href="/others/course.html">Course</a></li>
+                <li><a href="course.html">Course</a></li>
                 <li>></li>
                 <li><a href="#">English</a></li>
             </ul>
@@ -55,7 +56,7 @@
             <div class="poem-summary">
             <div class="poem">
                 <h3>Poem </h3>
-                <span>
+                <span id="firstpoem">
 Where the mind is without fear and the head is held high;
 Where knowledge is free;
 Where the world has not been broken up into fragments
@@ -72,7 +73,7 @@ Into that heaven of freedom, my Father, let my country awake.
             <div class="Summary" id="summary-id">
             <h3> Summary</h3>
             <span>
-In this poem, Tagore expresses his vision for a free and enlightened India.He dreams of a nation
+In this poem, Tagore expresses his vision for a free and enlightened India. He dreams of a nation
 where people can live fearlessly, with dignity, and where knowledge is accessible to all.The poet also
 calls for unity, truth, and reason, rejecting divisive barriers like caste, religion, and regionalism.
 The poem is a plea for progress, not only politically, but also intellectually and morally, as the poet
@@ -83,7 +84,7 @@ are critical for the betterment of a nation and its people.</span>
         </div>
             <div class="video" id="video-id">
                 <video id="myVideo" width="550px" height ="300px" controls>
-                    <source src="/images/Chp1Anime1(Summary).mp4"  >
+                    <source src="Chp1Anime1(Summary).mp4"  >
                 </video>
                 <button class="button" onclick="displayVideo()">Back to content </button>
             </div>
@@ -93,7 +94,7 @@ are critical for the betterment of a nation and its people.</span>
         
         <div class="figure-of-speech" id="figure-of-speech-id">
             <h3> Figure of Speech</h3>
-            <span>
+            <span id="figure-of-speech-id">
 <b>1. Where knowledge is free;”</b>
 The figure of speech in this line is <b>Metaphor.</b>
 <u>Explanation:</u> The phrase "knowledge is free" is a metaphor that compares knowledge to a resource available to everyone. It suggests a society where education and wisdom are accessible without restrictions.
@@ -114,28 +115,30 @@ The figure of speech in this line is <b style="color: rgb(37, 37, 133);">Hyperbo
         </div>
         <div class="video-fos" id="video-fos-id">
             <video id="myVideo1" width="550px" height ="300px" controls>
-                <source src="/images/Chp1Anime2(Figures Of speech).mp4"  >
+                <source src="Chp1Anime2(Figures Of speech).mp4"  >
             </video>
             <button class="button" onclick="displayFigureVideo()">Back to content </button>
         </div>
         <div class="Meaning">
-            <h3>Meaning</h3>
-            <span>
-1. <b>Striving:</b>Making great efforts to achieve or obtain something.
-2. <b>Fragments:</b> or broken pieces of something.
-3. <b>Dreary:</b>,bleak and lifeless
-4. <b>Dead habit:</b> customs or practices that no longer have meaning or value.
-5. <b>Thee:</b>An old English word meaning "you," often used in prayer or addressing God.
-6. <b>Ever-widening:</b> expanding or growing broader.</span>
+            <h3 >Meaning</h3>
+            <span id="meanings">
+1. <b>Striving:- </b>Making great efforts to achieve or obtain something.
+2. <b>Fragments:- </b> broken pieces of something.
+3. <b>Dreary:- </b>bleak and lifeless
+4. <b>Dead habit:- </b> customs or practices that no longer have meaning or value.
+5. <b>Thee:- </b>An old English word meaning "you," often used in prayer or addressing God.
+6. <b>Ever-widening:- </b> expanding or growing broader.</span>
         </div>
-
+        <div class="test-button1 ">
+            <button ><a href="EngTest1.html" >Let's test our understanding </a></button>
+        </div>
     </div>
     <div class="chp1_title" id="chp2_title" style="display: none;">
         <h2>Where the mind is without fear..</h2>
         <div class="poem-summary">
         <div class="poem">
             <h3>Poem </h3>
-            <span>
+            <span id="poem2">
 All the world's a stage,
 And all the men and women merely players;
 They have their exits and their entrances;
@@ -169,7 +172,7 @@ Sans teeth, sans eyes, sans taste, sans everything.
         <div class="Summary" id="summary-id-2">
         <h3> Summary</h3>
         <span>
-Shakespeare's "All the world's a stage" compares life to a play in which people are actors, passing through seven stages of life. These stages ar
+Shakespeare's "All the world's a stage" compares life to a play in which people are actors, passing through seven stages of life. These stages are
 1. Infancy - Helpless, crying in the nurse’s arms.
 2. Childhood - A reluctant schoolboy, dragging himself to school.
 3. Young love - A passionate, sighing lover writing poems for his beloved.
@@ -184,7 +187,7 @@ The speech reflects the inevitability of aging and the transient nature of life.
     </div>
         <div class="video" id="video-id-2">
             <video id="myVideo-2" width="550px" height ="300px" controls>
-                <source src="/images/Chp2Anime1(intro).mp4" >
+                <source src="Chp2Anime1(intro).mp4" >
             </video>
             <button class="button" onclick="displayVideo2()">Back to content </button>
         </div>
@@ -211,17 +214,17 @@ The figure of speech in this line is <b style="color: rgb(37, 37, 133);">Repetit
 <u>Explanation:</u> The repeated use of "sans" (meaning "without") emphasizes the loss and emptiness experienced in old age, culminating in the complete absence of faculties.
 
         </span>
-        <button class="button" onclick="displayFigureVideo()">Watch animation </button>
+        <button class="button" onclick="displayFigureVideo2()">Watch animation </button>
     </div>
     <div class="video-fos" id="video-fos-id-2">
         <video id="myVideo1-2" width="550px" height ="300px" controls>
-            <source src="/images/Chp1Anime2(Figures Of speech).mp4"  >
+            <source src="Chp2Anime2(Figures of speech 1).mp4"  >
         </video>
-        <button class="button" onclick="displayFigureVideo()">Back to content </button>
+        <button class="button" onclick="displayFigureVideo2()">Back to content </button>
     </div>
     <div class="Meaning"  style="top: 870px; height: fit-content;">
         <h3>Meaning</h3>
-        <span>
+        <span id="meanings2">
 1. <b>Stage:</b>A raised platform for performances; metaphorically, the setting for life.
 2. <b>Players:</b>Actors in a play; in this context, people living their lives.
 3. <b>Mewling:</b>Crying feebly; often associated with infants.
@@ -235,80 +238,49 @@ The figure of speech in this line is <b style="color: rgb(37, 37, 133);">Repetit
 </div>
 <div class="chp1_title" id="chp3_title" style="display: none;">
     <h2>The thief's story</h2>
-    <div class="poem-summary">
-    <div class="poem">
-        <h3>Poem..............3 </h3>
-        <span>
-Where the mind is without fear and the head is held high;
-Where knowledge is free;
-Where the world has not been broken up into fragments
-By narrow domestic walls;
-Where words come out from the depth of truth;
-Where tireless striving stretches its arms towards perfection;
-Where the clear stream of reason has not lost its way
-Into the dreary desert sand of dead habit;
-Where the mind is led forward by thee
-Into ever-widening thought and action—
-Into that heaven of freedom, my Father, let my country awake.
-                        -Rabindranath Tagore</span>
-    </div>
-    <div class="Summary" id="summary-id">
+    <div class="poem-summary3">
+    
+    <div class="Summary" id="summary-id3">
     <h3> Summary</h3>
     <span>
-In this poem, Tagore expresses his vision for a free and enlightened India.He dreams of a nation
-where people can live fearlessly, with dignity, and where knowledge is accessible to all.The poet also
-calls for unity, truth, and reason, rejecting divisive barriers like caste, religion, and regionalism.
-The poem is a plea for progress, not only politically, but also intellectually and morally, as the poet
-appeals to a higher power to guide his country to a better, more liberated future.
-The themes of the poem are deeply rooted in freedom, truth, and the pursuit of knowledge, all of which
-are critical for the betterment of a nation and its people.</span>
-    <button class="button" onclick="displayVideo()">Watch animation </button>
+        Summary of "The Thief's Story"
+
+        "The Thief's Story" by Ruskin Bond narrates the tale of a young thief named Hari Singh who encounters a kind-hearted man named Anil. Despite being only 15 years old, Hari is experienced in his craft, having changed his name every month to evade the police. He approaches Anil while he is watching a wrestling match, flattering him to gain his trust.
+        
+        Anil, who is easy-going and kind, eventually offers Hari a job, even though he cannot pay him. Hari lies about his cooking skills to stay with Anil, who teaches him to read and write. Hari finds comfort in working for Anil, who trusts him completely and treats him well, despite his past as a thief.
+        
+        After a month of working for Anil, Hari decides to steal the money Anil has earned from selling a book. Despite having the chance to escape on a train with the stolen money, he hesitates and misses the opportunity. Alone and unsure of where to go, he reflects on his actions. Hari understands that Anil's reaction to the theft would be one of sadness, not anger, as he would feel the loss of trust rather than just financial loss.
+        
+        In the end, the story explores themes of trust, betrayal, and the complexity of human relationships, highlighting how kindness can profoundly impact a person's life, even one who has chosen a life of crime.</span> <br>
+    <button class="button" onclick="displayVideo3()">Watch animation </button>
 </div>
-    <div class="video" id="video-id">
-        <video id="myVideo" width="550px" height ="300px" controls>
-            <source src="/images/Chp1Anime1(Summary).mp4"  >
+    <div class="video" id="video-id3">
+        <video id="myVideo3" width="550px" height ="300px" controls>
+            <source src="Chp3Anime1(Summary).mp4"  >
         </video>
-        <button class="button" onclick="displayVideo()">Back to content </button>
+        <button class="button" onclick="displayVideo3()">Back to content </button>
     </div>
     
   
 </div>
-<div class="figure-of-speech" id="figure-of-speech-id">
-    <h3> Figure of Speech</h3>
-    <span>
-<b>1. Where knowledge is free;”</b>
-The figure of speech in this line is <b>Metaphor.</b>
-<u>Explanation:</u> The phrase "knowledge is free" is a metaphor that compares knowledge to a resource available to everyone. It suggests a society where education and wisdom are accessible without restrictions.
-<b>2. “Where tireless striving stretches its arms towards perfection;”</b>
-The figure of speech in this line is <b>Personification.</b>
-<u>Explanation:</u> The act of "striving" is personified as something that can "stretch its arms." This gives human qualities to the abstract concept of striving, showing it as reaching out for perfection.
-<b>3. “Where the mind is without fear and the head is held high;”</b>
-The figure of speech in this line is <b>Alliteration.</b>
-<u>Explanation:</u> The repetition of the "h" sound in "head" and "held high" creates a rhythm. This emphasizes the idea of dignity and self-respect.
-<b>4. “Where the clear stream of reason has not lost its way, into the dreary desert sand of dead habit;”</b>
-The figure of speech in this line is <b>Repetition.</b>
-<u>Explanation:</u> The word "where" is repeated at the beginning of several lines, which helps to create a rhythmic structure and emphasizes the poet’s vision of an ideal world.
-<b>5. “Where words come out from the depth of truth;”</b>
-The figure of speech in this line is <b style="color: rgb(37, 37, 133);">Hyperbole.</b>
-<u>Explanation:</u> The phrase "depth of truth" is an exaggeration. It emphasizes that words should come from the most sincere, honest place, stressing the importance of truth in communication
-    </span>
-    <button class="button" onclick="displayFigureVideo()">Watch animation </button>
-</div>
+
 <div class="video-fos" id="video-fos-id">
-    <video id="myVideo1" width="550px" height ="300px" controls>
+    <video id="myVideo1" width="600px" height ="400px" controls>
         <source src="/images/Chp1Anime2(Figures Of speech).mp4"  >
     </video>
     <button class="button" onclick="displayFigureVideo()">Back to content </button>
 </div>
-<div class="Meaning">
+<div class="Meaning3" id="Meaning3">
     <h3>Meaning</h3>
     <span>
-1. <b>Striving:</b>Making great efforts to achieve or obtain something.
-2. <b>Fragments:</b> or broken pieces of something.
-3. <b>Dreary:</b>,bleak and lifeless
-4. <b>Dead habit:</b> customs or practices that no longer have meaning or value.
-5. <b>Thee:</b>An old English word meaning "you," often used in prayer or addressing God.
-6. <b>Ever-widening:</b> expanding or growing broader.</span>
+<b>flattery :</b> insincerepraise
+ <b>modestly :</b> without boasting, in a humble way
+<b>grunting :</b> making low guttural sounds
+<b>appealing :</b> attention-getting attractive
+<b>by fits and starts :</b> in short irregular intervals
+<b>unlined :</b> showing no sign of worry or anxiety
+<b>heart sank :</b> felt depressed
+<b>spirits rose :</b>became very hopeful
 </div>
 
 </div>
@@ -328,7 +300,77 @@ The figure of speech in this line is <b style="color: rgb(37, 37, 133);">Hyperbo
 
 </ul>
 </div>
+<div class="checker-container" id="voiceCheckerDiv">
+    <h1>Active to Passive Voice Checker</h1>
+
+    <div class="question">
+        <p><strong>Active voice sentence:</strong> "The teacher teaches the students."</p>
+        <p>Please convert this sentence to passive voice:</p>
+        <input type="text" id="studentAnswer1" placeholder="Enter passive voice sentence"> <br>
+        <button onclick="checkAnswer('studentAnswer1', 1)">Check Answer</button>
+        <div id="result1" class="result"></div>
+    </div>
+
+    <div class="question">
+        <p><strong>Active voice sentence:</strong> "The chef cooks the meal."</p>
+        <p>Please convert this sentence to passive voice:</p>
+        <input type="text" id="studentAnswer2" placeholder="Enter passive voice sentence"> <br>
+        <button onclick="checkAnswer('studentAnswer2', 2)">Check Answer</button>
+        <div id="result2" class="result"></div>
+    </div>
+
+    <div class="question">
+        <p><strong>Active voice sentence:</strong> "The manager approves the request."</p>
+        <p>Please convert this sentence to passive voice:</p>
+        <input type="text" id="studentAnswer3" placeholder="Enter passive voice sentence"> <br>
+        <button onclick="checkAnswer('studentAnswer3', 3)">Check Answer</button>
+        <div id="result3" class="result"></div>
+    </div>
+
+    <div class="question">
+        <p><strong>Active voice sentence:</strong> "The dog chased the cat."</p>
+        <p>Please convert this sentence to passive voice:</p>
+        <input type="text" id="studentAnswer4" placeholder="Enter passive voice sentence"> <br>
+        <button onclick="checkAnswer('studentAnswer4', 4)">Check Answer</button>
+        <div id="result4" class="result"></div>
+    </div>
+
+    <div class="question">
+        <p><strong>Active voice sentence:</strong> "The children played the game."</p>
+        <p>Please convert this sentence to passive voice:</p>
+        <input type="text" id="studentAnswer5" placeholder="Enter passive voice sentence"><br>
+        <button onclick="checkAnswer('studentAnswer5', 5)">Check Answer</button>
+        <div id="result5" class="result"></div>
+    </div>
 </div>
+</div>
+
+</div>
+</div>
+<script>
+
+
+</script>
+<script type="text/javascript">
+    function googleTranslateElementInit() {
+        const selectedLanguage = localStorage.getItem('selectedLanguage') || 'en';
+        new google.translate.TranslateElement({
+            pageLanguage: 'en',
+            includedLanguages: 'hi,gu,kn,ml,mr,pa,ta,te,bn,ur,mai',
+            layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+            autoDisplay: false
+        }, 'google_translate_element');
+
+        
+        if (selectedLanguage && selectedLanguage !== 'en') {
+            const event = new Event('change');
+            const languageDropdown = document.querySelector('.goog-te-combo');
+            languageDropdown.value = selectedLanguage;
+            languageDropdown.dispatchEvent(event);
+        }
+    }
+</script>
+<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
     <script src="english_main.js">
 
     </script>

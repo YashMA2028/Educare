@@ -108,7 +108,7 @@ hr {
 }
 /*Dispaly content*/
 .chp1_main_section{
-    display: flex;
+    /* display: ; */
     position: absolute;
     top:90px;
     left: 300px;
@@ -241,6 +241,28 @@ hr {
     text-align: left;
     font-size: 20px;
 }
+.test-button1{
+position: absolute;
+top: 970px;
+left: 800px;
+
+}
+.test-button1 button{
+    padding: 10px 20px;
+    background-color: #7ac27a; /* Green background */
+    color: rgb(2, 2, 2); /* White text */
+    border: 1px solid black; /* No border */
+    border-radius: 5px; /* Rounded corners */
+    font-size: 16px; /* Font size */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s ease-in-out; /* Smooth transition for background color */ /* Block display for full-width */
+    width: 220px;
+    
+}
+.test-button a{
+    text-decoration: none;
+}
+
 /* Chanegd div*/
 .video{
     margin-top: 50px;
@@ -351,4 +373,95 @@ footer {
 
 .footer-section a:hover {
     text-decoration: underline;
+}
+#myVideo1-2{
+   position: relative;
+   margin-top: 300px;
+}
+.poem-summary3{
+    padding-left: 30px;
+    gap: 40px;
+}
+.Meaning3{
+    border: 1px solid black;
+    border-radius: 10px;
+    width: 400px;
+    height: 300px;
+    position: absolute;
+    top:75px;
+    left: 650px;
+    padding: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.Meaning3 h3{
+    font-size: 20px;
+    font-weight: bold;
+    margin: 0px;
+}
+.Meaning3 span{
+    white-space: pre-wrap;
+    text-align: left;
+    font-size: 20px;
+}
+.Meaning3:hover{
+    transform: scale(1.05); /* Enlarge by 5% on hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Increase shadow on hover */
+}
+.checker-container {
+    border: solid black 1px;
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 940px; /* Increased the width */
+    width: 100%; /* Ensure the div takes full width if needed */
+}
+
+.checker-container h1 {
+    color: #333;
+}
+
+.question {
+    margin-bottom: 20px; /* Space between questions */
+}
+
+.checker-container input {
+    width: 80%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #000000;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    transition: background-color 0.3s ease; /* Smooth transition for background color */
+}
+
+.checker-container button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.checker-container button:hover {
+    background-color: #45a049;
+}
+
+.result {
+    font-weight: bold;
+    margin-top: 10px;
+    font-size: 18px;
+}
+
+.correct {
+    color: green;
+}
+
+.incorrect {
+    color: red;
 }
