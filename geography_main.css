@@ -17,7 +17,7 @@ body {
 
 .logo-title {
     display: flex;
-    align-items: center;
+    align-items: center;   
     gap: 15px; /* Space between logo and text */
 }
 
@@ -141,3 +141,24 @@ hr {
     padding: 10px;
     padding-left: 20px;
 }
+.test-button{
+    position: absolute;
+    top: 650px;
+    left: 750px;
+    
+    }
+    .test-button button{
+        padding: 10px 20px;
+        background-color: #7ac27a; /* Green background */
+        color: rgb(2, 2, 2); /* White text */
+        border: 1px solid black; /* No border */
+        border-radius: 5px; /* Rounded corners */
+        font-size: 16px; /* Font size */
+        cursor: pointer; /* Pointer cursor on hover */
+        transition: background-color 0.3s ease-in-out; /* Smooth transition for background color */ /* Block display for full-width */
+        width: 220px;
+        
+    }
+    .test-button a{
+        text-decoration: none;
+    }
