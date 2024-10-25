@@ -7,9 +7,10 @@
     <link rel="stylesheet" href="home.css">
 </head>
 <body>
+    <div id="google_translate_element">
     <div class="header-box">
         <div class="logo-title">
-            <img src="/images/EDucare.png" width="70px " height="70px">
+            <img src="EDucare.png" width="70px " height="70px">
             <span class="site-title">Educare</span>
         </div>
         <nav>
@@ -84,66 +85,152 @@
         document.getElementById('chatPopup').style.display = 'none';
     });
 
-    document.getElementById('sendBtn').addEventListener('click', function() {
-        const userInput = document.getElementById('userInput').value;
-        if (userInput) {
-            handleUserInput(userInput);
-            document.getElementById('userInput').value = '';
+    document.getElementById('userInput').addEventListener('keypress', function(event) {
+    // Check if the Enter key (key code 13) is pressed
+    if (event.key === 'Enter') {
+        const inputField = event.target;
+        const input = inputField.value.trim(); // Get the input and trim any whitespace
+
+        if (input) {
+            handleUserInput(input); // Send message to bot
+            inputField.value = ''; // Clear the input field after sending
         }
-    });
-
-    function handleUserInput(input) {
-        const chatBody = document.getElementById('chatBody');
-        const userMessage = document.createElement('div');
-        userMessage.textContent = input;
-        userMessage.className = 'message user-message';
-        chatBody.appendChild(userMessage);
-        chatBody.scrollTop = chatBody.scrollHeight;
-
-        // Process the input and respond
-        processInput(input);
     }
+});
 
-    function processInput(input) {
-        const chatBody = document.getElementById('chatBody');
-        const botMessage = document.createElement('div');
-        botMessage.className = 'message bot-message';
-        chatBody.appendChild(botMessage);
+function handleUserInput(input) {
+    const chatBody = document.getElementById('chatBody');
+    const userMessage = document.createElement('div');
+    userMessage.textContent = input;
+    userMessage.className = 'message user-message';
+    chatBody.appendChild(userMessage);
+    chatBody.scrollTop = chatBody.scrollHeight;
 
-        const normalizedInput = input.toLowerCase();
-        if (['english', 'eng', 'ENGLISH', 'ENG', 'English'].includes(normalizedInput)) {
-            botMessage.textContent = 'Which chapter? (Enter a number between 1 and 4)';
-        } else if (/^[1-4]$/.test(input)) {
-            const chapterNumber = parseInt(input, 10);
-            botMessage.textContent = `Here is the link to Chapter ${chapterNumber}: `;
-            const link = document.createElement('a');
-            link.href = `EngChp${chapterNumber}.html`; // Assuming chapters are named as Chapter1.html, Chapter2.html, etc.
-            link.textContent = `Chapter ${chapterNumber}`;
-            link.target = '_blank';
-            botMessage.appendChild(link);
+    // Process the input and respond
+    processInput(input);
+}
+
+let step = 0; // Track the current step
+
+function processInput(input) {
+    const chatBody = document.getElementById('chatBody');
+    const botMessage = document.createElement('div');
+    botMessage.className = 'message bot-message';
+    chatBody.appendChild(botMessage);
+
+    const normalizedInput = input.toLowerCase();
+
+    // Step 0: Initial greeting message
+    if (step === 0) {
+        botMessage.textContent = 'Hi kid! I am here to guide you through this website.';
+        step++;
+
+        // Automatically move to step 1 after a brief delay
+        setTimeout(() => {
+            const nextBotMessage = document.createElement('div');
+            nextBotMessage.className = 'message bot-message';
+            nextBotMessage.textContent = 'Which standard are you in? (e.g., 8, 9, 10)';
+            chatBody.appendChild(nextBotMessage);
+            chatBody.scrollTop = chatBody.scrollHeight;
+            step++; // Move to step 2
+        }, 1500); // 1.5-second delay
+    }
+    // Step 2: Ask for the subject after receiving the standard
+    else if (step === 2) {
+        if (/^(8|9|10)$/.test(normalizedInput)) {
+            botMessage.textContent = `You are in standard ${normalizedInput}. Which subject do you want to study? (e.g., English, Geography, History)`;
+            step++;
         } else {
-            botMessage.textContent = 'Sorry, I did not understand that. Please type "English", "Eng", or "eng" to start.';
+            botMessage.textContent = 'Please enter a valid standard (8, 9, or 10).';
         }
-        chatBody.scrollTop = chatBody.scrollHeight;
     }
+    // Step 3: Redirect based on subject input
+    else if (step === 3) {
+        const englishVariants = ['english', 'eng', 'en', 'enenglish', 'england'];
+        const geographyVariants = ['geography', 'geo', 'geog', 'geography'];
+        const historyVariants = ['history', 'hist', 'histo', 'hi'];
+
+        if (englishVariants.includes(normalizedInput)) {
+            const redirectUrl = `english_main.html#English`;
+            botMessage.textContent = 'Redirecting you to English...';
+            botMessage.innerHTML += `<a href="${redirectUrl}" target="_blank">English</a>`;
+            setTimeout(() => {
+                window.open(redirectUrl, '_blank');
+            }, 1000);
+        } else if (geographyVariants.includes(normalizedInput)) {
+            const redirectUrl = `geography_main.html#Geography`;
+            botMessage.textContent = 'Redirecting you to Geography...';
+            botMessage.innerHTML += `<a href="${redirectUrl}" target="_blank">Geography</a>`;
+            setTimeout(() => {
+                window.open(redirectUrl, '_blank');
+            }, 1000);
+        } else if (historyVariants.includes(normalizedInput)) {
+            const redirectUrl = `history_main.html#History`;
+            botMessage.textContent = 'Redirecting you to History...';
+            botMessage.innerHTML += `<a href="${redirectUrl}" target="_blank">History</a>`;
+            setTimeout(() => {
+                window.open(redirectUrl, '_blank');
+            }, 1000);
+        } else {
+            botMessage.textContent = 'Please enter a valid subject (English, Geography, History).';
+        }
+    } else {
+        botMessage.textContent = 'Sorry, I did not understand that. Please type again.';
+    }
+
+    chatBody.scrollTop = chatBody.scrollHeight;
+}
+
+
 </script>
-<script type="text/javascript">
+<!-- <script type="text/javascript">
     function googleTranslateElementInit() {
+        const selectedLanguage = localStorage.getItem('selectedLanguage') || 'en';
         new google.translate.TranslateElement({
             pageLanguage: 'en',
-            includedLanguages: 'en,hi,gu,kn,ml,mr,pa,ta,te,bn,ur,mai', // Add the language codes for Indian languages
+            includedLanguages: 'hi,gu,kn,ml,mr,pa,ta,te,bn,ur,mai',
+            layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+            autoDisplay: false
         }, 'google_translate_element');
-    } 
-    function storeSelectedLanguage() {
-        const languageDropdown = document.querySelector('.goog-te-combo');
-        languageDropdown.addEventListener('change', function() {
-            localStorage.setItem('selectedLanguage', languageDropdown.value);
-        });
+
+        
+        if (selectedLanguage && selectedLanguage !== 'en') {
+            const event = new Event('change');
+            const languageDropdown = document.querySelector('.goog-te-combo');
+            languageDropdown.value = selectedLanguage;
+            languageDropdown.dispatchEvent(event);
+        }
+    }
+</script> -->
+<script type="text/javascript">
+    function googleTranslateElementInit() {
+        const selectedLanguage = localStorage.getItem('selectedLanguage') || 'en';
+        new google.translate.TranslateElement({
+            pageLanguage: 'en',
+            includedLanguages: 'hi,gu,kn,ml,mr,pa,ta,te,bn,ur,mai',
+            layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+            autoDisplay: false
+        }, 'google_translate_element');
+
+        // Automatically apply the saved language
+        if (selectedLanguage && selectedLanguage !== 'en') {
+            const event = new Event('change');
+            const languageDropdown = document.querySelector('.goog-te-combo');
+            languageDropdown.value = selectedLanguage;
+            languageDropdown.dispatchEvent(event);
+        }
     }
 
-    // Run the function to store the selected language
-    storeSelectedLanguage();
+    // Listen for changes in the dropdown and save the selected language
+    document.addEventListener('change', function(e) {
+        if (e.target.classList.contains('goog-te-combo')) {  
+            const selectedLanguage = e.target.value;
+            localStorage.setItem('selectedLanguage', selectedLanguage);
+        }
+    });
 </script>
+
 <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</div>
 </body>
 </html>
