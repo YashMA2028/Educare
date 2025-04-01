@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>मराठी विषय चाचणी</title>
+    <style>
+        body { font-family: 'Arial', sans-serif; background-color: #f4f4f4; padding: 20px; text-align: center; }
+        h1 { color: #4a4a8c; }
+        .container { max-width: 600px; margin: auto; background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px #aaa; }
+        button { background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; }
+        button:hover { background-color: #45a049; }
+        .correct { color: green; }
+        .wrong { color: red; }
+        select { padding: 10px; width: 100%; margin-bottom: 20px; }
+        #quiz img { max-width: 100px; display: block; margin: auto; }
+        #result img { max-width: 150px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>मराठी विषय चाचणी</h1>
+        <label for="chapterSelect">अध्याय निवडा:</label>
+        <select id="chapterSelect" onchange="loadQuiz()">
+            <option value="">-- अध्याय निवडा --</option>
+            <option value="1">अध्याय १ - जय जय हे भारत देशा</option>
+            <option value="2">अध्याय २ -  बोलतो मराठी</option>
+            <option value="3">अध्याय ३ - आजी : कुटुंबाचं आगळ</option>
+            <option value="3">अध्याय ४ - निसर्गाची महती </option>
+        </select>
+        <div id="quiz"></div>
+        <button onclick="submitQuiz()">उत्तर पाठवा</button>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        const chapters = {
+            1: [
+                { q: "भारताचे राष्ट्रगीत कोणते आहे?", options: ["जन गण मन", "वंदे मातरम", "सारे जहाँ से अच्छा"], answer: 0 },
+                { q: "राष्ट्रगीताचे लेखक कोण?", options: ["रवींद्रनाथ टागोर", "बंकिमचंद्र चटर्जी", "सुभाषचंद्र बोस"], answer: 0 }
+            ],
+            2: [
+                { q: "बोलतो मराठी या निबंधाचा मुख्य विषय काय आहे?", options: ["नवीन भाषा शिकण्याचे महत्त्व", "मराठी भाषेची समृद्धता आणि सौंदर्य", "मराठी साहित्यातील इतिहास"], answer: 1 },
+                { q: "लेखिका बोलतो मराठी या निबंधात मराठी भाषेबद्दल काय महत्त्व अधोरेखित करतात?", options: ["परकीय भाषेचे शिक्षण वाढवण्याची गरज", "मराठी भाषेच्या शुद्धतेचे आणि समृद्धतेचे जतन करणे महत्त्वाचे आहे", "आधुनिक समाजात मराठीचा गिरावट होणे"], answer: 1 }
+            ],
+            3: [
+                { q: "आजी : कुटुंबाचं आगळ या धड्यात लेखकाने आजीचे कुटुंबातील कोणते महत्त्व अधोरेखित केले आहे?", options: ["आजीचे मुख्यतः घरकामातील योगदान", "आजीचे शाळेतील योगदान", "आजीचे मार्गदर्शन आणि कुटुंबातील एकोपा वाढविणे"], answer: 2 },
+                { q: "लेखकाने आजी : कुटुंबाचं आगळ या धड्यात आजीच्या कुटुंबातील भूमिकेचा उल्लेख कसा केला आहे", options: ["आजी कुटुंबातील एकटा व्यक्ती आहे.", "आजीला कुटुंबातील इतर सदस्यांचा आदर नाही", "आजी कुटुंबातील मार्गदर्शक आणि सल्लागार म्हणून महत्त्वाची भूमिका बजावते."], answer: 2 }
+            ]
+        };
+
+        function loadQuiz() {
+            const chapter = document.getElementById('chapterSelect').value;
+            const quizDiv = document.getElementById('quiz');
+            const resultDiv = document.getElementById('result');
+            quizDiv.innerHTML = '';
+            resultDiv.innerHTML = '';
+
+            if (chapter && chapters[chapter]) {
+                chapters[chapter].forEach((item, index) => {
+                    quizDiv.innerHTML += `<h3>${index + 1}. ${item.q}</h3>`;
+                    item.options.forEach((option, i) => {
+                        quizDiv.innerHTML += `<input type='radio' name='q${index}' value='${i}'> ${option} <br>`;
+                    });
+                    quizDiv.innerHTML += `<div id='feedback${index}'></div>`;
+                });
+            }
+        }
+
+        function submitQuiz() {
+            const chapter = document.getElementById('chapterSelect').value;
+            if (!chapter || !chapters[chapter]) {
+                alert("कृपया आधी अध्याय निवडा!");
+                return;
+            }
+
+            let score = 0;
+            chapters[chapter].forEach((item, index) => {
+                const selected = document.querySelector(`input[name='q${index}']:checked`);
+                const feedback = document.getElementById(`feedback${index}`);
+                if (selected) {
+                    if (parseInt(selected.value) === item.answer) {
+                        score++;
+                        feedback.innerHTML = "✅ बरोबर!";
+                        feedback.className = "correct";
+                    } else {
+                        feedback.innerHTML = "❌ चूक! बरोबर उत्तर: " + item.options[item.answer];
+                        feedback.className = "wrong";
+                    }
+                } else {
+                    feedback.innerHTML = "❗ कृपया उत्तर निवडा!";
+                    feedback.className = "wrong";
+                }
+            });
+
+            let resultDiv = document.getElementById('result');
+            let gifUrl = "";
+            if (score === chapters[chapter].length) {
+                gifUrl = "https://media.giphy.com/media/26AHONQ79FdWZhAI0/giphy.gif"; // विजयाचा GIF
+            } else if (score > 0) {
+                gifUrl = "https://media.giphy.com/media/l41lFw057lAJQMwg0/giphy.gif"; // चांगला प्रयत्न GIF
+            } else {
+                gifUrl = "https://media.giphy.com/media/3o6ZsYin1nvfWOMpHG/giphy.gif"; // पुन्हा प्रयत्न करा GIF
+            }
+
+            resultDiv.innerHTML = `तुमचा स्कोअर: ${score} / ${chapters[chapter].length} <br><img src="${gifUrl}">`;
+        }
+    </script>
+</body>
+</html>

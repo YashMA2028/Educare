@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marathi Educational Page</title>
+    <link rel="stylesheet" href="marathi_main.css">
+</head>
+<body>
+    <div class="navbar">
+        <div class="logo-title">
+            <img src="EDucare.png" alt="Logo" width="50">
+            <h1>Educare</h1>
+        </div>
+        <nav class="nav-buttons">
+            <a href="#" class="home" style="color: white;">Home</a>
+            <a href="#" class="courses" style="color: white;">Courses</a>
+            <a href="#" class="about" style="color: white;">About</a>
+            <a href="#" class="contact" style="color: white;">Contact</a>
+            <div class="auth-buttons">
+        </div>
+        </div>
+    </div>
+    
+    <div class="main-container">
+        <aside class="sidebar">
+            <h2>Chapters</h2>
+            <ul>
+                <li><a href="marathi 1.html" onclick="loadChapter(1)">पाठ १: जय जय हे भारत देशा</a></li>
+                <li><a href="marathi 2.html" onclick="loadChapter(2)">पाठ २: बोलतो मराठी</a></li>
+                <li><a href="marathi 3.html" onclick="loadChapter(3)">पाठ ३: आजी : कुटुंबाचं आगळ</a></li>
+                <li><a href="#" onclick="loadChapter(4)">पाठ ४: विज्ञानाची किमया</a></li>
+            </ul>
+        </aside>
+        
+        <section class="chp_main_section">
+            <div id="chp_content">
+                <h2 id="chapterTitle">पाठ २: बोलतो मराठी</h2>
+                <button id="speakBtn">🔊 ऐका</button>
+                <div id="chapterText">
+                    <h3>लेखिका:</h3>
+                    <p>सुमती रमण.</p>
+                    
+                    <h3>पाठाचा सारांश:</h3>
+                    <p>'बोलतो मराठी' या निबंधात लेखिकेने मराठी भाषेची वैशिष्ट्ये, तिची समृद्धता आणि तिच्याबद्दल असलेला अभिमान व्यक्त केला आहे. त्या मराठी भाषेच्या सौंदर्याचे, तिच्या अभिव्यक्तीच्या क्षमतेचे आणि तिच्या साहित्यिक परंपरेचे कौतुक करतात. तसेच, भाषेच्या शुद्धतेचे आणि तिच्या जतनाचे महत्त्वही अधोरेखित करतात.</p>
+                    
+                    <h3>मुख्य मुद्दे:</h3>
+                    <ul>
+                        <li>मराठी भाषेची समृद्ध परंपरा आणि साहित्यिक योगदान.</li>
+                        <li>भाषेच्या शुद्धतेचे आणि जतनाचे महत्त्व.</li>
+                        <li>मराठी भाषेतील अभिव्यक्तीची क्षमता आणि सौंदर्य.</li>
+                    </ul>
+
+                    <h3>अभ्यासासाठी उपयुक्त स्रोत:</h3>
+                    <ul>
+                        <li>पाठ्यपुस्तकाचे PDF: <a href="https://books.balbharati.in">Balbharati ई-पुस्तके</a></li>
+                        <li>प्रश्नोत्तरे आणि सराव: <a href="https://www.shaalaa.com/textbook-solutions/c/balbharati-solutions-marathi-kumarbharati-10-standard-ssc-maharashtra-state-board-chapter-2-bolto-mraathi_3943">Shaalaa.com</a></li>
+                    </ul>
+                </div>
+                <div class="test-button">
+                    <a href="marathiTest1.html" class="marathi-test-btn">📝 स्वाध्याय द्या</a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Chatbot Integration -->
+    <div id="chatIcon">💬</div>
+    <div id="chatPopup">
+        <div id="chatHeader">Chatbot<button id="closeBtn">x</button></div>
+        <div id="chatBody"></div>
+        <div id="chatFooter">
+            <input type="text" id="userInput" placeholder="Type a message...">
+            <button id="sendBtn">Send</button>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('chatIcon').addEventListener('click', function() {
+            document.getElementById('chatPopup').style.display = 'block';
+        });
+
+        document.getElementById('closeBtn').addEventListener('click', function() {
+            document.getElementById('chatPopup').style.display = 'none';
+        });
+
+        document.getElementById('sendBtn').addEventListener('click', function() {
+            const userInput = document.getElementById('userInput').value;
+            if (userInput) {
+                handleUserInput(userInput);
+                document.getElementById('userInput').value = '';
+            }
+        });
+
+        function handleUserInput(input) {
+            const chatBody = document.getElementById('chatBody');
+            const userMessage = document.createElement('div');
+            userMessage.textContent = input;
+            userMessage.className = 'message user-message';
+            chatBody.appendChild(userMessage);
+            chatBody.scrollTop = chatBody.scrollHeight;
+
+            processInput(input);
+        }
+
+        function processInput(input) {
+            const chatBody = document.getElementById('chatBody');
+            const botMessage = document.createElement('div');
+            botMessage.className = 'message bot-message';
+            chatBody.appendChild(botMessage);
+
+            let response = "माफ करा, मी समजू शकलो नाही. कृपया पाठ क्रमांक टाइप करा (उदा. 1, 2, 3, 4)";
+            let chapterLink = "";
+            
+            if (input === "1") {
+                chapterLink = "marathi 1.html";
+                response = "आपण पाठ १ निवडला आहे. आपण त्यासाठी येथे क्लिक करू शकता: <a href='" + chapterLink + "'>पाठ १: जय जय हे भारत देशा</a>";
+            } else if (input === "2") {
+                chapterLink = "marathi 2.html";
+                response = "आपण पाठ २ निवडला आहे. आपण त्यासाठी येथे क्लिक करू शकता: <a href='" + chapterLink + "'>पाठ २: बोलतो मराठी</a>";
+            } else if (input === "3") {
+                chapterLink = "marathi 3.html";
+                response = "आपण पाठ ३ निवडला आहे. आपण त्यासाठी येथे क्लिक करू शकता: <a href='" + chapterLink + "'>पाठ ३: आजी : कुटुंबाचं आगळ</a>";
+            } else if (input === "4") {
+                chapterLink = "marathi 4.html";
+                response = "आपण पाठ ४ निवडला आहे. आपण त्यासाठी येथे क्लिक करू शकता: <a href='" + chapterLink + "'>पाठ ४: विज्ञानाची किमया</a>";
+            }
+            
+            botMessage.innerHTML = response;
+            chatBody.scrollTop = chatBody.scrollHeight;
+        }
+
+        let speechSynthesisUtterance;
+        let isSpeaking = false;
+
+        function getMarathiVoice() {
+            const voices = speechSynthesis.getVoices();
+            return voices.find(voice => voice.lang.startsWith('mr')) || voices.find(voice => voice.lang.startsWith('hi'));
+        }
+
+        function speakText() {
+            const text = document.getElementById("chapterText").innerText;
+
+            if (speechSynthesis.speaking) {
+                speechSynthesis.cancel();
+                isSpeaking = false;
+                return;
+            }
+
+            speechSynthesisUtterance = new SpeechSynthesisUtterance(text);
+            speechSynthesisUtterance.voice = getMarathiVoice();
+            speechSynthesisUtterance.lang = "mr-IN";  
+            speechSynthesisUtterance.rate = 0.9;  
+
+            speechSynthesisUtterance.onend = () => {
+                isSpeaking = false;
+            };
+
+            speechSynthesis.speak(speechSynthesisUtterance);
+            isSpeaking = true;
+        }
+
+        function stopSpeech() {
+            if (speechSynthesis.speaking) {
+                speechSynthesis.cancel();
+                isSpeaking = false;
+            }
+        }
+
+        document.getElementById("speakBtn").addEventListener("click", speakText);
+
+        // Spacebar functionality to start and stop reading
+        document.addEventListener("keydown", function(event) {
+            if (event.code === "Space") {
+                event.preventDefault();  // Prevents scrolling when spacebar is pressed
+                if (isSpeaking) {
+                    stopSpeech();  // Stop reading if already speaking
+                } else {
+                    speakText();  // Start reading
+                }
+            }
+        });
+
+        // Ensure voices are loaded before setting the Marathi voice
+        speechSynthesis.onvoiceschanged = () => {
+            getMarathiVoice();
+        };
+
+        // Stop reading when the user navigates away or refreshes the page
+        window.addEventListener("beforeunload", function() {
+            if (speechSynthesis.speaking) {
+                speechSynthesis.cancel();  // Stop speech
+            }
+        });
+    </script>
+</body>
+</html>
