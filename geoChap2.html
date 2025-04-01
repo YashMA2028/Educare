@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geography - Chapter 2: Location and Extent</title>
+    <link rel="stylesheet" href="geography_main.css">
+</head>
+
+<body>
+    <!-- Header Section -->
+    <div class="header-box">
+        <div class="logo-title">
+            <img src="EDucare.png" width="70px" height="70px">
+            <span class="site-title">Educare</span>
+        </div>
+        <nav>
+            <a href="home.html" class="M" id="a">Home</a>
+            <a href="course.html" class="M" style="height: 25px;">Courses</a>
+            <a href="about.html" class="M" style="height: 25px;">About</a>
+            <a href="library.html" class="M" style="height: 25px;">Library</a>
+            <a href="login.html" class="login-signup-btn" target="_blank">Login/Signup</a>
+        </nav>
+    </div>
+    
+    <!-- Sidebar Section -->
+    <div class="sidebr">
+        <div class="title-subj">
+            <h2>Class 10 <sup>th</sup></h2>
+            <p>SSC | Maharashtra Board | English</p>
+        </div>
+        <div class="section-chp-names">
+            <p><a href="geography_main.html" id="chp1">Chapter 1: Field Visit</a></p>
+            <hr>
+            <p><a href="geoChap2.html" id="chp1">Chapter 2: Location and Extent</a></p>
+            <hr>
+            <p><a href="geochap3.html" id="chp1">Chapter 3: Physiography and Drainage</a></p>
+            <hr>
+            <p><a href="chapter4.html" id="grammar">Chapter 4: Climate</a></p>
+            <hr>
+            <p><a href="chapter5.html" id="composition">Chapter 5: Natural Vegetation and Wildlife</a></p>
+            <hr>
+        </div>
+    </div>
+
+    <!-- Main Content Section -->
+    <div class="chp_main_section">
+        <div class="breadcrumb">
+            <ul>
+                <li><a href="/others/home.html">Home</a></li>
+                <li>></li>
+                <li><a href="/others/course.html">Course</a></li>
+                <li>></li>
+                <li><a href="#">Geography</a></li>
+            </ul>
+        </div>
+
+        <!-- Chapter 2 Content -->
+        <div class="chp1" id="chp1">
+            <h1>Chapter 2: Location and Extent</h1>
+
+            <h2>What is Location and Extent?</h2>
+            <p>The location of a place refers to its specific position on the Earth's surface, while the extent refers to the area it covers. Understanding location and extent helps in recognizing the significance of a place geographically, including its boundaries, climate, and resources.</p>
+
+            <h2>Understanding Location</h2>
+            <p>Location can be described in terms of geographical coordinates such as latitude and longitude. These coordinates help pinpoint a place on the map or globe. The Earth's surface is divided by lines of latitude (horizontal lines) and longitude (vertical lines). The exact location of a place can be determined by its distance from the Equator and the Prime Meridian.</p>
+
+            <h2>Understanding Extent</h2>
+            <p>Extent refers to the total area a place or region occupies. The extent of a country or region includes its geographical boundaries, such as mountains, rivers, and seas, which define the region's physical limits.</p>
+
+            <h2>Geographical Extent of India</h2>
+            <p>India is a vast country with diverse geographical features. It stretches from the snowy mountains in the north to the warm oceans in the south.</p>
+
+        </div>
+
+    </div>
+
+    <!-- Test Button Section -->
+    <div class="test-button">
+        <button><a href="GeogTest2.html">Let's test our understanding</a></button>
+    </div>
+
+    <script src="geography_main.js"></script>
+    <!-- Chatbot Integration -->
+<div id="chatIcon">💬</div>
+<div id="chatPopup">
+    <div id="chatHeader">Chatbot<button id="closeBtn">x</button></div>
+    <div id="chatBody"></div>
+    <div id="chatFooter">
+        <input type="text" id="userInput" placeholder="Type a message...">
+        <button id="sendBtn">Send</button>
+    </div>
+</div>
+
+<script src="geography_main.js"></script>
+<script>
+    document.getElementById('chatIcon').addEventListener('click', function() {
+        document.getElementById('chatPopup').style.display = 'block';
+    });
+
+    document.getElementById('closeBtn').addEventListener('click', function() {
+        document.getElementById('chatPopup').style.display = 'none';
+    });
+
+    document.getElementById('sendBtn').addEventListener('click', function() {
+        const userInput = document.getElementById('userInput').value;
+        if (userInput) {
+            handleUserInput(userInput);
+            document.getElementById('userInput').value = '';
+        }
+    });
+
+    function handleUserInput(input) {
+        const chatBody = document.getElementById('chatBody');
+        const userMessage = document.createElement('div');
+        userMessage.textContent = input;
+        userMessage.className = 'message user-message';
+        chatBody.appendChild(userMessage);
+        chatBody.scrollTop = chatBody.scrollHeight;
+
+        processInput(input);
+    }
+
+    function processInput(input) {
+        const chatBody = document.getElementById('chatBody');
+        const botMessage = document.createElement('div');
+        botMessage.className = 'message bot-message';
+        chatBody.appendChild(botMessage);
+
+        let response = "Sorry, I didn't understand. Please type a chapter number (e.g., 1, 2, 3, 4, 5).";
+        let chapterLink = "";
+
+        if (input === "1") {
+            chapterLink = "geography_main.html";
+            response = "You've selected Chapter 1. Click here: <a href='" + chapterLink + "'>Chapter 1: Field Visit</a>";
+        } else if (input === "2") {
+            chapterLink = "geoChap2.html";
+            response = "You've selected Chapter 2. Click here: <a href='" + chapterLink + "'>Chapter 2: Location and Extent</a>";
+        } else if (input === "3") {
+            chapterLink = "geochap3.html";
+            response = "You've selected Chapter 3. Click here: <a href='" + chapterLink + "'>Chapter 3: Physiography and Drainage</a>";
+        } else if (input === "4") {
+            chapterLink = "#";
+            response = "You've selected Chapter 4. More content coming soon!";
+        } else if (input === "5") {
+            chapterLink = "#";
+            response = "You've selected Chapter 5. More content coming soon!";
+        }
+
+        botMessage.innerHTML = response;
+        chatBody.scrollTop = chatBody.scrollHeight;
+    }
+</script>
+</body>
+
+</html>

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geography</title>
+    <link rel="stylesheet" href="geography_main.css">
+</head>
+
+<body>
+    <div class="header-box">
+        <div class="logo-title">
+            <img src="EDucare.png" width="70px " height="70px">
+            <span class="site-title">Educare</span>  
+        </div>
+        <nav>
+            <a href="home.html" class="M" id="a">Home</a>
+            <a href="course.html" class="M" style="height: 25px;">Courses</a>
+            <a href="about.html" class="M" style="height: 25px;">About </a>
+            <a href="library.html" class="M" style="height: 25px;">Library</a>
+            <a href="login.html" class="login-signup-btn" target="_blank">Login/Signup</a>
+        </nav>
+    </div>
+    <div class="sidebr">
+        <div class="title-subj">
+            <h2>Class 10 <sup>th</sup></h2>
+            <p>SSC | Maharashtra Board | English</p>
+        </div>
+        <div class="section-chp-names">
+            <p><a href="geography_main.html" id="chp1"> Chapter 1 : Field Visit</a></p>
+            <hr>
+            <p><a href="geoChap2.html" id="chp2">Chapter 2: Location and Extent</a></p>
+            <hr>
+            <p><a href="geochap3.html" id="chp1">Chapter 3: Physiography and Drainage</a></p>
+            <hr>
+            <p><a href="#" id="grammar">Chapter 4: Climate</a></p>
+            <hr>
+            <p><a href="#" id="composition">Chapter 5: Natural Vegetation and Wildlife</a></p>
+            <hr>
+        </div>
+    </div>
+    <div class="chp_main_section">
+        <div class="breadcrumb">
+            <ul>
+                <li><a href="/others/home.html">Home</a></li>
+                <li>></li>
+                <li><a href="/others/course.html">Course</a></li>
+                <li>></li>
+                <li><a href="#">Geography</a></li>
+            </ul>
+        </div>
+        
+    
+    <div class="chp1" id="chp1">
+
+        
+        <h1> Chapter 1 : Field Visit</h1>
+        <h2>What is a Field Visit?</h2>
+        <p>The field visit or field trip is an educational procedure by which each student gain or learn information by observing the objects, places, natural events and other real-life information. The main objective of the field visit is to reinforce experiential and contextual learning.</p>
+        <h2>Things to carry in a Field Visit</h2>
+        <ul style="list-style-type: disc;">
+            <li> To collect information, you'll need a notebook, notepad, pencil</li>
+            <li> Use a magnetic compass, a GPS-enabled phone, and maps to find locations and get directions.</li>
+            <li> A first aid kit, water bottle, cap, and an I-card are necessities. </li>
+        </ul>
+        <h2>Importance of Field Visit</h2>
+        <ul style="list-style-type: disc;">
+            <li> Geography is a science to be learnt through observation.</li>
+            <li> Field study gives us an opportunity to get first hand information of the new place having a different location, climate and landforms.</li>
+            <li>Students learn the relationship between physical and cultural factors and how man adapts himself accordingly.</li>
+            <li>They get an opportunity to interact with the local people, know about their culture, food, clothing and understand their
+                problems</li>
+            <li>Students develop the feeling of belonging to these regions and their skill of observation and reasoning also improves</li>
+        </ul>
+
+
+    </div>
+
+    </div>
+</div>
+
+<div class="test-button ">
+    <button ><a href="GeogTest1.html" >Let's test our understanding </a></button>
+</div>
+<script src="geography_main.js"></script>
+<!-- Chatbot Integration -->
+<div id="chatIcon">💬</div>
+<div id="chatPopup">
+    <div id="chatHeader">Chatbot<button id="closeBtn">x</button></div>
+    <div id="chatBody"></div>
+    <div id="chatFooter">
+        <input type="text" id="userInput" placeholder="Type a message...">
+        <button id="sendBtn">Send</button>
+    </div>
+</div>
+
+<script src="geography_main.js"></script>
+<script>
+    document.getElementById('chatIcon').addEventListener('click', function() {
+        document.getElementById('chatPopup').style.display = 'block';
+    });
+
+    document.getElementById('closeBtn').addEventListener('click', function() {
+        document.getElementById('chatPopup').style.display = 'none';
+    });
+
+    document.getElementById('sendBtn').addEventListener('click', function() {
+        const userInput = document.getElementById('userInput').value;
+        if (userInput) {
+            handleUserInput(userInput);
+            document.getElementById('userInput').value = '';
+        }
+    });
+
+    function handleUserInput(input) {
+        const chatBody = document.getElementById('chatBody');
+        const userMessage = document.createElement('div');
+        userMessage.textContent = input;
+        userMessage.className = 'message user-message';
+        chatBody.appendChild(userMessage);
+        chatBody.scrollTop = chatBody.scrollHeight;
+
+        processInput(input);
+    }
+
+    function processInput(input) {
+        const chatBody = document.getElementById('chatBody');
+        const botMessage = document.createElement('div');
+        botMessage.className = 'message bot-message';
+        chatBody.appendChild(botMessage);
+
+        let response = "Sorry, I didn't understand. Please type a chapter number (e.g., 1, 2, 3, 4, 5).";
+        let chapterLink = "";
+
+        if (input === "1") {
+            chapterLink = "geography_main.html";
+            response = "You've selected Chapter 1. Click here: <a href='" + chapterLink + "'>Chapter 1: Field Visit</a>";
+        } else if (input === "2") {
+            chapterLink = "geoChap2.html";
+            response = "You've selected Chapter 2. Click here: <a href='" + chapterLink + "'>Chapter 2: Location and Extent</a>";
+        } else if (input === "3") {
+            chapterLink = "geochap3.html";
+            response = "You've selected Chapter 3. Click here: <a href='" + chapterLink + "'>Chapter 3: Physiography and Drainage</a>";
+        } else if (input === "4") {
+            chapterLink = "#";
+            response = "You've selected Chapter 4. More content coming soon!";
+        } else if (input === "5") {
+            chapterLink = "#";
+            response = "You've selected Chapter 5. More content coming soon!";
+        }
+
+        botMessage.innerHTML = response;
+        chatBody.scrollTop = chatBody.scrollHeight;
+    }
+    // Text-to-Speech Integration
+    let speechUtterance;
+        let isSpeaking = false;
+
+        function getVoice() {
+            const voices = speechSynthesis.getVoices();
+            return voices.find(voice => voice.lang.startsWith('en')) || voices.find(voice => voice.lang.startsWith('mr'));
+        }
+
+        function speakText() {
+            const text = document.getElementById("chapterText").innerText;
+
+            // Clear previous speech if it's still active
+            if (speechSynthesis.speaking) {
+                speechSynthesis.cancel();
+                isSpeaking = false;
+                document.getElementById("speakBtn").textContent = "🔊 Speak"; // Reset button text
+                return;
+            }
+
+            // Set new speech parameters
+            speechUtterance = new SpeechSynthesisUtterance(text);
+            speechUtterance.voice = getVoice();
+            speechUtterance.rate = 1;  // Reset rate to 1 (neutral speed)
+
+            speechUtterance.onend = () => { 
+                isSpeaking = false; 
+                document.getElementById("speakBtn").textContent = "🔊 Speak"; // Reset button text
+            };
+
+            speechSynthesis.speak(speechUtterance);
+            isSpeaking = true;
+            document.getElementById("speakBtn").textContent = "⏸️ Stop"; // Change button text to Stop
+        }
+
+        // Toggle speech when button is clicked
+        document.getElementById("speakBtn").addEventListener("click", function () {
+            if (isSpeaking) {
+                speechSynthesis.cancel(); // Stop speech if it's speaking
+                isSpeaking = false;
+                document.getElementById("speakBtn").textContent = "🔊 Speak"; // Reset button text
+            } else {
+                speakText();
+                document.getElementById("speakBtn").textContent = "⏸️ Stop"; // Change button text to Stop
+            }
+        });
+
+        // Spacebar functionality for toggling speech
+        document.addEventListener("keydown", function (event) {
+            if (event.code === "Space") {
+                event.preventDefault(); // Prevent default spacebar scrolling
+                if (isSpeaking) {
+                    speechSynthesis.cancel();  // Stop speech
+                    isSpeaking = false;
+                    document.getElementById("speakBtn").textContent = "🔊 Speak"; // Reset button text
+                } else {
+                    speakText();  // Start speech
+                    document.getElementById("speakBtn").textContent = "⏸️ Stop"; // Change button text to Stop
+                }
+            }
+        });
+
+        // Stop speech when the page is changed or reloaded
+        window.addEventListener('beforeunload', function () {
+            if (speechSynthesis.speaking) {
+                speechSynthesis.cancel();
+            }
+        });
+
+        // Ensure voices are loaded before setting
+        speechSynthesis.onvoiceschanged = () => { getVoice(); };
+</script>
+</body>
+</html>
