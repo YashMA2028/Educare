@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html ng-app="educareApp">
+<head>
+    <title>Educare - History</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <style>
+        /* General Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        /* Simplified Header Styles */
+        header {
+            background-color: #003366;
+            color: white;
+            padding: 15px 20px;
+        }
+        
+        .header-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .header-nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            margin-right: 20px;
+            font-size: 1rem;
+        }
+        
+        .login-btn {
+            background-color: #ff9900;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        /* Main Layout */
+        .main-container {
+            max-width: 1200px;
+            margin: 20px auto;
+            display: flex;
+            gap: 20px;
+            padding: 0 20px;
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            width: 300px;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            height: fit-content;
+        }
+        
+        .course-header {
+            margin-bottom: 20px;
+        }
+        
+        .course-header h1 {
+            color: #003366;
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+        
+        .course-header h2 {
+            color: #333;
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+        
+        .course-header p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        /* Chapter List */
+        .chapter-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .chapter-link {
+            display: block;
+            padding: 15px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+            text-decoration: none;
+            color: #0066cc;
+            font-weight: 500;
+        }
+        
+        .chapter-link:hover {
+            background-color: #f0f7ff;
+            text-decoration: underline;
+        }
+        
+        .chapter-link.active {
+            background-color: #e6f2ff;
+            border-left: 3px solid #003366;
+            font-weight: 600;
+            color: #003366;
+        }
+        
+        /* Content Area */
+        .content-area {
+            flex: 1;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+        }
+        
+        .current-chapter h3 {
+            color: #003366;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        /* Video Container */
+        .video-container {
+            margin-bottom: 25px;
+            border-radius: 4px;
+            overflow: hidden;
+            background-color: #000;
+        }
+        
+        video {
+            width: 100%;
+            display: block;
+        }
+        
+        /* Content Sections */
+        .content-section {
+            margin-bottom: 25px;
+            padding: 0 15px;
+        }
+        
+        .content-section h5 {
+            color: #003366;
+            margin-bottom: 12px;
+            font-size: 1.1rem;
+        }
+        
+        .content-section ul {
+            margin-left: 20px;
+        }
+        
+        .content-section li {
+            margin-bottom: 8px;
+            color: #444;
+        }
+        
+        /* Scholar Section */
+        .scholar {
+            margin-bottom: 15px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+        }
+        
+        .scholar p {
+            margin-bottom: 5px;
+        }
+        
+        .scholar strong {
+            color: #003366;
+        }
+        
+        /* Quiz Button */
+        .quiz-btn {
+            background-color: #003366;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 25px 0;
+            display: inline-block;
+            text-decoration: none;
+            text-align: center;
+        }
+        
+        .quiz-btn:hover {
+            background-color: #002244;
+        }
+        
+        /* Audio Controls */
+        .audio-controls {
+            margin: 15px 0;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        .audio-btn {
+            background-color: #003366;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        
+        .audio-btn:hover {
+            background-color: #002244;
+        }
+        
+        .audio-btn:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #003366;
+            color: white;
+            text-align: center;
+            padding: 15px 0;
+            margin-top: 30px;
+        }
+        
+        footer p {
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-nav {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .header-nav a {
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+            
+            .login-btn {
+                margin-top: 10px;
+            }
+            
+            .main-container {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+            }
+            
+            .content-area {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body ng-controller="HistoryController">
+    <!-- Simplified Header Section -->
+    <header>
+        <div class="header-nav">
+            <div>
+                <a href="#/">Home</a>
+                <a href="#/courses">Courses</a>
+                <a href="#/about">About</a>
+                <a href="#/library">Library</a>
+            </div>
+            <button class="login-btn">Login/Signup</button>
+        </div>
+    </header>
+
+    <!-- Main Content Section -->
+    <div class="main-container">
+        <!-- Sidebar with Chapter List -->
+        <aside class="sidebar">
+            <div class="course-header">
+                <h1>Educare</h1>
+                <h2>Class 10 <sup>th</sup></h2>
+                <p>SSC | Maharashtra Board | History</p>
+            </div>
+
+            <div class="chapter-list">
+                <a href="#" 
+                   class="chapter-link" 
+                   ng-repeat="chapter in chapters" 
+                   ng-click="selectChapter(chapter)"
+                   ng-class="{active: selectedChapter && selectedChapter.id === chapter.id}">
+                    {{ chapter.name }}
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="content-area" ng-if="selectedChapter">
+            <div class="current-chapter">
+                <h3>{{ selectedChapter.name }}</h3>
+                
+                <!-- Video Player -->
+                <div class="video-container" ng-if="selectedChapter.videoUrl">
+                    <video controls>
+                        <source ng-src="{{getTrustedVideoUrl(selectedChapter.videoUrl)}}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                
+                <!-- Audio Controls -->
+                <div class="audio-controls">
+                    <button class="audio-btn" ng-click="playAudio()" ng-disabled="isPlaying">
+                        Play Audio
+                    </button>
+                    <button class="audio-btn" ng-click="pauseAudio()" ng-disabled="!isPlaying">
+                        Pause Audio
+                    </button>
+                    <button class="audio-btn" ng-click="stopAudio()" ng-disabled="!isPlaying">
+                        Stop Audio
+                    </button>
+                    <small>(Press Spacebar to toggle play/pause)</small>
+                </div>
+                
+                <p>{{ selectedChapter.description }}</p>
+
+                <div class="content-section">
+                    <h5>Objectives</h5>
+                    <ul>
+                        <li ng-repeat="objective in selectedChapter.objectives">{{ objective }}</li>
+                    </ul>
+                </div>
+
+                <div class="content-section">
+                    <h5>Experts</h5>
+                    <ul>
+                        <li ng-repeat="expert in selectedChapter.experts">{{ expert }}</li>
+                    </ul>
+                </div>
+
+                <div class="content-section">
+                    <h5>Research Methods</h5>
+                    <ul>
+                        <li ng-repeat="method in selectedChapter.researchMethods">{{ method }}</li>
+                    </ul>
+                </div>
+
+                <div class="content-section">
+                    <h5>Disciplines</h5>
+                    <ul>
+                        <li ng-repeat="discipline in selectedChapter.disciplines">{{ discipline }}</li>
+                    </ul>
+                </div>
+
+                <div class="content-section">
+                    <h5>Modern Historiography</h5>
+                    <p>{{ selectedChapter.modernHistoriography }}</p>
+                </div>
+
+                <div class="content-section">
+                    <h5>Notable Scholars</h5>
+                    <div class="scholar" ng-repeat="scholar in selectedChapter.notableScholars">
+                        <p><strong>{{ scholar.name }}</strong> ({{ scholar.country }}) - {{ scholar.book }}</p>
+                        <ul>
+                            <li ng-repeat="thought in scholar.thoughts">{{ thought }}</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Quiz Button linking to separate quiz page -->
+                <div style="text-align: center;">
+                    <a ng-href="quiz_chapter{{selectedChapter.id}}.html" class="quiz-btn">
+                        Let's Test Our Understanding
+                    </a>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Footer Section -->
+    <footer>
+        <p>&copy; 2025 Educare. All rights reserved.</p>
+    </footer>
+
+    <script>
+        var app = angular.module("educareApp", []);
+
+        app.controller("HistoryController", function ($scope, $sce) {
+            // Chapter List
+            $scope.chapters = [
+                { 
+                    id: 1, 
+                    name: "Historiography: Development in the West",
+                    videoUrl: "videos/chapter1.mp4", 
+                    description: "An exploration of the evolution of historiography in the Western world.", 
+                    objectives: ["Understanding Western historical methods", "Analyzing key Western historians", "Exploring the impact of Western historiography"], 
+                    experts: ["Western Historians", "Philosophy Scholars", "Research Methodologists"], 
+                    researchMethods: ["Textual analysis", "Historical criticism", "Comparative historiography"], 
+                    disciplines: ["History", "Philosophy", "Political Science", "Sociology"], 
+                    modernHistoriography: "Western historiography has shaped global historical understanding.", 
+                    notableScholars: [
+                        { name: "Leopold von Ranke", book: "History of the Latin and Teutonic Nations", country: "Germany", thoughts: ["Emphasized primary sources", "Advocated objective history"] },
+                        { name: "Michel Foucault", book: "The Archaeology of Knowledge", country: "France", thoughts: ["Explored power and knowledge", "Introduced discourse analysis"] }
+                    ]
+                },
+                { 
+                    id: 2, 
+                    name: "Historiography: Indian Tradition", 
+                    videoUrl: "videos/chapter2.mp4",
+                    description: "A study of the rich tradition of historiography in India.", 
+                    objectives: ["Understanding Indian historical methods", "Exploring ancient Indian texts", "Analyzing the influence of Indian historiography"], 
+                    experts: ["Indian Historians", "Sanskrit Scholars", "Archaeologists"], 
+                    researchMethods: ["Textual interpretation", "Archaeological excavations", "Comparative studies"], 
+                    disciplines: ["History", "Indology", "Archaeology", "Anthropology"], 
+                    modernHistoriography: "Indian historiography blends ancient traditions with modern methods.", 
+                    notableScholars: [
+                        { name: "Kalhana", book: "Rajatarangini", country: "India", thoughts: ["Chronicled Kashmir's history", "Combined myth and history"] },
+                        { name: "Romila Thapar", book: "The Past Before Us", country: "India", thoughts: ["Analyzed ancient Indian history", "Focused on social structures"] }
+                    ]
+                },
+                { 
+                    id: 3, 
+                    name: "Applied History", 
+                    videoUrl: "https://example.com/videos/chapter3.mp4",
+                    description: "The application of historical knowledge to solve contemporary problems.", 
+                    objectives: ["Understanding the role of history in modern decision-making", "Exploring case studies of applied history", "Analyzing the impact of historical insights on policy"], 
+                    experts: ["Applied Historians", "Policy Analysts", "Social Scientists"], 
+                    researchMethods: ["Case study analysis", "Historical analogy", "Policy evaluation"], 
+                    disciplines: ["History", "Public Policy", "Sociology", "Economics"], 
+                    modernHistoriography: "Applied history bridges the gap between the past and present.", 
+                    notableScholars: [
+                        { name: "David Hackett Fischer", book: "Historians' Fallacies", country: "USA", thoughts: ["Advocated for rigorous historical analysis", "Emphasized the importance of evidence"] },
+                        { name: "Margaret MacMillan", book: "The Uses and Abuses of History", country: "Canada", thoughts: ["Explored the relevance of history in modern times", "Highlighted the dangers of misusing history"] }
+                    ]
+                },
+                { 
+                    id: 4, 
+                    name: "History of Indian Arts", 
+                    videoUrl: "https://example.com/videos/chapter4.mp4",
+                    description: "A journey through the evolution of Indian art forms.", 
+                    objectives: ["Understanding the development of Indian art", "Exploring key art forms and their historical context", "Analyzing the influence of Indian art on global culture"], 
+                    experts: ["Art Historians", "Cultural Anthropologists", "Archaeologists"], 
+                    researchMethods: ["Artifact analysis", "Iconography", "Comparative studies"], 
+                    disciplines: ["History", "Art History", "Cultural Studies", "Anthropology"], 
+                    modernHistoriography: "Indian art reflects the country's rich cultural and historical diversity.", 
+                    notableScholars: [
+                        { name: "Ananda Coomaraswamy", book: "The Dance of Shiva", country: "India", thoughts: ["Explored the symbolism in Indian art", "Highlighted the spiritual aspects of art"] },
+                        { name: "Stella Kramrisch", book: "The Hindu Temple", country: "Austria", thoughts: ["Studied temple architecture", "Analyzed the role of art in religion"] }
+                    ]
+                },
+                { 
+                    id: 5, 
+                    name: "Mass Media and History", 
+                    videoUrl: "https://example.com/videos/chapter5.mp4",
+                    description: "The role of mass media in shaping historical narratives.", 
+                    objectives: ["Understanding the influence of media on history", "Exploring the portrayal of historical events in media", "Analyzing the impact of media on public perception of history"], 
+                    experts: ["Media Historians", "Communication Scholars", "Cultural Analysts"], 
+                    researchMethods: ["Content analysis", "Media criticism", "Public perception studies"], 
+                    disciplines: ["History", "Media Studies", "Sociology", "Communication"], 
+                    modernHistoriography: "Mass media plays a crucial role in shaping how history is perceived and remembered.", 
+                    notableScholars: [
+                        { name: "Marshall McLuhan", book: "Understanding Media", country: "Canada", thoughts: ["Explored the impact of media on society", "Introduced the concept of 'the medium is the message'"] },
+                        { name: "Noam Chomsky", book: "Manufacturing Consent", country: "USA", thoughts: ["Analyzed media's role in shaping public opinion", "Highlighted media bias"] }
+                    ]
+                }
+            ];
+
+            // Selected chapter and audio state
+            $scope.selectedChapter = null;
+            $scope.isPlaying = false;
+            $scope.speechSynthesis = window.speechSynthesis;
+            $scope.currentUtterance = null;
+
+            // Trust video URLs for AngularJS
+            $scope.getTrustedVideoUrl = function(url) {
+                return $sce.trustAsResourceUrl(url);
+            };
+
+            // Initialize keyboard event listener
+            $scope.initKeyboardListener = function() {
+                angular.element(document).on('keydown', function(event) {
+                    if (event.keyCode === 32) { // Spacebar
+                        event.preventDefault();
+                        $scope.$apply(function() {
+                            $scope.toggleAudio();
+                        });
+                    }
+                });
+            };
+
+            // Call initialization
+            $scope.initKeyboardListener();
+
+            // Select chapter
+            $scope.selectChapter = function(chapter) {
+                $scope.selectedChapter = chapter;
+                $scope.stopAudio();
+            };
+
+            // Toggle audio playback
+            $scope.toggleAudio = function() {
+                if ($scope.isPlaying) {
+                    $scope.pauseAudio();
+                } else {
+                    $scope.playAudio();
+                }
+            };
+
+            // Play audio for current chapter
+            $scope.playAudio = function() {
+                if (!$scope.selectedChapter) {
+                    alert("Please select a chapter first");
+                    return;
+                }
+                
+                $scope.stopAudio();
+                
+                // Build the complete text to be read
+                let textToRead = `${$scope.selectedChapter.name}. ${$scope.selectedChapter.description}. `;
+                
+                textToRead += "Objectives: ";
+                $scope.selectedChapter.objectives.forEach((obj, index) => textToRead += `${index + 1}. ${obj}. `);
+                
+                textToRead += "Experts: ";
+                $scope.selectedChapter.experts.forEach((exp, index) => textToRead += `${index + 1}. ${exp}. `);
+                
+                textToRead += "Research Methods: ";
+                $scope.selectedChapter.researchMethods.forEach((method, index) => textToRead += `${index + 1}. ${method}. `);
+                
+                textToRead += "Disciplines: ";
+                $scope.selectedChapter.disciplines.forEach((discipline, index) => textToRead += `${index + 1}. ${discipline}. `);
+                
+                textToRead += `Modern Historiography: ${$scope.selectedChapter.modernHistoriography}. `;
+                
+                textToRead += "Notable Scholars: ";
+                $scope.selectedChapter.notableScholars.forEach((scholar, index) => {
+                    textToRead += `${index + 1}. ${scholar.name} from ${scholar.country}. `;
+                    textToRead += `Wrote ${scholar.book}. `;
+                    textToRead += "Key thoughts: ";
+                    scholar.thoughts.forEach((thought, tIndex) => {
+                        textToRead += `${tIndex + 1}. ${thought}. `;
+                    });
+                });
+                
+                $scope.currentUtterance = new SpeechSynthesisUtterance(textToRead);
+                
+                $scope.currentUtterance.onend = function() {
+                    $scope.$apply(function() {
+                        $scope.isPlaying = false;
+                    });
+                };
+                
+                $scope.speechSynthesis.speak($scope.currentUtterance);
+                $scope.isPlaying = true;
+            };
+
+            // Pause audio
+            $scope.pauseAudio = function() {
+                $scope.speechSynthesis.pause();
+                $scope.isPlaying = false;
+            };
+
+            // Stop audio completely
+            $scope.stopAudio = function() {
+                if ($scope.speechSynthesis) {
+                    $scope.speechSynthesis.cancel();
+                }
+                $scope.isPlaying = false;
+            };
+
+            // Clean up event listeners when controller is destroyed
+            $scope.$on('$destroy', function() {
+                angular.element(document).off('keydown');
+                $scope.stopAudio();
+            });
+        });
+    </script>
+</body>
+</html>

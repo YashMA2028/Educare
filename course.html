@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SSC Courses - Educare</title>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: #003366;
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 1.5rem;
+            padding: 0.5rem;
+            transition: color 0.3s;
+        }
+        
+        nav a:hover {
+            color: #ffcc00;
+        }
+        
+        .login-btn {
+            background-color: #ffcc00;
+            color: #003366;
+            border: none;
+            padding: 0.5rem 1.5rem;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .login-btn:hover {
+            background-color: #ff9900;
+            transform: translateY(-2px);
+        }
+        
+        /* Main Content */
+        .course-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+        
+        .page-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .page-header h1 {
+            color: #003366;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .page-header p {
+            color: #666;
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        /* Subject Cards */
+        .subject-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .subject-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .subject-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+        }
+        
+        .subject-img {
+            height: 180px;
+            background-color: #e6f7ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: #003366;
+        }
+        
+        .subject-content {
+            padding: 1.5rem;
+        }
+        
+        .subject-content h3 {
+            color: #003366;
+            margin-top: 0;
+            margin-bottom: 0.5rem;
+        }
+        
+        .subject-content p {
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+        
+        .view-btn {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            background-color: #003366;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .view-btn:hover {
+            background-color: #001a33;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #001a33;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                padding: 1rem;
+            }
+            
+            nav {
+                margin-top: 1rem;
+            }
+            
+            .subject-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .page-header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="logo">Educare</div>
+        <nav>
+            <a href="#">Home</a>
+            <a href="#">Courses</a>
+            <a href="#">About</a>
+            <a href="#">Library</a>
+        </nav>
+        <button class="login-btn">Login/Signup</button>
+    </header>
+
+    <!-- Main Content -->
+    <div class="course-container">
+        <div class="page-header">
+            <h1>SSC Maharashtra Board Courses</h1>
+            <p>Explore our comprehensive collection of study materials for Class 10 students following the Maharashtra State Board curriculum.</p>
+        </div>
+        
+        <div class="subject-grid">
+            <!-- History -->
+            <div class="subject-card">
+                <div class="subject-img" style="background-color: #fff8e6;">
+                    📜
+                </div>
+                <div class="subject-content">
+                    <h3>History</h3>
+                    <p>Explore India's rich historical heritage and world history with interactive lessons and quizzes.</p>
+                    <a href="history_main.html" class="view-btn">View Course</a>
+                </div>
+            </div>
+            
+            <!-- Civics -->
+            <div class="subject-card">
+                <div class="subject-img" style="background-color: #e6ffe6;">
+                    🏛️
+                </div>
+                <div class="subject-content">
+                    <h3>Political Science (Civics)</h3>
+                    <p>Understand the Indian political system, constitution, and democratic processes.</p>
+                    <a href="civics_main.html" class="view-btn">View Course</a>
+                </div>
+            </div>
+            
+            <!-- Geography -->
+            <div class="subject-card">
+                <div class="subject-img" style="background-color: #e6f7ff;">
+                    🌍
+                </div>
+                <div class="subject-content">
+                    <h3>Geography</h3>
+                    <p>Study physical and human geography with detailed maps and case studies.</p>
+                    <a href="#" class="view-btn">View Course</a>
+                </div>
+            </div>
+            
+            <!-- Mathematics -->
+            <div class="subject-card">
+                <div class="subject-img" style="background-color: #f0e6ff;">
+                    ➗
+                </div>
+                <div class="subject-content">
+                    <h3>Mathematics</h3>
+                    <p>Master algebra, geometry, trigonometry and more with step-by-step solutions.</p>
+                    <a href="#" class="view-btn">View Course</a>
+                </div>
+            </div>
+            
+            <!-- Science I -->
+            <div class="subject-card">
+                <div class="subject-img" style="background-color: #ffe6f0;">
+                    🔬
+                </div>
+                <div class="subject-content">
+                    <h3>Science Part I</h3>
+                    <p>Physics and Chemistry concepts with practical examples and experiments.</p>
+                    <a href="#" class="view-btn">View Course</a>
+                </div>
+            </div>
+            
+            <!-- Science II -->
+            <div class="subject-card">
+                <div class="subject-img" style="background-color: #ffffe6;">
+                    🧪
+                </div>
+                <div class="subject-content">
+                    <h3>Science Part II</h3>
+                    <p>Biology and Environmental Science with detailed diagrams and explanations.</p>
+                    <a href="#" class="view-btn">View Course</a>
+                </div>
+            </div>
+            
+            <!-- Marathi -->
+            <div class="subject-card">
+                <div class="subject-img" style="background-color: #e6ffe6;">
+                    📖
+                </div>
+                <div class="subject-content">
+                    <h3>Marathi</h3>
+                    <p>Comprehensive Marathi language and literature resources for SSC students.</p>
+                    <a href="#" class="view-btn">View Course</a>
+                </div>
+            </div>
+            
+            <!-- English -->
+            <div class="subject-card">
+                <div class="subject-img" style="background-color: #e6f7ff;">
+                    ✍️
+                </div>
+                <div class="subject-content">
+                    <h3>English</h3>
+                    <p>Improve your English language skills with grammar, writing and comprehension exercises.</p>
+                    <a href="#" class="view-btn">View Course</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+    <footer>
+        <p>&copy; 2025 Educare. All rights reserved.</p>
+        
+    </footer>
+</body>
+</html>

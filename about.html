@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="educareApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - EDUCARE</title>
+    <link rel="stylesheet" href="about.css"> <!-- Reuse the same CSS as the homepage -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="js/app.js"></script>
+</head>
+<body ng-controller="AboutController">
+
+    <!-- Header Section -->
+    <header>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="#/Courses">Courses</a>
+            <a href="#/about">About</a>
+            <a href="#/Library">Library</a>
+        </nav>
+        <a href="login_signup.html"><button>Login/Signup</button></a>
+    </header>
+
+    <!-- Hero Section for About Page -->
+    <section class="hero">
+        <h1>About EDUCARE</h1>
+        <p>Empowering learners through innovative and accessible education.</p>
+    </section>
+
+    <!-- Mission Section -->
+    <section class="mission-section">
+        <h2>Our Mission</h2>
+        <p>{{ mission }}</p>
+    </section>
+
+    <!-- Benefits Section -->
+    <section class="benefits-section">
+        <h2>Why Choose EDUCARE?</h2>
+        <div class="benefit-list">
+            <div class="benefit-item" ng-repeat="benefit in benefits">
+                <h3>{{ benefit.title }}</h3>
+                <p>{{ benefit.description }}</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer>
+        <p>&copy; 2025 EDUCARE. All rights reserved.</p>
+    </footer>
+
+    <script>
+        var app = angular.module('educareApp', []);
+        app.controller('AboutController', function($scope) {
+            $scope.mission = "Our mission is to bridge the gap between knowledge and learners, ensuring that education is available to all, anytime and anywhere.";
+            $scope.benefits = [
+                { title: "Comprehensive Topic-Based Tests", description: "Test your knowledge with quizzes tailored to each topic." },
+                { title: "Supports Multilingual", description: "Learn in your preferred language with our multilingual support." },
+                { title: "Accessible for Visually Impaired", description: "Our platform is designed to be inclusive for all learners." },
+                { title: "24/7 Access to Study Materials", description: "Access your study materials anytime, anywhere." }
+            ];
+        });
+    </script>
+
+</body>
+</html>

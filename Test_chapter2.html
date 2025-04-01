@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html ng-app="educareApp">
+<head>
+    <title>Chapter 2 Test - Civics</title>
+    <link rel="stylesheet" href="civics_main.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f7fa;
+            color: #333;
+        }
+        
+        .quiz-container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 30px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #003366;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .audio-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .audio-btn {
+            padding: 10px 20px;
+            background-color: #003366;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .key-hint {
+            font-size: 14px;
+            color: #666;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .question-container {
+            margin-bottom: 25px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            border-left: 4px solid #003366;
+        }
+        
+        .question-text {
+            font-weight: 600;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        
+        .options-container {
+            margin-left: 20px;
+        }
+        
+        .option {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .option input {
+            margin-right: 10px;
+        }
+        
+        .option label {
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+        }
+        
+        .option label:hover {
+            background-color: #e6f7ff;
+        }
+        
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        button {
+            padding: 10px 20px;
+            background-color: #003366;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        
+        button:hover {
+            background-color: #001a33;
+            transform: translateY(-2px);
+        }
+        
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .score-section {
+            text-align: center;
+            padding: 30px;
+            background-color: #e6f7ff;
+            border-radius: 8px;
+            margin-top: 20px;
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        .score-section h2 {
+            color: #003366;
+            margin-bottom: 15px;
+        }
+        
+        .score-message {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        
+        .back-to-chapter {
+            display: block;
+            text-align: center;
+            margin-top: 30px;
+            color: #003366;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+        
+        .back-to-chapter:hover {
+            color: #001a33;
+            text-decoration: underline;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body ng-controller="QuizController" ng-keydown="handleKeyPress($event)" tabindex="0">
+    <div class="quiz-container">
+        <h1>Chapter 2: The Electoral Process</h1>
+        
+        <!-- Audio Controls -->
+        <div class="audio-controls">
+            <button class="audio-btn" ng-click="readCurrentQuestion()">
+                {{ isPlaying ? '⏸ Pause' : '🔊 Read Question' }}
+            </button>
+            <div class="key-hint">Press Spacebar to hear the current question</div>
+        </div>
+
+        <!-- Current Question -->
+        <div ng-if="currentQuestionIndex < quizQuestions.length">
+            <div class="question-container">
+                <div class="question-text">
+                    Q{{ currentQuestionIndex + 1 }}: {{ quizQuestions[currentQuestionIndex].text }}
+                </div>
+                <div class="options-container">
+                    <div class="option" ng-repeat="option in quizQuestions[currentQuestionIndex].options">
+                        <input type="radio" 
+                               name="question{{ currentQuestionIndex }}" 
+                               id="option{{ $index }}"
+                               ng-model="quizQuestions[currentQuestionIndex].selectedAnswer" 
+                               ng-value="option">
+                        <label for="option{{ $index }}" ng-click="readOption(option)">{{ option }}</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation Buttons -->
+            <div class="navigation-buttons">
+                <button ng-click="prevQuestion()" ng-disabled="currentQuestionIndex === 0">Previous</button>
+                <button ng-click="nextQuestion()" ng-disabled="!quizQuestions[currentQuestionIndex].selectedAnswer">
+                    {{ currentQuestionIndex === quizQuestions.length - 1 ? 'Submit' : 'Next' }}
+                </button>
+            </div>
+        </div>
+
+        <!-- Score Section -->
+        <div class="score-section" ng-if="currentQuestionIndex === quizQuestions.length">
+            <h2>Test Completed!</h2>
+            <p class="score-message">Your Score: {{ score }} / {{ quizQuestions.length }}</p>
+            <div ng-if="score === quizQuestions.length" style="color: #27ae60; font-weight: bold;">
+                Excellent! Perfect score!
+            </div>
+            <div ng-if="score >= quizQuestions.length * 0.7 && score < quizQuestions.length" style="color: #f39c12;">
+                Good job! You have a strong understanding of this chapter.
+            </div>
+            <div ng-if="score < quizQuestions.length * 0.7" style="color: #e74c3c;">
+                Keep studying! Review the chapter and try again.
+            </div>
+            <button ng-click="restartQuiz()" style="margin-top: 20px;">Take Test Again</button>
+        </div>
+        
+        <a href="civics_main.html" class="back-to-chapter">← Back to Chapter Content</a>
+    </div>
+
+    <script>
+        var app = angular.module("educareApp", []);
+        app.controller("QuizController", function ($scope) {
+            $scope.quizQuestions = [
+                { 
+                    text: "What is the minimum age required to vote in India?", 
+                    options: ["16 years", "18 years", "21 years", "25 years"], 
+                    answer: "18 years" 
+                },
+                { 
+                    text: "Which constitutional article establishes the Election Commission of India?", 
+                    options: ["Article 324", "Article 356", "Article 370", "Article 52"], 
+                    answer: "Article 324" 
+                },
+                { 
+                    text: "The Model Code of Conduct comes into force:", 
+                    options: ["When elections are announced", "After results are declared", "Only during campaigning", "Throughout the year"], 
+                    answer: "When elections are announced" 
+                },
+                { 
+                    text: "Which amendment lowered the voting age from 21 to 18 years?", 
+                    options: ["42nd Amendment", "44th Amendment", "61st Amendment", "73rd Amendment"], 
+                    answer: "61st Amendment" 
+                },
+                { 
+                    text: "The EVM (Electronic Voting Machine) was first used in which year?", 
+                    options: ["1982", "1998", "2004", "2014"], 
+                    answer: "1982" 
+                }
+            ];
+
+            $scope.currentQuestionIndex = 0;
+            $scope.score = 0;
+            $scope.isPlaying = false;
+            
+            // Keyboard event handler
+            $scope.handleKeyPress = function(event) {
+                if (event.keyCode === 32) { // Spacebar
+                    event.preventDefault();
+                    $scope.readCurrentQuestion();
+                }
+            };
+
+            // Read current question and options
+            $scope.readCurrentQuestion = function() {
+                if ($scope.isPlaying) {
+                    window.speechSynthesis.cancel();
+                    $scope.isPlaying = false;
+                    return;
+                }
+                
+                const question = $scope.quizQuestions[$scope.currentQuestionIndex];
+                let textToRead = `Question ${$scope.currentQuestionIndex + 1}: ${question.text}. Options: `;
+                
+                question.options.forEach((option, index) => {
+                    textToRead += `${index + 1}. ${option}. `;
+                });
+
+                const utterance = new SpeechSynthesisUtterance(textToRead);
+                utterance.onend = function() {
+                    $scope.isPlaying = false;
+                    $scope.$apply();
+                };
+                
+                window.speechSynthesis.speak(utterance);
+                $scope.isPlaying = true;
+            };
+
+            // Read a specific option
+            $scope.readOption = function(option) {
+                window.speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(option);
+                window.speechSynthesis.speak(utterance);
+                $scope.isPlaying = false;
+            };
+
+            // Quiz navigation functions
+            $scope.nextQuestion = function() {
+                // Check if answer is correct
+                const currentQuestion = $scope.quizQuestions[$scope.currentQuestionIndex];
+                if (currentQuestion.selectedAnswer === currentQuestion.answer) {
+                    $scope.score++;
+                }
+                
+                window.speechSynthesis.cancel();
+                $scope.isPlaying = false;
+                $scope.currentQuestionIndex++;
+            };
+
+            $scope.prevQuestion = function() {
+                window.speechSynthesis.cancel();
+                $scope.isPlaying = false;
+                $scope.currentQuestionIndex--;
+            };
+
+            $scope.restartQuiz = function() {
+                window.speechSynthesis.cancel();
+                $scope.isPlaying = false;
+                $scope.currentQuestionIndex = 0;
+                $scope.score = 0;
+                $scope.quizQuestions.forEach(q => q.selectedAnswer = null);
+            };
+        });
+    </script>
+</body>
+</html>

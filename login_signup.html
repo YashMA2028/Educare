@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="authApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register & Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link rel="stylesheet" href="login_signup.css">
+    <script src="login_signup.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+
+</head>
+<body ng-controller="AuthController">
+    <div class="main-container">
+        <!-- Sign Up Form -->
+        <div class="container" ng-show="showSignUp"> 
+            <h1 class="form-title">Register</h1>
+            <form name="signUpForm" ng-submit="signUp()" novalidate>
+                <div class="input-group">
+                    <i class="fas fa-user"></i>
+                    <input type="text" ng-model="user.firstName" id="fName" placeholder="First Name" required autocomplete="off" spellcheck="false" readonly onfocus="this.removeAttribute('readonly');">
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-user"></i>
+                    <input type="text" ng-model="user.lastName" id="lName" placeholder="Last Name" required autocomplete="off" spellcheck="false" readonly onfocus="this.removeAttribute('readonly');">
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-envelope"></i> 
+                    <input type="email" ng-model="user.email" placeholder="Email" required autocomplete="off" spellcheck="false">
+
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-lock"></i> 
+                    <input type="password" ng-model="user.password" placeholder="Password" required>
+                </div>
+                <button type="submit" class="btn">Sign Up</button>
+            </form>
+            <p class="or">----------or----------</p>
+            <div class="links">
+                <p>Already Have an Account?</p>
+                <button ng-click="toggleForms()">Sign In</button>
+            </div>
+        </div>
+
+        <!-- Sign In Form -->
+        <div class="container" ng-show="!showSignUp"> 
+            <h1 class="form-title">Sign In</h1>
+            <form name="signInForm" ng-submit="signIn()" novalidate>
+                <div class="input-group">
+                    <i class="fas fa-envelope"></i> 
+                    <input type="email" ng-model="user.email" placeholder="Email" required>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-lock"></i> 
+                    <input type="password" ng-model="user.password" placeholder="Password" required>
+                </div>
+                <p class="recover"><a href="#">Recover Password</a></p>
+                <button type="submit" class="btn">Sign In</button>
+            </form>
+            <p class="or">----------or----------</p>
+            <div class="links">
+                <p>Don't Have an Account Yet?</p>
+                <button ng-click="toggleForms()">Sign Up</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var app = angular.module('authApp', []);
+        app.controller('AuthController', function ($scope) {
+            $scope.user = {};
+            $scope.showSignUp = true;
+            $scope.toggleForms = function () {
+                $scope.showSignUp = !$scope.showSignUp;
+            };
+            $scope.signUp = function () {
+                if ($scope.signUpForm.$valid) {
+                    alert('Sign Up Successful!');
+                } else {
+                    alert('Please fill in all fields correctly.');
+                }
+            };
+            $scope.signIn = function () {
+                if ($scope.signInForm.$valid) {
+                    alert('Sign In Successful!');
+                } else {
+                    alert('Please enter valid credentials.');
+                }
+            };
+        });
+    </script>
+</body>
+</html>

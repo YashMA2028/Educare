@@ -1,0 +1,162 @@
+/* General Styles - Kept mostly the same */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: url('https://via.placeholder.com/1920x1080') no-repeat center center/cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: #333;
+    position: relative;
+}
+
+/* Overlay for Background - Made slightly darker */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 0;
+}
+
+/* Main Container - Enhanced shadow and border */
+.main-container {
+    background-color: rgba(255, 255, 255, 0.92);
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+    padding: 40px;
+    width: 90%;
+    max-width: 380px;
+    position: relative;
+    z-index: 1;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    max-width: 380px;
+    width: 100%;
+    padding: 40px;
+    box-sizing: border-box;
+}
+
+/* Form Title - More emphasis */
+.form-title {
+    font-size: 26px;
+    margin-bottom: 25px;
+    color: #003366;
+    text-align: center;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+/* Input Group - Better spacing and focus effect */
+.input-group {
+    position: relative;
+    margin-bottom: 25px;
+}
+
+.input-group i {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #003366;
+    font-size: 16px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px 12px 12px 36px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 15px;
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.8);
+    box-sizing: border-box; /* Ensures the width includes padding & border */
+}
+
+
+.input-group input:focus {
+    border-color: #003366;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(0, 51, 102, 0.2);
+}
+
+/* Floating Labels - Smoother transition */
+.input-group label {
+    position: absolute;
+    left: 36px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #6b7280;
+    pointer-events: none;
+    transition: all 0.2s ease;
+    background-color: transparent;
+    padding: 0 5px;
+    font-size: 15px;
+}
+
+.input-group input:focus + label,
+.input-group input:not(:placeholder-shown) + label {
+    top: -10px;
+    font-size: 12px;
+    color: #003366;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 0 8px;
+    left: 20px;
+}
+
+/* Button - More polished look */
+.btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #003366;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    margin-top: 10px;
+}
+
+.btn:hover {
+    background-color: #002244;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Recover Password Link - Better emphasis */
+.recover {
+    text-align: center;
+    margin: 18px 0;
+}
+
+.recover a {
+    color: #003366;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 14px;
+    transition: color 0.2s;
+}
+
+.recover a:hover {
+    color: #001a33;
+    text-decoration: underline;
+}
+
+/* Responsive Design - Adjusted slightly */
+@media (max-width: 480px) {
+    .main-container {
+        padding: 30px;
+        width: 85%;
+    }
+    
+    .form-title {
+        font-size: 22px;
+    }
+}

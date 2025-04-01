@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html ng-app="educareApp">
+<head>
+    <title>EDUCARE</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-route.min.js"></script>
+    <script src="js/app.js"></script>
+</head>
+<body ng-controller="MainController">
+
+    <header>
+        <nav>
+            <a href="#/">Home</a>
+            <a href="#/Courses">Courses</a>
+            <a href="about.html">About</a>
+            <a href="#/Library">Library</a>
+          
+
+            
+        </nav>
+        <a href="login_signup.html"><button>Login/Signup</button></a>
+        
+
+    </header>
+
+    <section class="hero">
+        <h1>Learn From Home</h1>
+        <p>Education at Your Fingertips</p>
+        <button>Get Started</button>
+    </section>
+
+    <section class="featured-resources">
+        <h2>Featured Resources</h2>
+        <div class="resource-list">
+            <div class="resource-item">
+                <img src="images/ebook.png" alt="Ebook Icon" class="icon">
+                <h3>Free eBooks</h3>
+                <p>Access our collection of free eBooks on various topics.</p>
+                <button>Download Now</button>
+            </div>
+            <div class="resource-item">
+               
+                <div class="lab-feature">
+                    <img src="images/virtual-lab.png" alt=" virtual-lab" class="icon">
+                    <h3>Interactive Lab</h3>
+                    <p>Practice what you learn in our coding playground.</p>
+                    <button onclick="openLab()">Start Lab</button>
+                </div>
+            </div>
+            <div class="resource-item">
+                <img src="images/study-material.png" alt=" study-material" class="icon">
+                <h3>Study Materials</h3>
+                <p>Download comprehensive study materials for your courses.</p>
+                <button>Download Now</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta">
+        <h2>Start Your Learning Journey Today</h2>
+        
+    </section>
+
+    <footer>
+        <p>&copy; 2025 EDUCARE All rights reserved.</p>
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html ng-app="educareApp">
+<head>
+    <title>Educare - Civics</title>
+    <link rel="stylesheet" href="civics_main.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="civics_main.js"></script>
+</head>
+<body ng-controller="CivicsController" ng-keydown="handleKeyPress($event)" tabindex="0">
+    <!-- Header Section -->
+    <header>
+        <nav>
+            <a href="#/">Home</a>
+            <a href="#/courses">Courses</a>
+            <a href="#/about">About</a>
+            <a href="#/library">Library</a>
+        </nav>
+        <button>Login/Signup</button>
+    </header>
+
+    <!-- Main Content Section -->
+    <section class="course-content">
+        <h1>Educare</h1>
+        <h2>Class 10th - Civics</h2>
+        <p>SSC | Maharashtra Board</p>
+        
+        <div class="audio-controls">
+            <button ng-click="toggleAudio()" class="audio-btn">
+                {{ isPlaying ? '⏸ Pause' : '🔊 Read Aloud' }}
+            </button>
+        </div>
+
+        <!-- Chapter List -->
+        <div class="chapter-list">
+            <div class="chapter-item" ng-repeat="chapter in chapters" ng-click="toggleChapter(chapter.id)">
+                <h3>
+                    <span>Chapter {{chapter.id}}: {{chapter.name}}</span>
+                    <span>{{selectedChapterId === chapter.id ? '−' : '+'}}</span>
+                </h3>
+                
+                <!-- Chapter Details Section -->
+                <div class="chapter-details" ng-if="selectedChapterId === chapter.id">
+                    <p>{{chapter.description}}</p>
+
+                    <h4>Key Concepts</h4>
+                    <ul>
+                        <li ng-repeat="concept in chapter.keyConcepts" ng-click="readText(concept, $event)">
+                            {{concept}}
+                        </li>
+                    </ul>
+
+                    <h4>Important Principles</h4>
+                    <ul>
+                        <li ng-repeat="principle in chapter.principles" ng-click="readText(principle, $event)">
+                            {{principle}}
+                        </li>
+                    </ul>
+
+                    <h4>Constitutional Provisions</h4>
+                    <ul>
+                        <li ng-repeat="provision in chapter.constitutionalProvisions" ng-click="readText(provision, $event)">
+                            <strong>Article {{provision.article}}:</strong> {{provision.description}}
+                        </li>
+                    </ul>
+
+                    <h4>Landmark Cases</h4>
+                    <ul>
+                        <li ng-repeat="case in chapter.landmarkCases" ng-click="readText(case.name + '. ' + case.description, $event)">
+                            <strong>{{case.name}} ({{case.year}}):</strong> {{case.description}}
+                        </li>
+                    </ul>
+
+                    <h4>Important Amendments</h4>
+                    <ul>
+                        <li ng-repeat="amendment in chapter.amendments" ng-click="readText(amendment.number + ' Amendment. ' + amendment.description, $event)">
+                            <strong>{{amendment.number}} Amendment ({{amendment.year}}):</strong> {{amendment.description}}
+                        </li>
+                    </ul>
+
+                    <!-- Test Button -->
+                    <div ng-if="chapter.id === 1">
+                        <a href="Test_chapter1.html" class="test-btn">
+                            Let's Test Our Understanding
+                        </a>
+                    </div>
+                    <div ng-if="chapter.id === 2">
+                        <a href="Test_chapter2.html" class="test-btn">
+                            Let's Test Our Understanding
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer>
+        <p>&copy; 2025 Educare. All rights reserved.</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html ng-app="educareApp">
+<head>
+    <title>Chapter 5 Quiz</title>
+    <link rel="stylesheet" href="history_main.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .quiz-container {
+            background-color: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .audio-btn {
+            padding: 10px 20px;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-bottom: 15px;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+        .audio-btn:hover {
+            background: #2980b9;
+        }
+        .key-hint {
+            font-size: 14px;
+            color: #7f8c8d;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+        .question-container {
+            margin-bottom: 25px;
+            padding: 20px;
+            border: 1px solid #ecf0f1;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        label {
+            display: block;
+            margin: 10px 0;
+            padding: 12px;
+            background: #ecf0f1;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        label:hover {
+            background: #d6eaf8;
+            transform: translateX(5px);
+        }
+        input[type="radio"] {
+            margin-right: 10px;
+        }
+        button {
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 15px;
+            margin-right: 10px;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+        button:hover:not(:disabled) {
+            background: #2980b9;
+        }
+        button:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+        }
+        .score-section {
+            text-align: center;
+            padding: 30px;
+            background: #e8f4fc;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        .score-section h2 {
+            color: #27ae60;
+            margin-bottom: 20px;
+        }
+        .score-section p {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body ng-controller="QuizController" ng-keydown="handleKeyPress($event)" tabindex="0">
+    <div class="quiz-container">
+        <h1>Chapter 5: Mass Media and History</h1>
+
+        <!-- Audio Controls -->
+        <button class="audio-btn" ng-click="readCurrentQuestion()">
+            🔊 Read Question (Press Spacebar)
+        </button>
+        <div class="key-hint">Press Spacebar to hear the current question read aloud</div>
+
+        <!-- Current Question -->
+        <div class="question-container" ng-if="currentQuestionIndex < quizQuestions.length">
+            <p><strong>Q{{ currentQuestionIndex + 1 }}:</strong> {{ quizQuestions[currentQuestionIndex].text }}</p>
+            <div ng-repeat="option in quizQuestions[currentQuestionIndex].options">
+                <label ng-click="readOption(option)">
+                    <input type="radio" name="question{{ currentQuestionIndex }}" 
+                           ng-model="quizQuestions[currentQuestionIndex].selectedAnswer" 
+                           ng-value="option">
+                    {{ option }}
+                </label>
+            </div>
+
+            <!-- Navigation Buttons -->
+            <div class="navigation-buttons">
+                <button ng-click="prevQuestion()" ng-disabled="currentQuestionIndex === 0">Previous</button>
+                <button ng-click="nextQuestion()" ng-disabled="!quizQuestions[currentQuestionIndex].selectedAnswer">
+                    {{ currentQuestionIndex === quizQuestions.length - 1 ? 'Submit Quiz' : 'Next Question' }}
+                </button>
+            </div>
+        </div>
+
+        <!-- Score Section -->
+       <!-- Score Section -->
+       <div class="score-section" ng-if="currentQuestionIndex === quizQuestions.length">
+        <h2>Test Completed!</h2>
+        <p class="score-message">Your Score: {{ score }} / {{ quizQuestions.length }}</p>
+        <div ng-if="score === quizQuestions.length" style="color: #27ae60; font-weight: bold;">
+            Excellent! Perfect score!
+        </div>
+        <div ng-if="score >= quizQuestions.length * 0.7 && score < quizQuestions.length" style="color: #f39c12;">
+            Good job! You have a strong understanding of this chapter.
+        </div>
+        <div ng-if="score < quizQuestions.length * 0.7" style="color: #e74c3c;">
+            Keep studying! Review the chapter and try again.
+        </div>
+        <button ng-click="restartQuiz()" style="margin-top: 20px;">Take Test Again</button>
+    </div>
+    
+    <a href="history.html" class="back-to-chapter">← Back to Chapter Content</a>
+</div>
+
+    <script>
+        var app = angular.module("educareApp", []);
+        app.controller("QuizController", function ($scope) {
+            $scope.quizQuestions = [
+                {
+                    text: "What is the primary focus of media history?",
+                    options: ["Studying ancient texts", "Analyzing the influence of media on historical narratives", "Exploring archaeological findings", "Focusing on mythological stories"],
+                    correctAnswer: "Analyzing the influence of media on historical narratives"
+                },
+                {
+                    text: "Which book did Marshall McLuhan write?",
+                    options: ["Understanding Media", "Manufacturing Consent", "The Dance of Shiva", "Historians' Fallacies"],
+                    correctAnswer: "Understanding Media"
+                },
+                {
+                    text: "What concept did Marshall McLuhan introduce?",
+                    options: ["The medium is the message", "Manufacturing consent", "The uses and abuses of history", "The archaeology of knowledge"],
+                    correctAnswer: "The medium is the message"
+                },
+                {
+                    text: "What is a key concern in media and history?",
+                    options: ["Media bias", "Archaeological accuracy", "Mythological symbolism", "Economic policies"],
+                    correctAnswer: "Media bias"
+                },
+                {
+                    text: "Which scholar analyzed media's role in shaping public opinion?",
+                    options: ["Marshall McLuhan", "Noam Chomsky", "Ananda Coomaraswamy", "Stella Kramrisch"],
+                    correctAnswer: "Noam Chomsky"
+                }
+            ];
+
+            $scope.currentQuestionIndex = 0;
+            $scope.score = 0;
+            
+            // Keyboard event handler
+            $scope.handleKeyPress = function(event) {
+                if (event.keyCode === 32) { // Spacebar
+                    event.preventDefault();
+                    $scope.readCurrentQuestion();
+                }
+            };
+
+            // Read current question and options
+            $scope.readCurrentQuestion = function() {
+                // Stop any current speech
+                window.speechSynthesis.cancel();
+                
+                const question = $scope.quizQuestions[$scope.currentQuestionIndex];
+                let textToRead = `Question ${$scope.currentQuestionIndex + 1}: ${question.text}. Options: `;
+                
+                question.options.forEach((option, index) => {
+                    textToRead += `${index + 1}. ${option}. `;
+                });
+
+                const utterance = new SpeechSynthesisUtterance(textToRead);
+                utterance.rate = 0.9; // Slightly slower than normal
+                window.speechSynthesis.speak(utterance);
+            };
+
+            // Read a specific option
+            $scope.readOption = function(option) {
+                window.speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(`Option: ${option}`);
+                utterance.rate = 0.9;
+                window.speechSynthesis.speak(utterance);
+            };
+
+            // Quiz navigation functions
+            $scope.nextQuestion = function() {
+                // Check if answer is correct
+                const currentQuestion = $scope.quizQuestions[$scope.currentQuestionIndex];
+                if (currentQuestion.selectedAnswer === currentQuestion.correctAnswer) {
+                    $scope.score++;
+                }
+                
+                window.speechSynthesis.cancel();
+                $scope.currentQuestionIndex++;
+            };
+
+            $scope.prevQuestion = function() {
+                window.speechSynthesis.cancel();
+                $scope.currentQuestionIndex--;
+            };
+
+            $scope.restartQuiz = function() {
+                window.speechSynthesis.cancel();
+                $scope.currentQuestionIndex = 0;
+                $scope.score = 0;
+                $scope.quizQuestions.forEach(q => q.selectedAnswer = null);
+            };
+        });
+    </script>
+</body>
+</html>
