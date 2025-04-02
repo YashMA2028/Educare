@@ -54,17 +54,117 @@ query_data = [
     {"question": "What are the main themes of the poem?", 
      "answer": "Freedom of Thought and Expression, Importance of Education, Nationalism and Unity, Overcoming Fear and Oppression, Breaking Social Barriers."},
     {"question": "What is the historical context of the poem?", 
-     "answer": "The poem was written during British rule in India, reflecting Tagore's vision of an independent and progressive nation."}
+     "answer": "The poem was written during British rule in India, reflecting Tagore's vision of an independent and progressive nation."},
+     {
+    "question": "What is the narrator quite successful at?",
+    "answer": "The narrator is quite successful at stealing, as he is an experienced and fairly successful thief."
+  },
+  {
+    "question": "Who does ‘I’ refer to in this story?",
+    "answer": "'I' refers to Hari Singh, the narrator of the story, who is a young thief."
+  },
+  {
+    "question": "What favours did Anil do for the narrator?",
+    "answer": "Anil taught the narrator to cook, write, and helped him with basic education, including writing his name and learning to write sentences."
+  },
+  {
+    "question": "What proves that the narrator still practised deceit?",
+    "answer": "The narrator lied about his name (calling himself Hari Singh), and he also lied about his ability to cook to secure a job with Anil."
+  },
+  {
+    "question": "What could have caused the scars on Hari’s face?",
+    "answer": "The scars on Hari’s face could have been caused by his life as a thief, involving dangerous situations and confrontations."
+  },
+  {
+    "question": "Why did Hari hesitate to board the train?",
+    "answer": "Hari hesitated to board the train because of an unexplained feeling, perhaps guilt or uncertainty about his decision to rob Anil."
+  },
+  {
+    "question": "Why does Hari believe that friends were more trouble than help?",
+    "answer": "Hari believes that friends are more trouble than help because they complicate his life, and he prefers to stay independent, not trusting anyone."
+  },
+  {
+    "question": "What is face reading?",
+    "answer": "Face reading refers to the practice of analyzing people’s facial expressions and features to determine their emotions or character traits."
+  },
+  {
+    "question": "What were Hari’s regrets as he pondered over his theft?",
+    "answer": "Hari regretted losing Anil’s trust and realized that stealing would not lead him to be a clever, respected man, but rather someone trapped in deceit."
+  },
+  {
+    "question": "Does Anil realize that he has been robbed?",
+    "answer": "Although Anil likely knows he has been robbed, he does not show it outwardly. He keeps his calm and pays Hari the next morning without showing any signs of anger or disappointment."
+  },
+  {
+    "question": "Why did Hari feel nervous?",
+    "answer": "Hari felt nervous because returning the stolen money undetected was more difficult than stealing it in the first place. He feared being caught."
+  },
+  {
+    "question": "What is a satchel?",
+    "answer": "A school bag."
+  },
+  {
+    "question": "What does 'pard' mean?",
+    "answer": "It is a poetical short form of ‘leopard’."
+  },
+  {
+    "question": "What does 'cannon’s mouth' refer to?",
+    "answer": "It refers to facing great danger to life."
+  },
+  {
+    "question": "What are youthful hose?",
+    "answer": "They are close-fitting coverings for legs."
+  },
+  {
+    "question": "What are players in this context?",
+    "answer": "Actors."
+  },
+  {
+    "question": "What do 'exits and entrances' refer to?",
+    "answer": "They refer to the coming and going of people in life, similar to an act or play."
+  },
+  {
+    "question": "What does puking mean?",
+    "answer": "It means throwing up or vomiting."
+  },
+  {
+    "question": "What is a woeful ballad?",
+    "answer": "A sad, sorrowful song or poem."
+  },
+  {
+    "question": "Why is reputation like a bubble?",
+    "answer": "Reputation is like a bubble because it is fragile and can easily burst, often when put under pressure."
+  },
+  {
+    "question": "What is the major difference noticed in the 5th and 6th stage of life?",
+    "answer": "The 5th stage is that of a mature, wise man (the justice) who holds a position of authority, while the 6th stage is characterized by the physical decline and weakness of old age, marked by a shriveled body and loss of strength."
+  },
+  {
+    "question": "What does treble mean in this context?",
+    "answer": "It refers to something that is three times weaker than its usual state."
+  },
+  {
+    "question": "What is oblivion?",
+    "answer": "It is the state of being unaware or unconscious of surroundings and happenings."
+  },
+  {
+    "question": "What does second childishness mean?",
+    "answer": "It refers to a return to the helpless, ignorant state of a child, typically in old age."
+  },
+  {
+    "question": "What does sans mean?",
+    "answer": "Sans means without."
+  }
 ]
 
-# Course structure database
+# Course structure database - updated with underscores for multi-word subjects
 COURSES = {
-    "10": ["English", "Mathematics", "Science", "Social Studies"],
+    "10": ["English", "Mathematics", "Science", "Social_Studies"],
     "9": ["English", "Mathematics", "Science"],
     "8": ["English", "Mathematics", "Science"]
 }
 
-# Navigation phrases
+# Navigation phrases - updated with underscores for multi-word subjects
 nav_phrases = [
     {"phrase": "standard 10", "grade": "10", "subject": None},
     {"phrase": "standard 9", "grade": "9", "subject": None},
@@ -72,7 +172,7 @@ nav_phrases = [
     {"phrase": "english", "grade": None, "subject": "English"},
     {"phrase": "mathematics", "grade": None, "subject": "Mathematics"},
     {"phrase": "science", "grade": None, "subject": "Science"},
-    {"phrase": "social studies", "grade": None, "subject": "Social Studies"},
+    {"phrase": "social studies", "grade": None, "subject": "Social_Studies"},
     {"phrase": "home page", "action": "home"},
     {"phrase": "main menu", "action": "home"},
     {"phrase": "go back", "action": "back"},
@@ -117,8 +217,11 @@ def navigation_chatbot(user_query):
                 session['current_grade'] = grade
                 session['nav_stage'] = 'subject_selection'
                 
-                # Create clickable subject links
-                subject_links = [create_anchor_tag(subj, f"{subj}_{grade}") for subj in COURSES[grade]]
+                # Create clickable subject links with proper display names
+                subject_links = []
+                for subj in COURSES[grade]:
+                    display_name = subj.replace('_', ' ')
+                    subject_links.append(create_anchor_tag(display_name, f"{subj}_{grade}"))
                 subject_list = ", ".join(subject_links)
                 
                 return {
@@ -133,17 +236,22 @@ def navigation_chatbot(user_query):
         grade = session.get('current_grade')
         if grade:
             for subject in COURSES[grade]:
-                if subject.lower() in processed_query:
+                # Match both with and without underscores
+                if subject.lower().replace('_', ' ') in processed_query:
                     link = f"{subject}_{grade}"
+                    display_name = subject.replace('_', ' ')
                     return {
                         "type": "navigation",
-                        "content": f"Taking you to {create_anchor_tag(f'{subject} Standard {grade}', link)}",
+                        "content": f"Taking you to {create_anchor_tag(f'{display_name} Standard {grade}', link)}",
                         "action": {"type": "open_subject", "link": link},
                         "html": True
                     }
             
             # Show subjects again as clickable links
-            subject_links = [create_anchor_tag(subj, f"{subj}_{grade}") for subj in COURSES[grade]]
+            subject_links = []
+            for subj in COURSES[grade]:
+                display_name = subj.replace('_', ' ')
+                subject_links.append(create_anchor_tag(display_name, f"{subj}_{grade}"))
             subject_list = ", ".join(subject_links)
             return {
                 "type": "navigation",
@@ -182,9 +290,10 @@ def navigation_chatbot(user_query):
                 subject = nav_match['subject']
                 grade = session['current_grade']
                 link = f"{subject}_{grade}"
+                display_name = subject.replace('_', ' ')
                 return {
                     "type": "navigation",
-                    "content": f"Taking you to {create_anchor_tag(f'{subject} Standard {grade}', link)}",
+                    "content": f"Taking you to {create_anchor_tag(f'{display_name} Standard {grade}', link)}",
                     "action": {"type": "open_subject", "link": link},
                     "html": True
                 }
@@ -205,10 +314,10 @@ def navigation_chatbot(user_query):
         if nav_match.get('grade'):
             session['current_grade'] = nav_match['grade']
             session['nav_stage'] = 'subject_selection'
-            subject_links = [
-                create_anchor_tag(subj, f"{subj}_{nav_match['grade']}") 
-                for subj in COURSES[nav_match['grade']]
-            ]
+            subject_links = []
+            for subj in COURSES[nav_match['grade']]:
+                display_name = subj.replace('_', ' ')
+                subject_links.append(create_anchor_tag(display_name, f"{subj}_{nav_match['grade']}"))
             subject_list = ", ".join(subject_links)
             return {
                 "type": "navigation",
@@ -219,10 +328,10 @@ def navigation_chatbot(user_query):
     
     # No match found - guide user with clickable links
     if 'current_grade' in session:
-        subject_links = [
-            create_anchor_tag(subj, f"{subj}_{session['current_grade']}") 
-            for subj in COURSES[session['current_grade']]
-        ]
+        subject_links = []
+        for subj in COURSES[session['current_grade']]:
+            display_name = subj.replace('_', ' ')
+            subject_links.append(create_anchor_tag(display_name, f"{subj}_{session['current_grade']}"))
         subject_list = ", ".join(subject_links)
         return {
             "type": "navigation",
@@ -244,7 +353,7 @@ def navigation_chatbot(user_query):
         }
 
 def query_chatbot(user_query):
-    """Handle poem-related questions (same as before)"""
+    """Handle poem-related questions"""
     processed_query = preprocess_text(user_query)
     
     # Semantic search
@@ -280,7 +389,8 @@ def index():
 @app.route('/home')
 def home():
     session.clear()
-    return render_template('home.html')
+    # Changed from home.html to English_10.html as the main page
+    return render_template('English_10.html')
 
 @app.route('/select_standard/<grade>')
 def select_standard(grade):
@@ -296,17 +406,31 @@ def select_standard(grade):
 def load_subject(subject_link):
     """Handle subject links in Subject_Standard format"""
     try:
-        parts = subject_link.split('_')
+        # Remove .html if present
+        if subject_link.endswith('.html'):
+            subject_link = subject_link[:-5]
+            
+        # Split into subject and grade
+        parts = subject_link.rsplit('_', 1)
         if len(parts) != 2:
             return "Invalid subject link format", 400
             
-        subject, standard = parts
-        template_name = f"{subject}_{standard}.html"
+        subject, grade = parts
         
-        # Verify template exists
+        # Verify the grade exists in our courses
+        if grade not in COURSES:
+            return f"Standard {grade} not found", 404
+            
+        # Verify the subject exists for this grade
+        if subject not in COURSES[grade]:
+            return f"Subject {subject.replace('_', ' ')} not found for Standard {grade}", 404
+            
+        # Check if the template exists
+        template_name = f"{subject}_{grade}.html"
         template_path = os.path.join(app.template_folder, template_name)
+        
         if not os.path.exists(template_path):
-            return f"Subject content not found: {template_name}", 404
+            return f"Content page not found: {template_name}", 404
             
         return render_template(template_name)
     
@@ -316,41 +440,69 @@ def load_subject(subject_link):
 @app.route('/navigation-bot', methods=['POST'])
 def navigation_bot_api():
     data = request.json
-    user_query = data.get("query", "")
+    user_query = data.get("query", "").strip().lower()
     voice_input = data.get("voice", False)
     
     if not user_query:
         return jsonify({"response": "Please provide a valid query."})
     
+    # Handle home command
+    if user_query in ["home", "main menu", "go home"]:
+        session.clear()
+        return jsonify({
+            "response": "Returning to home page",
+            "action": {
+                "type": "redirect",
+                "url": url_for('index')  # This will generate the correct URL for index.html
+            },
+            "html": False,
+            "voice_support": voice_input
+        })
+    
     response = navigation_chatbot(user_query)
     
-    response_with_voice = {
+    # If navigation chatbot suggested home (from nav_phrases)
+    if response.get("content") == "Returning to home page":
+        response["action"] = {
+            "type": "redirect",
+            "url": url_for('index')
+        }
+    
+    return jsonify({
         "response": response["content"],
         "action": response.get("action"),
         "html": response.get("html", False),
-        "voice_support": True if voice_input else False
-    }
-    
-    return jsonify(response_with_voice)
+        "voice_support": voice_input
+    })
 
 @app.route('/query-bot', methods=['POST'])
 def query_bot_api():
     data = request.json
-    user_query = data.get("query", "")
+    user_query = data.get("query", "").strip().lower()
     voice_input = data.get("voice", False)
     
     if not user_query:
         return jsonify({"response": "Please provide a valid query."})
     
-    response = query_chatbot(user_query)
+    # Handle home command
+    if user_query in ["home", "main menu", "go home"]:
+        session.clear()
+        return jsonify({
+            "response": "Returning to home page",
+            "action": {
+                "type": "redirect",
+                "url": url_for('index')
+            },
+            "html": False,
+            "voice_support": voice_input
+        })
     
-    response_with_voice = {
+    response = query_chatbot(user_query)
+    return jsonify({
         "response": response["content"],
         "confidence": response.get("confidence", 0),
-        "voice_support": True if voice_input else False
-    }
-    
-    return jsonify(response_with_voice)
+        "voice_support": voice_input
+    })
 
 if __name__ == "__main__":
     app.run(debug=True)

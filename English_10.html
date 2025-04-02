@@ -19,7 +19,7 @@
         <button class="chapter-label" onclick="loadChapter('Eng10_Chapter1')">📖 Chapter 1: Where the mind is without fear</button>
         <button class="chapter-label" onclick="loadChapter('Eng10_Chapter2')">📖 Chapter 2: The Thief's Story</button>
         <button class="chapter-label" onclick="loadChapter('Eng10_Chapter3')">📖 Chapter 3: All the worlds a stage</button>
-       
+        
     </div>
 
     <div class="content-wrapper">
@@ -448,16 +448,34 @@ function loadChapter(chapter) {
 
         function sendMessage() {
             const chatInput = document.getElementById("chat-input");
-            const userMessage = chatInput.value.trim();
+            const userMessage = chatInput.value.trim().toLowerCase(); // Convert to lowercase for case-insensitive matching
+            
+            // Check for home command first
+            if (userMessage === 'home' || userMessage === 'main menu' || userMessage === 'go home') {
+                appendMessage('You', userMessage);
+                chatInput.value = '';
+                appendMessage('Assistant', "Returning to home page...");
+                setTimeout(() => {
+                    window.location.href = '/'; // Redirect to index.html
+                }, 1000);
+                return;
+            }
+        
             if (!userMessage) return;
-
+        
             appendMessage('You', userMessage);
             chatInput.value = '';
-
+        
             const typingIndicator = document.getElementById("typing-indicator");
             typingIndicator.style.display = "flex";
-
-            fetch('/query-bot', {
+        
+            // Determine which chatbot endpoint to use
+            const endpoint = userMessage.includes('chapter') || 
+                            userMessage.includes('standard') || 
+                            userMessage.includes('subject') ? 
+                            '/navigation-bot' : '/query-bot';
+        
+            fetch(endpoint, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -469,8 +487,11 @@ function loadChapter(chapter) {
                 typingIndicator.style.display = "none";
                 appendMessage('Assistant', data.response);
                 
-                if (data.action) {
-                    handleNavigation(data.action);
+                // Handle redirect action if present
+                if (data.action && data.action.type === 'redirect') {
+                    setTimeout(() => {
+                        window.location.href = data.action.url;
+                    }, 1000);
                 }
             })
             .catch(error => {
@@ -481,7 +502,12 @@ function loadChapter(chapter) {
         }
         
         function handleNavigation(action) {
-            if (action.type === 'open_subject' && action.link) {
+            if (action.type === 'redirect' && action.url) {
+                setTimeout(() => {
+                    window.location.href = action.url;
+                }, 1000);
+            }
+            else if (action.type === 'open_subject' && action.link) {
                 const confirmMsg = `Taking you to ${action.link.replace('_', ' ')}`;
                 appendMessage('Assistant', confirmMsg);
                 
@@ -489,6 +515,7 @@ function loadChapter(chapter) {
                     window.location.href = `/subject/${action.link}`;
                 }, 1000);
             }
+        
         }
 
         function appendMessage(sender, message) {
