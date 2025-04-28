@@ -1,0 +1,1557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English - Standard 10</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='English_10.css') }}" rel="stylesheet">
+   
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href="{{ url_for('static', filename='theme-toggle.css') }}" rel="stylesheet">
+    <script src="{{ url_for('static', filename='theme-toggle.js') }}"></script>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">English - Standard 10</a>
+        </div>
+        <li class="nav-item theme-switch-wrapper">
+            <label class="theme-switch" for="checkbox">
+                <input type="checkbox" id="checkbox" />
+                <div class="slider round"></div>
+            </label>
+        </li>
+    </nav>
+
+    <div class="sidebar">
+        <h3>Chapters</h3>
+        <div class="chapter-list">
+          <button class="chapter-label" onclick="loadChapter('Eng10_Chapter1')">
+            <i class="fas fa-book"></i>
+            Chapter 1: Where the mind is without fear
+            <span class="chapter-progress completed"></span>
+          </button>
+          <button class="chapter-label" onclick="loadChapter('Eng10_Chapter2')">
+            <i class="fas fa-book"></i>
+            Chapter 2: The Thief's Story
+            <span class="chapter-progress"></span>
+          </button>
+          <button class="chapter-label" onclick="loadChapter('Eng10_Chapter3')">
+            <i class="fas fa-book"></i>
+            Chapter 3: All the worlds a stage
+            <span class="chapter-progress completed"></span>
+          </button>
+        </div>
+      </div>
+      
+      <!-- Add this for mobile toggle -->
+      <button class="sidebar-toggle" onclick="toggleSidebar()">≡</button>
+
+    <div class="content-wrapper">
+        <div class="main-content">
+            <div class="content-box" id="chapter-content">
+                <h2>Welcome to English - Standard 10</h2>
+                <p class="lead">Select a chapter from the sidebar to begin learning.</p>
+                <div class="row mt-4">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Course Overview</h5>
+                                <p class="card-text">This course covers poetry analysis, grammar, composition, and literature studies for Standard 10 students.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Recent Activity</h5>
+                                <p class="card-text">Last completed: Chapter 1 - Poem Analysis</p>
+                                <button class="btn btn-sm btn-primary" onclick="loadChapter('Eng10_Chapter1')">Continue</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="chatbot-icon" onclick="toggleChat()">💬</div>
+
+    <div class="chat-window" id="chat-window">
+        <div class="chat-header">
+            Learning Assistant
+            <span onclick="toggleChat()">❌</span>
+        </div>
+        <div class="chat-body" id="chat-body">
+            <div class="typing-indicator" id="typing-indicator">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        <div class="chat-footer">
+            <input type="text" id="chat-input" class="chat-input" placeholder="Type or speak your question...">
+            <button id="tts-toggle" title="Toggle Speech">
+                <i class="fas fa-volume-up"></i>
+            </button>
+            <button class="voice-btn" id="voice-btn" title="Voice input">
+                <i class="fas fa-microphone"></i>
+            </button>
+            <span class="voice-status">Listening...</span>
+            <button class="send-btn" onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <script>
+        function toggleSidebar() {
+            document.querySelector('.sidebar').classList.toggle('active');
+          }
+        // Global variables
+        let recognition;
+        let isListening = false;
+        let isTTSEnabled = true;
+        let voiceRecognitionActive = false;
+        let currentIndex = 0;
+        
+        // Course structure database
+        const COURSES = {
+            "10": ["English", "Mathematics", "Science", "Social_Studies"],
+            "9": ["English", "Mathematics", "Science"],
+            "8": ["English", "Mathematics", "Science"]
+        };
+
+        // Flipbook pages for Chapter 2
+        const pages = [
+            "I was still a thief when I met Anil. And though only 15, I was an experienced and fairly successful hand.",
+            "Anil was watching a wrestling match when I approached him. He was about 25 — a tall, lean fellow... I hadn't had much luck of late and thought I might be able to get into the young man's confidence.",
+            "“You look a bit of a wrestler yourself,\" I said. A little flattery helps in making friends. Anil said, 'So do you.' He agreed to let me stay with him, though he couldn't pay me.",
+            "I asked, \"Can you feed me?\" \"Can you cook?\" I lied again and said, \"I can cook.\" He took me to his room above a sweet shop and allowed me to sleep in the balcony.",
+            "One evening, Anil returned with a small bundle of notes, saying he had sold a book to a publisher. He tucked the money under the mattress, where I could later find it.",
+            "My hand slid under the mattress, searching for the notes. I found them, drew them out quietly, and left the room, planning to escape with the money.",
+            "I walked to the station and thought about what I had done. The money was for my future, but I couldn't stop feeling guilty. Anil would be hurt if he found out.",
+            "I considered leaving for Lucknow on the 10:30 train, but hesitated. As I saw the train pull out, I realized I had missed my chance.",
+            "I wandered back to the bazaar and sat in the shelter of the clock tower, feeling ashamed and cold, not knowing where to go.",
+            "The next morning, Anil was up early and made tea. He handed me a fifty-rupee note, which confused me. He seemed to know what I had done but said nothing.",
+            "Anil never confronted me about the theft. Instead, he continued to teach me, and I began to appreciate his kindness. I knew I couldn't deceive him any longer."
+        ];
+
+        // Initialize voice recognition
+        function initVoiceRecognition() {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            if (!SpeechRecognition) {
+                console.warn("Speech recognition not supported");
+                document.getElementById("voice-btn").style.display = "none";
+                return null;
+            }
+
+            recognition = new SpeechRecognition();
+            recognition.continuous = false;
+            recognition.interimResults = false;
+            recognition.lang = 'en-US';
+
+            recognition.onresult = (event) => {
+                const transcript = event.results[0][0].transcript;
+                document.getElementById("chat-input").value = transcript;
+                sendMessage(); // Auto-submit after voice input
+            };
+
+            recognition.onerror = (event) => {
+                console.error("Voice error:", event.error);
+                appendMessage('Assistant', "Sorry, I didn't catch that. Please try speaking again.");
+                resetVoiceUI();
+            };
+
+            recognition.onend = () => {
+                resetVoiceUI();
+            };
+
+            return recognition;
+        }
+
+        function resetVoiceUI() {
+            document.getElementById("voice-btn").classList.remove("listening");
+            document.querySelector(".voice-status").style.display = "none";
+            isListening = false;
+        }
+
+        function startVoiceRecognition() {
+            if (!recognition) {
+                recognition = initVoiceRecognition();
+                if (!recognition) return;
+            }
+
+            try {
+                recognition.start();
+                isListening = true;
+                document.getElementById("voice-btn").classList.add("listening");
+                document.querySelector(".voice-status").style.display = "block";
+            } catch (e) {
+                console.error("Error starting recognition:", e);
+                appendMessage('Assistant', "Voice recognition failed to start. Please check your microphone permissions.");
+            }
+        }
+
+        function stopVoiceRecognition() {
+            if (recognition) {
+                recognition.stop();
+                resetVoiceUI();
+            }
+        }
+
+        // Text-to-Speech Functionality
+        function speak(text) {
+            if (!isTTSEnabled) return;
+            
+            if ('speechSynthesis' in window) {
+                // Cancel any previous speech
+                window.speechSynthesis.cancel();
+                
+                const utterance = new SpeechSynthesisUtterance();
+                // Clean the text by removing HTML tags
+                const cleanText = text.replace(/<[^>]+>/g, '');
+                utterance.text = cleanText;
+                utterance.rate = 0.9;
+                utterance.pitch = 1;
+                utterance.volume = 1;
+                
+                // Try to select a natural-sounding voice
+                const voices = window.speechSynthesis.getVoices();
+                const preferredVoices = ['Google UK English Female', 'Microsoft Zira - English (United States)'];
+                const selectedVoice = voices.find(v => preferredVoices.includes(v.name)) || voices[0];
+                
+                if (selectedVoice) {
+                    utterance.voice = selectedVoice;
+                }
+                
+                window.speechSynthesis.speak(utterance);
+            }
+        }
+
+        // Toggle TTS functionality
+        function toggleTTS() {
+            isTTSEnabled = !isTTSEnabled;
+            const ttsButton = document.getElementById("tts-toggle");
+            if (isTTSEnabled) {
+                ttsButton.innerHTML = '<i class="fas fa-volume-up"></i>';
+                ttsButton.title = "Disable Speech";
+                speak("Text to speech is now enabled");
+            } else {
+                ttsButton.innerHTML = '<i class="fas fa-volume-mute"></i>';
+                ttsButton.title = "Enable Speech";
+                window.speechSynthesis.cancel();
+            }
+        }
+
+        // CHAPTER LOADING SYSTEM
+        function loadChapter(chapter) {
+            const contentBox = document.getElementById('chapter-content');
+            
+            // Show loading state
+            contentBox.innerHTML = `
+                <div class="text-center py-5">
+                    <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <p class="mt-3">Loading chapter content...</p>
+                </div>
+            `;
+
+            // Check if we have inline content first
+            if (chapter === 'Eng10_Chapter1') {
+                setTimeout(() => {
+                    contentBox.innerHTML = `
+                        <div class="chapter-content">
+                            <div class="container">
+                                <div class="chapter-container text-center">
+                                    <h2 class="chapter-title">Chapter 1: Where the Mind is Without Fear</h2>
+                                </div>
+                                <div class="author-description" id="author-description">
+                                    <p>Rabindranath Tagore (1861-1941) was the author of <i>Gitanjali</i> and its 'profoundly sensitive, fresh and beautiful verse'. He became the first non-European to win the Nobel Prize in Literature in 1913. This poem is one of his vastly read and discussed poems. It was originally composed in Bengali and later he himself translated it into English. This poem is from his Nobel Prize-winning anthology <i>Gitanjali</i>. Tagore lived during the time when India was ruled by the British. In this poem, besides political freedom from British rule, Tagore also appeals to God for social, educational, and economic freedom for the people of India.</p>
+                                </div>
+                                <div class="poem-container">
+                                    <p>Where the mind is without fear and the head is held high</p>
+                                    <p>Where knowledge is free</p>
+                                    <p>Where the world has not been broken up into fragments</p>
+                                    <p>By narrow domestic walls</p>
+                                    <p>Where words come out from the depth of truth</p>
+                                    <p>Where tireless striving stretches its arms towards perfection</p>
+                                    <p>Where the clear stream of reason has not lost its way</p>
+                                    <p>Into the dreary desert sand of dead habit</p>
+                                    <p>Where the mind is led forward by Thee</p>
+                                    <p>Into ever-widening thought and action</p>
+                                    <p>Into that heaven of freedom, my Father, let my country awake.</p>
+                                </div>
+                                <p class="text-end fw-bold">- Rabindranath Tagore</p>
+                            </div>
+
+                            <!-- Meanings Section -->
+                            <div id="meanings">
+                                <h4>Meanings:</h4>
+                                <div class="meaning-item">
+                                    <strong>narrow domestic walls</strong>: Division on the basis of religion, caste, class, and color in societies and between countries of the world.
+                                </div>
+                                <div class="meaning-item">
+                                    <strong>tireless striving</strong>: Continuous efforts and struggle.
+                                </div>
+                                <div class="meaning-item">
+                                    <strong>stretches its arm</strong>: Aims at achieving.
+                                </div>
+                                <div class="meaning-item">
+                                    <strong>dead habit</strong>: Old traditional rituals and customs that are harmful.
+                                </div>
+                                <div class="meaning-item">
+                                    <strong>ever-widening</strong>: Forever broadening one's outlook.
+                                </div>
+                                <div class="meaning-item">
+                                    <strong>heaven of freedom</strong>: Condition of total freedom of good thoughts, good words, and good deeds, while respecting those of others.
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    initChapterContent();
+                }, 500);
+            } 
+            else if (chapter === 'Eng10_Chapter2') {
+                setTimeout(() => {
+                    contentBox.innerHTML = `
+                        <div class="chapter-content">
+    <div class="container">
+      <div class="chapter-container text-center">
+        <h2 class="chapter-title">Chapter 2: The Thief's Story</h2>
+        <div class="author-description2">
+          <p><strong>Ruskin Bond</strong> (1934) is an Indian author of British descent. He lives with his adopted family in Landour, Mussoorie, India. The Indian Council for Child Education has recognised his role in the growth of children's literature in India. He received the <strong>Sahitya Academy Award</strong> in 1992 for 'Our Trees Still Grow in Dehra'. He was also awarded the <strong>Padma Shri</strong> in 1999 and the <strong>Padma Bhushan</strong> in 2014.</p>
+        </div>
+  
+        <h3>📖 The Thief's Story - Ruskin Bond</h3>
+  
+        <div class="flipbook-container">
+          <div class="flipbook" id="flipbook">
+            <div class="page">I was still a thief when I met Anil. And though only 15, I was an experienced and fairly successful hand.</div>
+            <div class="page">Anil was watching a wrestling match when I approached him...</div>
+            <div class="page">He was about 25—a tall, lean fellow—and he looked easy-going, kind, and simple enough for my purpose.</div>
+            <div class="page">Anil walked away. I followed casually.</div>
+            <div class="page">"Hello again," I said.</div>
+            <div class="page">He grinned at me. "You look a bit of a wrestler yourself," he said.</div>
+            <div class="page">"Well," I said modestly, "I've done some wrestling."</div>
+            <div class="page">"What's your name?" he asked.
+  "Hari Singh," I lied.</div>
+            <div class="page">He seemed pleased. "You want to work?" he asked.</div>
+            <div class="page">"I can cook," I said.</div>
+            <div class="page">"Can you cook?" he asked.
+  "I can cook," I repeated.</div>
+            <div class="page">Later he found that I could not cook very well.</div>
+            <div class="page">Anil taught me to cook, to write my name, and to read simple sentences.</div>
+            <div class="page">I made a rupee a day from cheating in the shopping.</div>
+            <div class="page">Anil knew but did not seem to mind.</div>
+            <div class="page">One evening, he came home with a bundle of notes.</div>
+            <div class="page">He put them under the mattress.</div>
+            <div class="page">I thought of stealing them.</div>
+            <div class="page">When Anil was asleep, I crept up to the bed and slid my hand under the mattress.</div>
+            <div class="page">I took the notes and ran out of the room.</div>
+            <div class="page">It was raining.
+  I ran through the streets and reached the railway station.</div>
+            <div class="page">I stood at the platform but did not board the train.</div>
+            <div class="page">I returned to Anil's room, feeling guilty.</div>
+            <div class="page">I crept back and replaced the money under the mattress.</div>
+            <div class="page">The next morning, Anil gave me a fifty-rupee note.</div>
+            <div class="page">It was damp from the rain.
+  "Today we'll start writing sentences," he said.
+  He knew. But neither his lips nor his eyes showed anything.
+  I smiled at Anil in my most appealing way.
+  And the smile came by itself, without any effort. - Ruskin Bond</div>
+          </div>
+        </div>
+  
+        <div class="flip-controls">
+          <button class="btn btn-secondary" onclick="prevPage()">Back</button>
+          <button class="btn btn-danger" onclick="flipPage()">Next</button>
+        </div>
+  
+        <div class="faq-container">
+          <h3 class="faq-title">Frequently Asked Questions</h3>
+          <div class="faq-item" id="faq1">
+            <p><strong>1. What is the narrator quite successful at?</strong></p>
+            <p>The narrator is quite successful at stealing, as he is an experienced and fairly successful thief.</p>
+          </div>
+          <div class="faq-item">
+            <p><strong>2. Who does 'I' refer to in this story?</strong></p>
+            <p>'I' refers to Hari Singh, the narrator of the story, who is a young thief.</p>
+          </div>
+          <div class="faq-item">
+            <p><strong>3. What favours did Anil do for the narrator?</strong></p>
+            <p>Anil taught the narrator to cook, write, and helped him with basic education, including writing his name and learning to write sentences.</p>
+          </div>
+          <div class="faq-item">
+            <p><strong>4. What proves that the narrator still practised deceit?</strong></p>
+            <p>The narrator lied about his name (calling himself Hari Singh), and he also lied about his ability to cook to secure a job with Anil.</p>
+          </div>
+          <div class="faq-item">
+            <p><strong>5. What could have caused the scars on Hari's face?</strong></p>
+            <p>The scars on Hari's face could have been caused by his life as a thief, involving dangerous situations and confrontations.</p>
+          </div>
+          <div class="faq-item">
+            <p><strong>6. Why did Hari hesitate to board the train?</strong></p>
+            <p>Hari hesitated to board the train because of an unexplained feeling, perhaps guilt or uncertainty about his decision to rob Anil.</p>
+          </div>
+          <div class="faq-item">
+            <p><strong>7. Why does Hari believe that friends were more trouble than help?</strong></p>
+            <p>Hari believes that friends are more trouble than help because they complicate his life, and he prefers to stay independent, not trusting anyone.</p>
+          </div>
+          <div class="faq-item">
+            <p><strong>8. What is face reading?</strong></p>
+            <p>Face reading refers to the practice of analyzing people's facial expressions and features to determine their emotions or character traits.</p>
+          </div>
+          <div class="faq-item">
+            <p><strong>9. What were Hari's regrets as he pondered over his theft?</strong></p>
+            <p>Hari regretted losing Anil's trust and realized that stealing would not lead him to be a clever, respected man, but rather someone trapped in deceit.</p>
+          </div>
+          <div class="faq-item">
+            <p><strong>10. Does Anil realize that he has been robbed?</strong></p>
+            <p>Although Anil likely knows he has been robbed, he does not show it outwardly. He keeps his calm and pays Hari the next morning without showing any signs of anger or disappointment.</p>
+          </div>
+          <div class="faq-item">
+            <p><strong>11. Why did Hari feel nervous?</strong></p>
+            <p>Hari felt nervous because returning the stolen money undetected was more difficult than stealing it in the first place. He feared being caught.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> `;
+                    initChapterContent();
+                    initFlipbook();
+                }, 500);
+            }
+            else if (chapter === 'Eng10_Chapter3') {
+                setTimeout(() => {
+                    contentBox.innerHTML = `
+                        <div class="container">
+            <div class="chapter-container">
+                  <div class="chapter-container text-center">
+                                    <h2 class="chapter-title">Chapter 3: All the worlds a stage</h2>
+                                </div>
+                <div class="author-description3">
+                    <p><strong>William Shakespeare (1564-1616)</strong> was an English poet, playwright, and actor, widely regarded as the greatest writer in the English language and the world's prominent dramatist. He is often called England's national poet and the "Bard of Avon". This poem is taken from his play <em>As You Like It</em>. Here, he compares the world to a stage where the drama of human life is enacted.</p>
+                </div>
+
+              
+
+                <div class="row">
+                    <!-- Left Side: First Half of the Poem -->
+                    <div class="col-md-6">
+                        <div class="poem-part poem-part-left" id="poem-two-1">
+                            <p>All the world's a stage,<br>
+                            And all the men and women merely players;<br>
+                            They have their exits and their entrances,<br>
+                            And one man in his time plays many parts,<br>
+                            His acts being seven ages.<br>
+                            At first, the infant,<br>
+                            Mewling and puking in the nurse's arms.<br>
+                            Then the whining schoolboy, with his satchel<br>
+                            And shining morning face, creeping like snail<br>
+                            Unwillingly to school. And then the lover,<br>
+                            Sighing like furnace, with a woeful ballad<br>
+                            Made to his mistress' eyebrow. Then a soldier,<br>
+                            Full of strange oaths and bearded like the pard,<br>
+                            Jealous in honour, sudden and quick in quarrel,<br>
+                            Seeking the bubble reputation<br>
+                            Even in the cannon's mouth.</p>
+                        </div>
+                    </div>
+
+                    <!-- Right Side: Second Half of the Poem -->
+                    <div class="col-md-6">
+                        <div class="poem-part poem-part-right" id="poem-two-2">
+                            <p>And then the justice,<br>
+                            In fair round belly with good capon lined,<br>
+                            With eyes severe and beard of formal cut,<br>
+                            Full of wise saws and modern instances;<br>
+                            And so he plays his part. The sixth age shifts<br>
+                            Into the lean and slippered pantaloon,<br>
+                            With spectacles on nose and pouch on side;<br>
+                            His youthful hose, well saved, a world too wide<br>
+                            For his shrunk shank, and his big manly voice,<br>
+                            Turning again toward childish treble, pipes<br>
+                            And whistles in his sound. Last scene of all,<br>
+                            That ends this strange eventful history,<br>
+                            Is second childishness and mere oblivion,<br>
+                            Sans teeth, sans eyes, sans taste, sans everything.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="faq2">
+                    <h4>❓ Frequently Asked Questions</h4>
+                    <ul>
+                        <li><strong>Why is reputation like a bubble?</strong><br>Reputation is like a bubble because it is fragile and can easily burst, often when put under pressure.</li>
+                        <li><strong>What is the major difference noticed in the 5th and 6th stage of life?</strong><br>The 5th stage is that of a mature, wise man (the justice) who holds a position of authority, while the 6th stage is characterized by the physical decline and weakness of old age, marked by a shriveled body and loss of strength.</li>
+                    </ul>
+                </div>
+                <!-- Glossary Section -->
+                <div class="glossary" id="meanings2">
+                    <h3>📖 Glossary:</h3>
+                    <ul>
+                        <li><strong>Satchel:</strong> School bag</li>
+                        <li><strong>Pard:</strong> Poetical short form of 'leopard'</li>
+                        <li><strong>Cannon's mouth:</strong> Facing great danger to life</li>
+                        <li><strong>Youthful hose:</strong> Close-fitting covering for legs</li>
+                        <li><strong>Players:</strong> Actors</li>
+                        <li><strong>Exits and entrances:</strong> Refers to the coming and going of people in life, as in an act or play</li>
+                        <li><strong>Puking:</strong> Throwing up, vomiting</li>
+                        <li><strong>Woeful ballad:</strong> Sad, sorrowful song or poem</li>
+                        <li><strong>treble:</strong> It refers to something that is three times weaker than its usual state.</li>
+                        <li><strong>oblivion:</strong> It is the state of being unaware or unconscious of surroundings and happenings.</li>
+                        <li><strong>second childishness:</strong> It refers to a return to the helpless, ignorant state of a child, typically in old age.</li>
+                        <li><strong>sans:</strong> Sans means without.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+                    `;
+                    initChapterContent();
+                }, 500);
+            }
+            else {
+                // For other chapters, try to fetch external files
+                fetch(`${chapter}.html`)
+                    .then(response => {
+                        if (!response.ok) throw new Error("Chapter not found");
+                        return response.text();
+                    })
+                    .then(data => {
+                        contentBox.innerHTML = data;
+                        initChapterContent();
+                    })
+                    .catch(error => {
+                        contentBox.innerHTML = `
+                            <div class="alert alert-danger">
+                                <h4>Error Loading Chapter</h4>
+                                <p>${error.message}</p>
+                                <button class="btn btn-primary" onclick="loadDefaultContent()">
+                                    Return to Home
+                                </button>
+                            </div>
+                        `;
+                    });
+            }
+        }
+
+        function loadDefaultContent() {
+            const contentBox = document.getElementById('chapter-content');
+            contentBox.style.opacity = '0';
+            setTimeout(() => {
+                contentBox.innerHTML = `
+                    <h2>Welcome to English - Standard 10</h2>
+                    <p class="lead">Select a chapter from the sidebar to begin learning.</p>
+                    <div class="row mt-4">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Course Overview</h5>
+                                    <p class="card-text">This course covers poetry analysis, grammar, composition, and literature studies for Standard 10 students.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Recent Activity</h5>
+                                    <p class="card-text">Last completed: Chapter 1 - Poem Analysis</p>
+                                    <button class="btn btn-sm btn-primary" onclick="loadChapter('Eng10_Chapter1')">Continue</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                contentBox.style.opacity = '1';
+            }, 300);
+        }
+
+// Flipbook functionality for Chapter 2
+// Flipbook functionality for Chapter 2
+function initFlipbook() {
+    currentPage = 0;
+    showPage(currentPage);
+  }
+  
+  function showPage(index) {
+    const pages = document.querySelectorAll('.flipbook .page');
+    if (pages.length === 0) return;
+    
+    pages.forEach((page, i) => {
+      page.style.display = (i === index) ? 'block' : 'none';
+    });
+  }
+  
+  function flipPage() {
+    const pages = document.querySelectorAll('.flipbook .page');
+    if (currentPage < pages.length - 1) {
+      currentPage++;
+      showPage(currentPage);
+    }
+  }
+  
+  function prevPage() {
+    if (currentPage > 0) {
+      currentPage--;
+      showPage(currentPage);
+    }
+  }
+
+
+        
+        function initChapterContent() {
+            // Initialize any interactive elements in the loaded chapter
+            const interactiveElements = document.querySelectorAll('.interactive-element');
+            interactiveElements.forEach(element => {
+                element.addEventListener('click', handleInteractiveElement);
+            });
+            
+            // Initialize tooltips
+            const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+            tooltipTriggerList.map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
+        }
+
+        // Chatbot Functions
+        function sendMessage() {
+            const chatInput = document.getElementById("chat-input");
+            const userMessage = chatInput.value.trim();
+            
+            if (!userMessage) {
+                if (isListening) {
+                    appendMessage('Assistant', "I didn't hear anything. Please try speaking again.");
+                }
+                return;
+            }
+            
+            // Stop voice recognition if active
+            if (isListening) {
+                stopVoiceRecognition();
+            }
+            
+            appendMessage('You', userMessage);
+            chatInput.value = '';
+            
+            const typingIndicator = document.getElementById("typing-indicator");
+            typingIndicator.style.display = "flex";
+            
+            // Determine which chatbot endpoint to use
+            const endpoint = userMessage.toLowerCase().includes('chapter') || 
+                            userMessage.toLowerCase().includes('standard') || 
+                            userMessage.toLowerCase().includes('subject') ? 
+                            '/navigation-bot' : '/query-bot';
+            
+            fetch(endpoint, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ 
+                    query: userMessage,
+                    voice: isListening
+                })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                typingIndicator.style.display = "none";
+                
+                if (data.html) {
+                    appendHTMLMessage('Assistant', data.response);
+                } else {
+                    appendMessage('Assistant', data.response);
+                }
+                
+                if (data.action) {
+                    handleNavigation(data.action);
+                }
+            })
+            .catch(error => {
+                typingIndicator.style.display = "none";
+                appendMessage('Assistant', "Sorry, I encountered an error. Please try again.");
+                console.error("Chatbot error:", error);
+            });
+        }
+
+        function appendHTMLMessage(sender, htmlContent) {
+            const chatBody = document.getElementById("chat-body");
+            const messageDiv = document.createElement("div");
+            messageDiv.classList.add(sender === 'You' ? 'user-message' : 'chatbot-message');
+            messageDiv.innerHTML = `<strong>${sender}:</strong> ${htmlContent}`;
+            
+            const typingIndicator = document.getElementById("typing-indicator");
+            chatBody.insertBefore(messageDiv, typingIndicator);
+            
+            // Add TTS for bot responses only
+            if (sender !== 'You' && isTTSEnabled) {
+                setTimeout(() => {
+                    speak(htmlContent.replace(/<[^>]+>/g, ''));
+                }, 300);
+            }
+            
+            chatBody.scrollTop = chatBody.scrollHeight;
+            
+            // Add click handlers for any links in the message
+            messageDiv.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    window.location.href = this.href;
+                });
+            });
+        }
+
+        function appendMessage(sender, message) {
+            const chatBody = document.getElementById("chat-body");
+            const messageDiv = document.createElement("div");
+            messageDiv.classList.add(sender === 'You' ? 'user-message' : 'chatbot-message');
+            
+            message = message.replace(
+                /(https?:\/\/[^\s]+)/g, 
+                '<a href="$1" target="_blank" class="chat-link">$1</a>'
+            );
+            
+                        messageDiv.innerHTML = `<strong>${sender}:</strong> ${message}`;
+            
+            const typingIndicator = document.getElementById("typing-indicator");
+            chatBody.insertBefore(messageDiv, typingIndicator);
+            
+            // Add TTS for bot responses only
+            if (sender !== 'You' && isTTSEnabled) {
+                setTimeout(() => {
+                    speak(message);
+                }, 300);
+            }
+            
+            chatBody.scrollTop = chatBody.scrollHeight;
+        }
+
+        function handleNavigation(action) {
+            // Handle navigation actions from the chatbot
+            switch(action.type) {
+                case 'loadChapter':
+                    loadChapter(action.target);
+                    break;
+                case 'scrollTo':
+                    const element = document.getElementById(action.target);
+                    if (element) {
+                        element.scrollIntoView({ behavior: 'smooth' });
+                    }
+                    break;
+                case 'showModal':
+                    // Implement modal showing logic if needed
+                    break;
+            }
+        }
+
+        function toggleChat() {
+            const chatWindow = document.getElementById("chat-window");
+            if (chatWindow.style.display === "flex") {
+                chatWindow.style.display = "none";
+            } else {
+                chatWindow.style.display = "flex";
+                // Initialize voice recognition when chat is opened
+                if (!recognition) {
+                    initVoiceRecognition();
+                }
+                // Initialize speech synthesis voices
+                if ('speechSynthesis' in window) {
+                    window.speechSynthesis.getVoices();
+                }
+            }
+        }
+
+        // Flipbook functionality for Chapter 2
+        function initFlipbook() {
+            const flipbook = document.getElementById("flipbook");
+            if (!flipbook) return;
+            
+            const pageContent = document.getElementById("page-content");
+            if (pageContent) {
+                pageContent.textContent = pages[0];
+            }
+            
+            currentIndex = 0;
+        }
+
+        function flipPage() {
+            currentIndex++;
+            if (currentIndex >= pages.length) {
+                currentIndex = 0;
+            }
+            
+            const flipbook = document.getElementById("flipbook");
+            const pageContent = document.getElementById("page-content");
+            
+            if (!flipbook || !pageContent) return;
+            
+            // Add flip animation
+            flipbook.classList.add("flip");
+            
+            setTimeout(() => {
+                pageContent.textContent = pages[currentIndex];
+                flipbook.classList.remove("flip");
+            }, 500);
+        }
+
+        // Voice prompt functionality
+        function showVoicePrompt(message) {
+            const prompt = document.getElementById("voice-prompt");
+            if (!prompt) return;
+            
+            prompt.textContent = message;
+            prompt.style.display = "block";
+            
+            setTimeout(() => {
+                prompt.style.display = "none";
+            }, 3000);
+        }
+
+        // Event Listeners
+        document.addEventListener("DOMContentLoaded", function() {
+            // Initialize voice recognition button
+            const voiceBtn = document.getElementById("voice-btn");
+            if (voiceBtn) {
+                voiceBtn.addEventListener("mousedown", startVoiceRecognition);
+                voiceBtn.addEventListener("mouseup", stopVoiceRecognition);
+                voiceBtn.addEventListener("mouseleave", stopVoiceRecognition);
+            }
+            
+            // Initialize TTS toggle button
+            const ttsToggle = document.getElementById("tts-toggle");
+            if (ttsToggle) {
+                ttsToggle.addEventListener("click", toggleTTS);
+            }
+            
+            // Chat input keyboard support
+            const chatInput = document.getElementById("chat-input");
+            if (chatInput) {
+                chatInput.addEventListener("keypress", function(e) {
+                    if (e.key === "Enter") {
+                        sendMessage();
+                    }
+                });
+            }
+            
+            // Initialize default content
+            loadDefaultContent();
+            
+            // Initialize speech synthesis voices when they become available
+            if ('speechSynthesis' in window) {
+                speechSynthesis.onvoiceschanged = function() {
+                    console.log("Voices loaded:", speechSynthesis.getVoices());
+                };
+            }
+        });
+
+        // Handle window resize
+        window.addEventListener("resize", function() {
+            // Adjust layout if needed
+        });
+
+        // Handle page unload
+        window.addEventListener("beforeunload", function() {
+            if (recognition) {
+                recognition.stop();
+            }
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+            }
+        });
+
+
+        //speech synthesis
+        document.addEventListener("DOMContentLoaded", function() {
+            // Speech control variables
+            let enterPressCount = 0;
+            let spacePressCount = 0;
+            let mPressCount = 0;
+            let synth = window.speechSynthesis;
+            let utterance = null;
+            let isPaused = false;
+            let currentSpeakingElement = null;
+            let voicesLoaded = false;
+            let pausePosition = 0;
+            let fullText = "";
+        
+            // Load voices when available
+            function loadVoices() {
+                if (synth.getVoices().length > 0) {
+                    voicesLoaded = true;
+                } else {
+                    synth.onvoiceschanged = function() {
+                        if (synth.getVoices().length > 0) {
+                            voicesLoaded = true;
+                            synth.onvoiceschanged = null;
+                        }
+                    };
+                }
+            }
+            loadVoices();
+        
+            // Keyboard event listener
+            document.addEventListener("keydown", function(event) {
+                if (event.target.tagName !== 'INPUT' && event.target.tagName !== 'TEXTAREA') {
+                    // V + I key sequence
+let viSequence = "";
+
+document.addEventListener("keydown", function(event) {
+    if (event.target.tagName !== 'INPUT' && event.target.tagName !== 'TEXTAREA') {
+        // Detect V+I keys
+        if (event.key.toLowerCase() === 'v') {
+            viSequence = 'v';
+        } else if (event.key.toLowerCase() === 'i' && viSequence === 'v') {
+            viSequence = '';
+            startVoiceRecognition(); // Start voice input
+            showVoicePrompt("Voice input activated!");
+        } else {
+            viSequence = '';
+        }
+
+        // (your existing Enter/Space/M/P/S key handling here...)
+    }
+});
+
+                    // Author description - Enter key
+                    if (event.key === "Enter") {
+                        enterPressCount++;
+                        spacePressCount = 0;
+                        mPressCount = 0;
+                        if (enterPressCount === 3) {
+                            const authorDesc = document.querySelector('.author-description');
+                            if (authorDesc) {
+                                startSpeech(authorDesc);
+                            }
+                            enterPressCount = 0;
+                        }
+                    } 
+                    // Poem container - Space key
+                    else if (event.key === " ") {
+                        event.preventDefault();
+                        spacePressCount++;
+                        enterPressCount = 0;
+                        mPressCount = 0;
+                        if (spacePressCount === 3) {
+                            const poemContainer = document.querySelector('.poem-container');
+                            if (poemContainer) {
+                                startSpeech(poemContainer);
+                            }
+                            spacePressCount = 0;
+                        }
+                    }
+                    // Meanings - M key
+                    else if (event.key.toLowerCase() === "m") {
+                        mPressCount++;
+                        enterPressCount = 0;
+                        spacePressCount = 0;
+                        if (mPressCount === 3) {
+                            const meanings = document.querySelector('#meanings');
+                            if (meanings) {
+                                startSpeech(meanings);
+                            }
+                            mPressCount = 0;
+                        }
+                    }
+                    
+                    // Control keys
+                    else if (event.key.toLowerCase() === "p") {
+                        if (isPaused) {
+                            resumeSpeech();
+                        } else {
+                            pauseSpeech();
+                        }
+                    } else if (event.key.toLowerCase() === "s") {
+                        stopSpeech();
+                    }
+                }
+            });
+        
+            function startSpeech(element) {
+                stopSpeech();
+                
+                if (!voicesLoaded) {
+                    console.warn("Voices not loaded yet");
+                    loadVoices();
+                    return;
+                }
+        
+                currentSpeakingElement = element;
+                fullText = element.innerText.replace(/\s+/g, ' ').trim();
+                
+                utterance = new SpeechSynthesisUtterance(fullText);
+                utterance.rate = 1.0;
+                utterance.pitch = 1;
+                utterance.volume = 1;
+        
+                // Voice selection
+                const voices = synth.getVoices();
+                for (let voice of voices) {
+                    if (voice.name.includes('English')) {
+                        utterance.voice = voice;
+                        break;
+                    }
+                }
+        
+                // Track position
+                utterance.onboundary = function(event) {
+                    if (event.name === 'word') {
+                        pausePosition = event.charIndex;
+                    }
+                };
+        
+                // Visual feedback
+                element.classList.add('speaking');
+                
+                utterance.onend = utterance.onerror = function() {
+                    element.classList.remove('speaking', 'paused');
+                    currentSpeakingElement = null;
+                    isPaused = false;
+                    pausePosition = 0;
+                };
+        
+                synth.speak(utterance);
+                isPaused = false;
+            }
+        
+            function pauseSpeech() {
+                if (!currentSpeakingElement) return;
+                
+                if (synth.speaking && !synth.paused) {
+                    synth.pause();
+                    isPaused = true;
+                    currentSpeakingElement.classList.remove('speaking');
+                    currentSpeakingElement.classList.add('paused');
+                }
+            }
+        
+            function resumeSpeech() {
+                if (!currentSpeakingElement) return;
+                
+                if (synth.paused) {
+                    synth.resume();
+                } else {
+                    const remainingText = fullText.slice(pausePosition);
+                    utterance = new SpeechSynthesisUtterance(remainingText);
+                    
+                    const voices = synth.getVoices();
+                    for (let voice of voices) {
+                        if (voice.name.includes('English')) {
+                            utterance.voice = voice;
+                            break;
+                        }
+                    }
+                    
+                    utterance.rate = 1.0;
+                    utterance.pitch = 1;
+                    utterance.volume = 1;
+                    
+                    utterance.onboundary = function(event) {
+                        if (event.name === 'word') {
+                            pausePosition = event.charIndex + fullText.indexOf(remainingText);
+                        }
+                    };
+                    
+                    utterance.onend = utterance.onerror = function() {
+                        currentSpeakingElement.classList.remove('speaking', 'paused');
+                        currentSpeakingElement = null;
+                        isPaused = false;
+                        pausePosition = 0;
+                    };
+                    
+                    synth.speak(utterance);
+                }
+                
+                isPaused = false;
+                currentSpeakingElement.classList.add('speaking');
+                currentSpeakingElement.classList.remove('paused');
+            }
+        
+            function stopSpeech() {
+                synth.cancel();
+                if (currentSpeakingElement) {
+                    currentSpeakingElement.classList.remove('speaking', 'paused');
+                }
+                currentSpeakingElement = null;
+                isPaused = false;
+                pausePosition = 0;
+            }
+        
+            // Add CSS styles
+            const style = document.createElement('style');
+            style.textContent = `
+                .author-description.speaking, 
+                .poem-container.speaking,
+                #meanings.speaking {
+                    background-color: #fffde7;
+                    padding: 10px;
+                    border-left: 4px solid #ffc107;
+                    transition: all 0.3s ease;
+                    animation: pulse 2s infinite;
+                }
+                .author-description.paused, 
+                .poem-container.paused,
+                #meanings.paused {
+                    background-color: #e0e0e0;
+                    padding: 10px;
+                    border-left: 4px solid #9e9e9e;
+                    transition: all 0.3s ease;
+                }
+                @keyframes pulse {
+                    0% { box-shadow: 0 0 0 0 rgba(255,193,7,0.4); }
+                    70% { box-shadow: 0 0 0 10px rgba(255,193,7,0); }
+                    100% { box-shadow: 0 0 0 0 rgba(255,193,7,0); }
+                }
+            `;
+            document.head.appendChild(style);
+        
+            console.log("Speech controls ready:");
+            console.log("- Press Enter 3 times for author description");
+            console.log("- Press Space 3 times for poem");
+            console.log("- Press M 3 times for meanings");
+            console.log("- Press P to pause/resume");
+            console.log("- Press S to stop");
+        });
+
+        // Speech Control System
+const speechControls = {
+    synth: window.speechSynthesis,
+    utterance: null,
+    isPaused: false,
+    currentElement: null,
+    flipbookAuto: false,
+    currentFlipPage: 0,
+    
+    // Key sequence tracking
+    keySequence: [],
+    lastKeyTime: 0,
+    sequenceTimeout: 1000, // 1 second between key presses
+    
+    // Key combinations map
+    keyCombos: {
+      'enter,2': 'author-description2',    // Enter then 2
+      'f,f,f': 'flipbook-auto',           // F three times (continuous flipbook)
+      'f,a,q': 'faq-container',           // F then A then Q (all FAQs)
+      'enter,3': 'author-description3',   // Enter then 3
+      'p,p,p': 'poem-parts',                // P then 1 (both poem parts)
+      'f,a,q,2': 'faq2',                  // F then A then Q then 2
+      'm,m': 'meanings2'                  // M then 2
+    },
+  
+    // Initialize the speech system
+    init() {
+      if ('speechSynthesis' in window) {
+        this.synth.onvoiceschanged = () => console.log("Voices loaded");
+      }
+      document.addEventListener("keydown", this.handleKeyDown.bind(this));
+      this.injectStyles();
+    },
+  
+    // Inject necessary CSS styles
+    injectStyles() {
+      const styles = `
+        .speaking {
+          background-color: #fffde7;
+          padding: 10px;
+          border-left: 4px solid #ffc107;
+          transition: all 0.3s ease;
+          animation: pulse 2s infinite;
+        }
+        .paused {
+          background-color: #e0e0e0;
+          padding: 10px;
+          border-left: 4px solid #9e9e9e;
+          transition: all 0.3s ease;
+        }
+        .flipbook .page {
+          display: none;
+          padding: 20px;
+          min-height: 200px;
+        }
+        .flipbook .page.speaking {
+          display: block;
+          animation: pulse-border 2s infinite;
+        }
+        @keyframes pulse {
+          0% { box-shadow: 0 0 0 0 rgba(255,193,7,0.4); }
+          70% { box-shadow: 0 0 0 10px rgba(255,193,7,0); }
+          100% { box-shadow: 0 0 0 0 rgba(255,193,7,0); }
+        }
+        @keyframes pulse-border {
+          0% { box-shadow: 0 0 0 0 rgba(255,193,7,0.4); }
+          70% { box-shadow: 0 0 0 8px rgba(255,193,7,0); }
+          100% { box-shadow: 0 0 0 0 rgba(255,193,7,0); }
+        }
+      `;
+      const styleTag = document.createElement('style');
+      styleTag.textContent = styles;
+      document.head.appendChild(styleTag);
+    },
+  
+    // Start speech for an element
+    startSpeech(element) {
+      this.stop();
+      
+      if (!this.synth) {
+        console.warn("Speech synthesis not supported");
+        return;
+      }
+  
+      this.currentElement = element;
+      const text = element.textContent || element.innerText;
+      
+      this.utterance = new SpeechSynthesisUtterance(text);
+      this.utterance.rate = 0.9;
+      this.utterance.pitch = 1;
+      
+      // Select voice
+      const voices = this.synth.getVoices();
+      const preferredVoices = ['Google UK English Female', 'Microsoft Zira'];
+      const voice = voices.find(v => preferredVoices.includes(v.name)) || voices[0];
+      if (voice) this.utterance.voice = voice;
+  
+      // Visual feedback
+      element.classList.add('speaking');
+      
+      this.utterance.onend = () => {
+        element.classList.remove('speaking');
+        this.handleSpeechEnd(element);
+      };
+      
+      this.utterance.onerror = () => {
+        element.classList.remove('speaking', 'paused');
+        this.reset();
+      };
+  
+      this.synth.speak(this.utterance);
+    },
+  
+    // Handle continuous flipbook reading
+    startFlipbookReading() {
+      const flipbook = document.getElementById('flipbook');
+      if (!flipbook) return;
+  
+      this.flipbookAuto = true;
+      this.currentFlipPage = 0;
+      const pages = flipbook.querySelectorAll('.page');
+      
+      if (pages.length > 0) {
+        this.showPage(this.currentFlipPage);
+        this.readPageWithFlip(pages[this.currentFlipPage], pages);
+      }
+    },
+  
+    // Read a single flipbook page and auto-advance
+    readPageWithFlip(pageElement, allPages) {
+      this.stop(); // Stop any current speech
+      
+      this.currentElement = pageElement;
+      const text = pageElement.textContent;
+      
+      this.utterance = new SpeechSynthesisUtterance(text);
+      this.utterance.rate = 0.9;
+      this.utterance.pitch = 1;
+      
+      // Select voice
+      const voices = this.synth.getVoices();
+      const voice = voices.find(v => v.name.includes('English')) || voices[0];
+      if (voice) this.utterance.voice = voice;
+  
+      // Visual feedback
+      pageElement.classList.add('speaking');
+      this.showPage(this.currentFlipPage);
+      
+      this.utterance.onend = () => {
+        pageElement.classList.remove('speaking');
+        
+        if (this.flipbookAuto) {
+          this.currentFlipPage = (this.currentFlipPage + 1) % allPages.length;
+          
+          // Small delay before next page
+          setTimeout(() => {
+            this.readPageWithFlip(allPages[this.currentFlipPage], allPages);
+          }, 500);
+        }
+      };
+      
+      this.utterance.onerror = () => {
+        pageElement.classList.remove('speaking');
+        this.flipbookAuto = false;
+      };
+  
+      this.synth.speak(this.utterance);
+    },
+  
+    // Show specific flipbook page
+    showPage(index) {
+      const pages = document.querySelectorAll('.flipbook .page');
+      pages.forEach((page, i) => {
+        page.style.display = i === index ? 'block' : 'none';
+      });
+    },
+  
+    // Handle end of speech
+    handleSpeechEnd(element) {
+      this.currentElement = null;
+    },
+  
+    // Pause current speech
+    pause() {
+      if (this.synth.speaking && !this.synth.paused) {
+        this.synth.pause();
+        this.isPaused = true;
+        if (this.currentElement) {
+          this.currentElement.classList.remove('speaking');
+          this.currentElement.classList.add('paused');
+        }
+      }
+    },
+  
+    // Resume paused speech
+    resume() {
+      if (this.synth.paused) {
+        this.synth.resume();
+        this.isPaused = false;
+        if (this.currentElement) {
+          this.currentElement.classList.add('speaking');
+          this.currentElement.classList.remove('paused');
+        }
+      }
+    },
+  
+    // Stop all speech
+    stop() {
+      if (this.synth) {
+        this.synth.cancel();
+        this.flipbookAuto = false;
+        if (this.currentElement) {
+          this.currentElement.classList.remove('speaking', 'paused');
+        }
+        this.reset();
+      }
+    },
+  
+    // Reset speech state
+    reset() {
+      this.currentElement = null;
+      this.isPaused = false;
+      this.flipbookAuto = false;
+    },
+  
+    // Handle key presses
+    handleKeyDown(event) {
+      if (event.target.tagName === 'INPUT' || event.target.tagName === 'TEXTAREA') {
+        return;
+      }
+  
+      const key = event.key.toLowerCase();
+      const currentTime = Date.now();
+      
+      // Reset sequence if too much time between keys
+      if (currentTime - this.lastKeyTime > this.sequenceTimeout) {
+        this.keySequence = [];
+      }
+      
+      this.keySequence.push(key);
+      this.lastKeyTime = currentTime;
+      
+      // Check for control keys first
+      if (key === 's') {
+        this.stop();
+        this.keySequence = [];
+        return;
+      } else if (key === 'p') {
+        if (this.isPaused) {
+          this.resume();
+        } else {
+          this.pause();
+        }
+        this.keySequence = [];
+        return;
+      }
+      
+      // Check for key combinations
+      const sequenceStr = this.keySequence.join(',');
+      
+      for (const [combo, action] of Object.entries(this.keyCombos)) {
+        if (sequenceStr.endsWith(combo)) {
+          this.executeAction(action);
+          this.keySequence = [];
+          break;
+        }
+      }
+    },
+  
+    // Execute the appropriate action for key combo
+    executeAction(action) {
+      switch(action) {
+        case 'author-description2':
+          this.startSpeech(document.getElementById('author-description2'));
+          break;
+          
+        case 'flipbook-auto':
+          this.startFlipbookReading();
+          break;
+          
+        case 'faq-container':
+          this.readAllFAQs();
+          break;
+          
+        case 'author-description3':
+          this.startSpeech(document.getElementById('author-description3'));
+          break;
+          
+        case 'poem-parts':
+          const poem1 = document.getElementById('poem-two-1');
+          const poem2 = document.getElementById('poem-two-2');
+          if (poem1 && poem2) {
+            this.startSpeech(poem1);
+            setTimeout(() => {
+              if (!this.synth.speaking && !this.synth.paused) {
+                this.startSpeech(poem2);
+              }
+            }, (poem1.textContent.length / 15) * 1000);
+          }
+          break;
+          
+        case 'faq2':
+          this.startSpeech(document.getElementById('faq2'));
+          break;
+          
+        case 'meanings2':
+          this.startSpeech(document.getElementById('meanings2'));
+          break;
+      }
+    },
+  
+    // Read all FAQs sequentially
+    readAllFAQs() {
+      const faqContainer = document.querySelector('.faq-container');
+      if (!faqContainer) return;
+  
+      const faqItems = faqContainer.querySelectorAll('.faq-item');
+      let fullText = 'Frequently Asked Questions:\n\n';
+      
+      // Combine all FAQ text
+      faqItems.forEach((item, index) => {
+        const question = item.querySelector('strong').textContent;
+        const answer = Array.from(item.querySelectorAll('p'))
+          .filter(p => !p.querySelector('strong'))
+          .map(p => p.textContent)
+          .join('\n');
+        
+        fullText += `Question ${index + 1}: ${question}\n`;
+        fullText += `Answer: ${answer}\n\n`;
+      });
+      
+      // Create temporary element for reading
+      const tempDiv = document.createElement('div');
+      tempDiv.textContent = fullText;
+      tempDiv.style.display = 'none';
+      document.body.appendChild(tempDiv);
+      
+      // Highlight container
+      faqContainer.classList.add('speaking');
+      
+      // Start reading
+      this.startSpeech(tempDiv);
+      
+      // Clean up
+      this.utterance.onend = () => {
+        faqContainer.classList.remove('speaking');
+        document.body.removeChild(tempDiv);
+      };
+      
+      this.utterance.onerror = () => {
+        faqContainer.classList.remove('speaking');
+        document.body.removeChild(tempDiv);
+      };
+    }
+  };
+  
+  // Initialize when DOM is loaded
+  document.addEventListener('DOMContentLoaded', () => {
+    speechControls.init();
+    
+    // Add flipbook controls (optional)
+    const flipbookContainer = document.querySelector('.flipbook-container');
+    if (flipbookContainer) {
+      flipbookContainer.insertAdjacentHTML('beforeend', `
+        <div class="flipbook-controls">
+          <button onclick="speechControls.startFlipbookReading()">Start Reading</button>
+          <button onclick="speechControls.stop()">Stop</button>
+          <button onclick="speechControls.pause()">Pause</button>
+          <button onclick="speechControls.resume()">Resume</button>
+        </div>
+      `);
+    }
+  });
+    </script>
+    <script>
+        let currentPage = 0;
+        let isAnimating = false;
+      
+        // Hide all pages initially except the first one
+        function initFlipbook() {
+          const pages = document.querySelectorAll('.flipbook .page');
+          pages.forEach((page, i) => {
+            page.style.display = i === 0 ? 'flex' : 'none';
+          });
+        }
+      
+        function showPage(index, direction = 'next') {
+          if (isAnimating) return;
+          isAnimating = true;
+          
+          const pages = document.querySelectorAll('.flipbook .page');
+          const currentPageElem = pages[currentPage];
+          const newPageElem = pages[index];
+          
+          // Set initial display state for new page
+          newPageElem.style.display = 'flex';
+          
+          // Remove any existing animation classes
+          currentPageElem.classList.remove('page-flip-in', 'page-flip-out', 'page-flip-in-reverse', 'page-flip-out-reverse');
+          newPageElem.classList.remove('page-flip-in', 'page-flip-out', 'page-flip-in-reverse', 'page-flip-out-reverse');
+          
+          // Apply appropriate animation classes based on direction
+          if (direction === 'next') {
+            currentPageElem.classList.add('page-flip-out');
+            newPageElem.classList.add('page-flip-in');
+          } else {
+            currentPageElem.classList.add('page-flip-out-reverse');
+            newPageElem.classList.add('page-flip-in-reverse');
+          }
+          
+          // Update current page after animation completes
+          setTimeout(() => {
+            currentPageElem.style.display = 'none';
+            isAnimating = false;
+            currentPage = index;
+          }, 600); // Match this with animation duration
+        }
+      
+        function flipPage() {
+          const pages = document.querySelectorAll('.flipbook .page');
+          if (currentPage < pages.length - 1) {
+            showPage(currentPage + 1, 'next');
+          }
+        }
+      
+        function prevPage() {
+          if (currentPage > 0) {
+            showPage(currentPage - 1, 'prev');
+          }
+        }
+      
+        // Initialize the flipbook when content loads
+        document.addEventListener('DOMContentLoaded', function() {
+          initFlipbook();
+        });
+        
+        // Also initialize immediately in case the DOM is already loaded
+        initFlipbook();
+      </script>
+</body>
+</html>
