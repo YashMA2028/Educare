@@ -1,0 +1,339 @@
+/* Base Variables - Light Theme (Default) */
+:root {
+	/* Color Palette */
+	--primary: #4a6bff;
+	--primary-dark: #3a56cc;
+	--primary-light: #e6ebff;
+	--secondary: #00c9a7;
+	--secondary-dark: #00a188;
+	--secondary-light: #e0f7f3;
+	--accent: #ff6b6b;
+	--accent-dark: #e05555;
+	--accent-light: #ffebeb;
+	
+	
+	/* Background Colors */
+	--content-bg: #ffffff;
+	--sidebar-bg: #f8f9fa;
+	--card-bg: #ffffff;
+	--chat-bg: #ffffff;
+	--chat-header-bg: #f1f3f5;
+	
+	/* Text Colors */
+	--text-color: #000000;
+	--text-light: #f8f9fa;
+	--text-muted: #6c757d;
+	--heading-color: #1a1a2e;
+	
+	/* Border Colors */
+	--border-color: #e9ecef;
+	--border-dark: #ced4da;
+	
+	/* Special Elements */
+	--code-bg: #f8f9fa;
+	--blockquote-border: #e9ecef;
+	--highlight-bg: #fffacd;
+	
+	/* UI Components */
+	--table-header-bg: #f2f6ff;
+	--table-border: #dee2e6;
+	--table-row-hover: #f8f9fa;
+	
+	/* Educational Components */
+	--lesson-header-bg: #eef1ff;
+	--exercise-bg: #f0f7ff;
+	--quiz-bg: #f4f9ff;
+	--quiz-hover: #e9f2ff;
+	--note-bg: #f8f9fa;
+	--note-border: #e9ecef;
+	--example-bg: #f7f9fc;
+	
+	/* Sizes */
+	--sidebar-width: 280px;
+	--navbar-height: 60px;
+	
+	/* Effects */
+	--shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+	--shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+	--shadow-lg: 0 10px 15px rgba(0,0,0,0.1);
+	--transition-speed: 0.3s;
+
+	--chat-btn-primary: #4a6bff;
+	--chat-btn-primary-hover: #3a56cc;
+	--chat-btn-secondary: #00c9a7;
+	--chat-btn-secondary-hover: #00a188;
+	--chat-btn-accent: #ff6b6b;
+	--chat-btn-accent-hover: #e05555;
+	--chat-btn-text: #ffffff;
+  }
+  
+  
+  /* Dark Theme Variables */
+  [data-theme="dark"] {
+	/* Color Palette */
+	--primary: #6e00ff;
+	--primary-dark: #4a00b0;
+	--primary-light: #2a0066;
+	--secondary: #00f0ff;
+	--secondary-dark: #00a8b5;
+	--secondary-light: #00333a;
+	--accent: #ff00c8;
+	--accent-dark: #b5008c;
+	--accent-light: #33002b;
+	
+	/* Background Colors */
+	--content-bg: #121212;
+	--sidebar-bg: #1a1a1a;
+	--card-bg: #1e1e1e;
+	--chat-bg: #1e1e1e;
+	--chat-header-bg: #2a2a2a;
+	
+	/* Text Colors */
+	--text-color: #ffffff;
+	--text-light: #f8f9fa;
+	--text-muted: #aaaaaa;
+	--heading-color: #ffffff;
+	
+	/* Border Colors */
+	--border-color: #333333;
+	--border-dark: #444444;
+	
+	/* Special Elements */
+	--code-bg: #1e1e1e;
+	--blockquote-border: #444444;
+	--highlight-bg: #413d1e;
+	
+	/* UI Components */
+	--table-header-bg: #2a2f41;
+	--table-border: #3d3d3d;
+	--table-row-hover: #2a2a2a;
+	
+	/* Educational Components */
+	--lesson-header-bg: #1a1f35;
+	--exercise-bg: #1a2433;
+	--quiz-bg: #1a2433;
+	--quiz-hover: #1e2a3a;
+	--note-bg: #2a2a2a;
+	--note-border: #3d3d3d;
+	--example-bg: #1e2633;
+	
+	/* Effects */
+	--shadow-sm: 0 1px 3px rgba(0,0,0,0.3);
+	--shadow-md: 0 4px 6px rgba(0,0,0,0.3);
+	--shadow-lg: 0 10px 15px rgba(0,0,0,0.3);
+	--chat-btn-primary: #6e00ff;
+	--chat-btn-primary-hover: #8a2be2;
+	--chat-btn-secondary: #00f0ff;
+	--chat-btn-secondary-hover: #00ced1;
+	--chat-btn-accent: #ff00c8;
+	--chat-btn-accent-hover: #ff1493;
+	--chat-btn-text: #ffffff;
+  }
+/* Enhanced Chatbot Button Visibility */
+:root {
+	/* Light Mode Button Colors - Enhanced Contrast */
+	--chat-btn-primary: #4a6bff;
+	--chat-btn-primary-hover: #3a56cc;
+	--chat-btn-secondary: #00c9a7;
+	--chat-btn-secondary-hover: #00a188;
+	--chat-btn-accent: #ff6b6b;
+	--chat-btn-accent-hover: #e05555;
+	--chat-btn-text: #ffffff;
+	--chat-btn-border: rgba(0,0,0,0.1); /* Added border for light mode */
+  }
+  
+  [data-theme="dark"] {
+	/* Dark Mode Button Colors */
+	--chat-btn-primary: #6e00ff;
+	--chat-btn-primary-hover: #8a2be2;
+	--chat-btn-secondary: #00f0ff;
+	--chat-btn-secondary-hover: #00ced1;
+	--chat-btn-accent: #ff00c8;
+	--chat-btn-accent-hover: #ff1493;
+	--chat-btn-text: #ffffff;
+	--chat-btn-border: transparent;
+  }
+  
+  /* Chatbot Button Styles - Enhanced Visibility */
+  .chat-footer button {
+	border: none;
+	border-radius: 50%;
+	width: 42px;
+	height: 42px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	transition: all 0.2s ease;
+	font-size: 1rem;
+	color: var(--chat-btn-text);
+	box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+	border: 1px solid var(--chat-btn-border); /* Added border for light mode */
+  }
+  
+  /* Voice Button - More Vibrant in Light Mode */
+  .voice-btn {
+	background-color: var(--chat-btn-accent);
+  }
+  
+  .voice-btn:hover {
+	background-color: var(--chat-btn-accent-hover);
+	transform: translateY(-2px);
+	box-shadow: 0 4px 8px rgba(255, 0, 0, 0.2);
+  }
+  
+  /* TTS (Mute) Button - Enhanced Visibility */
+  #tts-toggle {
+	background-color: var(--chat-btn-secondary);
+	background-color: #121212;
+	/* Add icon color change for mute state */
+  }
+  
+  #tts-toggle.muted {
+	background-color: #6c757d; /* Gray when muted */
+  }
+  
+  #tts-toggle:hover {
+	background-color: var(--chat-btn-secondary-hover);
+	transform: translateY(-2px);
+	box-shadow: 0 4px 8px rgba(0, 201, 167, 0.2);
+  }
+  
+  /* Send Button */
+  .send-btn {
+	background-color: var(--chat-btn-primary);
+	border-radius: 30px;
+	width: auto;
+	padding: 0 1.2rem;
+  }
+  
+  .send-btn:hover {
+	background-color: var(--chat-btn-primary-hover);
+	transform: translateY(-2px);
+	box-shadow: 0 4px 8px rgba(74, 107, 255, 0.2);
+  }
+  
+  /* Button Icons - Enhanced Visibility */
+  .chat-footer button i {
+	font-size: 1.1rem;
+	color: white; /* Force white icons for better contrast */
+	text-shadow: 0 1px 2px rgba(0,0,0,0.2); /* Add subtle shadow */
+  }
+  
+  /* Active/Listening States */
+  .listening {
+	animation: pulse 1.5s infinite;
+	box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.4);
+  }
+  
+  /* Status Indicator */
+  .voice-status {
+	color: var(--chat-btn-accent);
+	font-weight: 600;
+	font-size: 0.8rem;
+	margin-left: 0.5rem;
+  }
+  
+  /* Responsive Adjustments */
+  @media (max-width: 768px) {
+	.chat-footer button {
+	  width: 38px;
+	  height: 38px;
+	}
+	
+	.send-btn {
+	  padding: 0 1rem;
+	}
+  }
+  
+  @keyframes pulse {
+	0% { transform: scale(1); }
+	50% { transform: scale(1.1); }
+	100% { transform: scale(1); }
+  }
+
+  
+/* Author Description Styling */
+.author-description, .author-description2 {
+    color: var(--text-color); /* Use the main text color variable */
+    background-color: var(--card-bg); /* Use card background for consistency */
+    padding: 1.5rem;
+    margin: 2rem 0;
+    border-radius: 8px;
+    line-height: 1.7;
+    border-left: 4px solid var(--primary);
+    box-shadow: var(--shadow-sm);
+    transition: all var(--transition-speed) ease;
+}
+
+/* Dark mode specific adjustments */
+[data-theme="dark"] .author-description,
+[data-theme="dark"] .author-description2 {
+    background-color: var(--card-bg);
+    border-left-color: var(--primary-dark);
+}
+
+/* Ensure text contrast in both themes */
+.author-description p,
+.author-description2 p {
+    color: var(--text-color);
+    margin-bottom: 1rem;
+}
+
+.author-description i,
+.author-description2 i {
+    color: var(--secondary);
+}
+
+/* Poem container for better visibility */
+.poem-container {
+    color: var(--text-color);
+    background-color: var(--content-bg);
+    padding: 1.5rem;
+    margin: 2rem 0;
+    border-radius: 8px;
+    border-left: 4px solid var(--secondary);
+    box-shadow: var(--shadow-sm);
+    transition: all var(--transition-speed) ease;
+}
+
+/* Meaning items for better visibility */
+.meaning-item {
+    color: var(--text-color);
+    background-color: var(--content-bg);
+    padding: 1rem;
+    margin: 1rem 0;
+    border-radius: 8px;
+    border-left: 4px solid var(--accent);
+    transition: all var(--transition-speed) ease;
+}
+
+.meaning-item strong {
+    color: var(--accent);
+}
+
+/* Additional contrast enhancements */
+body {
+    color: var(--text-color);
+    background-color: var(--light);
+    transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
+}
+
+/* Ensure all text elements maintain contrast */
+h1, h2, h3, h4, h5, h6,
+p, li, td, th, span, div, a {
+    color: var(--text-color);
+    transition: color var(--transition-speed) ease;
+}
+
+/* Card styling for better visibility */
+.card {
+    background-color: var(--card-bg);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    transition: all var(--transition-speed) ease;
+}
+
+.card-body {
+    color: var(--text-color);
+}
